@@ -139,28 +139,27 @@ new weight will synthesise from the nearest embedded one.
 Working and current. The build is 4.32 MB, 45 images and 8 font faces, and makes no
 network requests.
 
-**Done in the latest pass** (BRIEF §10): fonts embedded so the offline file keeps its
+**Done in the latest pass** (BRIEF §10): the three "Date to confirm" placeholders
+removed, which clears the blocker on sending the file to guests; fonts embedded so the offline file keeps its
 typography; the redaction denylist moved to salted hashes so this public repo carries
 no venue names; anchor targets no longer land under the sticky navbar; `--nav`
 variable; skip link and ARIA wiring on the speaker grid.
 
 **Blocked on the client — nothing here can be invented:**
 
-1. **Dates** for the Dallas, New York and Paris cards. All three read "Date to confirm".
-   *Do not send the file to guests until these are filled in.*
-2. Press photographs for the twenty speakers — the weakest assets on the page, and no
+1. Press photographs for the twenty speakers — the weakest assets on the page, and no
    upscaler can fix them without changing what people look like (BRIEF §7.3)
-3. Willkie Farr & Gallagher logo file — the cell is typeset text as a placeholder
-4. Colour photographs of Gregg Hill and Brenda Exline (BRIEF §7.4)
-5. FAQ, Letter from the Founder and News copy (BRIEF §8)
-6. An autumn replacement for the Christmas-market hero photograph (BRIEF §7.5)
-7. The city silhouette slideshow and the Frame.io video (BRIEF §8)
+2. Willkie Farr & Gallagher logo file — the cell is typeset text as a placeholder
+3. Colour photographs of Gregg Hill and Brenda Exline (BRIEF §7.4)
+4. FAQ, Letter from the Founder and News copy (BRIEF §8)
+5. An autumn replacement for the Christmas-market hero photograph (BRIEF §7.5)
+6. The city silhouette slideshow and the Frame.io video (BRIEF §8)
 
 **Decisions the client owes before more building:**
 
-8. Single-page-with-dropdowns vs genuinely multi-page (BRIEF §8). Option 1 is
+7. Single-page-with-dropdowns vs genuinely multi-page (BRIEF §8). Option 1 is
    recommended and preserves the single-file artefact.
-9. Whether the venue names are sensitive enough to warrant making this repo private
+8. Whether the venue names are sensitive enough to warrant making this repo private
    after all (BRIEF §2.3).
 
 **Deferred on purpose:** re-encoding calendar images for the ≤480px single-column

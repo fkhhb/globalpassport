@@ -524,9 +524,19 @@ has been protected through every change in this project and is not incidental.
   but no logo file was supplied and willkie.com is outside the sandbox network allowlist,
   so the cell currently carries the firm name typeset in the serif face instead of a mark.
   It reads deliberately rather than broken, but it is a placeholder. Ask for a PNG or SVG.
-- **Dates for Dallas, New York and Paris.** Added to the calendar as past summits on
-  request. Dates are unknown and were **not** invented — each card reads "Date to confirm".
-  **Do not send the file to guests until the dates are filled in.**
+- **Dates for Dallas, New York and Paris — resolved by dropping the line.** These were
+  added as past summits on request and their dates were never supplied. They read
+  "Date to confirm", which is placeholder text and reads as unfinished on a page handed
+  to guests. The client's position is that the exact dates do not matter for events that
+  have already happened, so the `.when` line was removed from those three cards rather
+  than filled in with anything invented.
+
+  The cards now read tag + city, and all eight tiles still render at identical height.
+  Five of the eight carry a date and three do not, which reads as deliberate in a way
+  that three "Date to confirm" labels did not. If years ever surface, add them back as
+  a plain `<div class="when">` and the layout absorbs it with no other change.
+
+  **This was the blocker on sending the file to guests. It is now clear.**
 - **The Dallas, New York and Paris card images are AI-generated, not photographs.**
   Record this; it is not obvious from looking at them. No usable photographs of these
   cities existed in the asset set and none could be fetched (the sandbox network allowlist
