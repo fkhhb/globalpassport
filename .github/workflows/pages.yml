@@ -10,10 +10,13 @@
 # reintroduced a venue name or a bare address can never reach a public URL.
 name: Deploy preview to Pages
 
+# main only. The github-pages environment accepts deployments from the default
+# branch and nothing else, so a run triggered by any other branch fails at the
+# environment gate before a single step executes - a red X that can never go
+# green. Use workflow_dispatch to redeploy the current main on demand.
 on:
   push:
     branches:
-      - claude/global-passport-website-w5cmpy
       - main
   workflow_dispatch:
 

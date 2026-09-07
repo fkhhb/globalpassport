@@ -906,3 +906,24 @@ pasted into chat as images, which renders them visible but writes no file, so on
 colour values crossed over. `assets/img/favicon.png` and `logo-footer.png` are both
 still the original 480x295 extractions, and the favicon in particular is a 480x295
 rectangle being used as a square icon.
+
+---
+
+## 16. Note — the Pages workflow is main-only
+
+`.github/workflows/pages.yml` triggers on pushes to `main` and on
+`workflow_dispatch`, and deliberately not on any other branch.
+
+The `github-pages` environment accepts deployments from the default branch only.
+A run started by a feature branch fails at the environment gate *before any step
+executes* — no checkout, no build, no audit — so it produces a red X that can
+never go green no matter what the branch contains. Listing a feature branch under
+`on.push.branches` only manufactures noise.
+
+This was learnt twice: once when the site still lived on the working branch and
+the deploy would not run at all (which is why it was merged to `main`), and again
+when fast-forwarding that branch to `main` produced an immediately-failing run for
+a commit that had already deployed successfully from `main` seconds earlier.
+
+To redeploy without a code change, use the workflow's **Run workflow** button on
+`main`, or `workflow_dispatch` via the API.
