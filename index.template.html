@@ -118,12 +118,6 @@ section.dark{background:var(--ink);color:#fff}
 .creed div+div{padding-left:40px;border-left:1px solid var(--line)}
 .creed h3{font-size:24px;font-style:italic}
 .creed p{margin:12px 0 0;color:var(--slate)}
-.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:8px;border-top:1px solid var(--line)}
-.facts div{padding:30px 34px 10px 0}
-.facts div+div{padding-left:34px;border-left:1px solid var(--line)}
-.facts .n{font-family:var(--serif);font-size:38px;line-height:1;color:var(--crimson)}
-.facts h4{font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 8px}
-.facts p{margin:0;color:var(--slate);font-size:16px}
 .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:56px}
 .pillar{border-top:2px solid var(--navy);padding-top:16px}
 .pillar h4{font-family:var(--serif);font-size:20px;font-weight:500;margin:0 0 6px}
@@ -186,11 +180,6 @@ section.dark{background:var(--ink);color:#fff}
 .day li:last-child{border-bottom:0}
 .day li time{flex:0 0 92px;color:var(--crimson);font-variant-numeric:tabular-nums;font-size:14px;padding-top:2px}
 .day li .dress{display:block;color:var(--slate);font-size:13.5px}
-.venues{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:60px}
-.venues figure{margin:0}
-.venues img{aspect-ratio:16/10;object-fit:cover;width:100%}
-.venues figcaption{font-family:var(--serif);font-size:16px;margin-top:10px}
-.venues span{display:block;font-family:var(--sans);font-size:13.5px;color:var(--slate)}
 
 /* calendar */
 .cal{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
@@ -294,11 +283,10 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
   .hero{grid-template-columns:1fr;min-height:0}
   .hero-photo{order:-1;height:46vh;min-height:280px}
   .hero-copy{padding:48px 22px 52px}
-  .creed,.facts,.prog,.venues,.founder{grid-template-columns:1fr}
-  .creed div,.facts div{padding:24px 0}
-  .creed div+div,.facts div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .creed,.prog,.founder{grid-template-columns:1fr}
+  .creed div{padding:24px 0}
+  .creed div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
   .founder{gap:36px}
-  .venues{gap:24px}
   .cal{grid-template-columns:repeat(2,1fr)}
   .spk-grid{grid-template-columns:repeat(2,1fr);gap:22px 16px}
   .logos{grid-template-columns:repeat(2,1fr)}
@@ -322,10 +310,10 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
     <button class="navtoggle" aria-expanded="false" aria-controls="menu">Menu</button>
     <ul id="menu">
       <li><a class="lnk" href="#about">About</a></li>
-      <li><a class="lnk" href="#leadership">Who we are</a></li>
       <li><a class="lnk" href="#munich">Munich 2026</a></li>
-      <li><a class="lnk" href="#speakers">Speakers</a></li>
+      <li><a class="lnk" href="#leadership">Who we are</a></li>
       <li><a class="lnk" href="#calendar">Summits</a></li>
+      <li><a class="lnk" href="#speakers">Speakers</a></li>
       <li><a class="lnk" href="#sponsors">Sponsors</a></li>
       <li><a class="lnk" href="#contact">Contact</a></li>
     </ul>
@@ -346,7 +334,7 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
     </div>
   </div>
   <figure class="hero-photo">
-    <img src="{{IMG:01-marienplatz-and-the-frauenkirche-at-dusk-mun.jpg}}" alt="Marienplatz and the Frauenkirche at dusk, Munich">
+    <img fetchpriority="high" decoding="async" src="{{IMG:01-marienplatz-and-the-frauenkirche-at-dusk-mun.jpg}}" alt="Marienplatz and the Frauenkirche at dusk, Munich">
     <figcaption>Marienplatz, Munich</figcaption>
   </figure>
 </header>
@@ -392,79 +380,7 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
   </div>
 </section>
 
-<section id="leadership" class="band">
-  <div class="wrap">
-    <div class="head">
-      <div class="label">Who we are</div>
-      <h2>A founder, and a small team who produce every edition by hand.</h2>
-    </div>
-
-    <div class="founder">
-      <figure>
-        <img src="{{IMG:02-john-blaffer-royall-at-a-global-passport-ser.jpg}}" alt="John Blaffer Royall at a Global Passport Series summit">
-        <figcaption>John Blaffer Royall, Founder and Chairman</figcaption>
-      </figure>
-      <div>
-        <blockquote>“Build exceptional ties across borders and political divides.”</blockquote>
-        <p>John is Chief Business Officer of PMB Capital, a London-based merchant bank and private equity fund founded in 2013 as part of Edmond de Rothschild and later spun out independently. He has 25 years across private equity, operating and corporate finance roles for growth equity businesses, having previously invested at Health Enterprise Partners and DLJ Merchant Banking (Credit Suisse), served as CFO of Time Link International Corp., and begun his career as an M&amp;A analyst at UBS Warburg.</p>
-        <p>He sits on the boards of Firemind, Global Passport Series, Texas Gulf Bank, the Blaffer Museum, Culturunners and the Autotelic Foundation, and has produced several global art initiatives and documentary films, including the Antarctic Biennale and Culturunners Healing Arts. He holds a BA from Southern Methodist University and an MBA from Columbia Business School.</p>
-      </div>
-    </div>
-
-    <div class="team">
-      <div class="member">
-        <img src="{{IMG:03-felix-elkmann.jpg}}" alt="Felix Elkmann">
-        <div>
-          <h4>Felix Elkmann</h4>
-          <div class="role">Executive Director</div>
-          <p>15+ years in media and technology at SAP, Datawords, Yext and Axel Springer, opening new markets across the US and Europe. Founder of the tequila brand InCorrupto and of Opera Dinners, a transatlantic charity supporting emerging opera singers and musicians.</p>
-        </div>
-      </div>
-      <div class="member">
-        <img src="{{IMG:04-katherine-gage-boulud.jpg}}" alt="Katherine Gage Boulud">
-        <div>
-          <h4>Katherine Gage Boulud</h4>
-          <div class="role">Senior Advisor and Events Chair</div>
-          <p>Brand ambassador and strategic partnership officer for Chef Daniel Boulud's global restaurant group. She produces high-level events for global leaders and luxury brands, and has reached 100k+ children through Spoons Across America.</p>
-        </div>
-      </div>
-      <div class="member">
-        <img src="{{IMG:05-brenda-exline.jpg}}" alt="Brenda Exline">
-        <div>
-          <h4>Brenda Exline</h4>
-          <div class="role">Senior Advisor</div>
-          <p>Serial entrepreneur and brand strategist who built and sold two media companies, including a top-25 woman-owned US communications agency. She now leads Gravitaz and advises Richemont's global PR team across 20 watch and jewellery maisons.</p>
-        </div>
-      </div>
-      <div class="member">
-        <img src="{{IMG:06-benton-bohannon.jpg}}" alt="Benton Bohannon">
-        <div>
-          <h4>Benton Bohannon</h4>
-          <div class="role">Executive Producer</div>
-          <p>Executive producer and media agency partner behind hit shows for MTV, Netflix, NBC Universal, Hulu and Fox Corporation, specialising in content for streaming platforms, social media and live events.</p>
-        </div>
-      </div>
-      <div class="member">
-        <img src="{{IMG:07-aurore-pasquet.jpg}}" alt="Aurore Pasquet">
-        <div>
-          <h4>Aurore Pasquet</h4>
-          <div class="role">Communications and Development</div>
-          <p>Advisor in private equity, art and real estate, a fellow at Chatham House and formerly at the OECD. Head of strategy for the Donà dalle Rose Foundation in Venice, producing global art initiatives and heritage conservation projects.</p>
-        </div>
-      </div>
-      <div class="member">
-        <img src="{{IMG:08-john-blaffer-royall.jpg}}" alt="John Blaffer Royall">
-        <div>
-          <h4>John Blaffer Royall</h4>
-          <div class="role">Founder and Chairman</div>
-          <p>Chief Business Officer of PMB Capital, previously at Health Enterprise Partners, DLJ Merchant Banking and UBS Warburg. Producer of art initiatives including the Antarctic Biennale and Healing Arts.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="munich">
+<section id="munich" class="band">
   <div class="wrap">
     <div class="head">
       <div class="label">Munich 2026</div>
@@ -506,15 +422,75 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
   </div>
 </section>
 
-<section id="speakers" class="dark">
+<section id="leadership">
   <div class="wrap">
     <div class="head">
-      <div class="label">Speakers</div>
-      <h2>The people who take the floor.</h2>
-      <p>Founders, investors, scientists, diplomats and journalists. Below is the faculty from Palm Beach, February 2026 — select any name to read more. The Munich programme is announced to guests ahead of the summit.</p>
+      <div class="label">Who we are</div>
+      <h2>A founder, and a small team who produce every edition by hand.</h2>
     </div>
-    <div class="spk-grid" id="spkgrid"></div>
-    <p class="note">Speaking at a GPS summit is by invitation. If you would like to propose a speaker or a session theme, write to us.</p>
+
+    <div class="founder">
+      <figure>
+        <img loading="lazy" decoding="async" src="{{IMG:02-john-blaffer-royall-at-a-global-passport-ser.jpg}}" alt="John Blaffer Royall at a Global Passport Series summit">
+        <figcaption>John Blaffer Royall, Founder and Chairman</figcaption>
+      </figure>
+      <div>
+        <blockquote>“Build exceptional ties across borders and political divides.”</blockquote>
+        <p>John is Chief Business Officer of PMB Capital, a London-based merchant bank and private equity fund founded in 2013 as part of Edmond de Rothschild and later spun out independently. He has 25 years across private equity, operating and corporate finance roles for growth equity businesses, having previously invested at Health Enterprise Partners and DLJ Merchant Banking (Credit Suisse), served as CFO of Time Link International Corp., and begun his career as an M&amp;A analyst at UBS Warburg.</p>
+        <p>He sits on the boards of Firemind, Global Passport Series, Texas Gulf Bank, the Blaffer Museum, Culturunners and the Autotelic Foundation, and has produced several global art initiatives and documentary films, including the Antarctic Biennale and Culturunners Healing Arts. He holds a BA from Southern Methodist University and an MBA from Columbia Business School.</p>
+      </div>
+    </div>
+
+    <div class="team">
+      <div class="member">
+        <img loading="lazy" decoding="async" src="{{IMG:03-felix-elkmann.jpg}}" alt="Felix Elkmann">
+        <div>
+          <h4>Felix Elkmann</h4>
+          <div class="role">Executive Director</div>
+          <p>15+ years in media and technology at SAP, Datawords, Yext and Axel Springer, opening new markets across the US and Europe. Founder of the tequila brand InCorrupto and of Opera Dinners, a transatlantic charity supporting emerging opera singers and musicians.</p>
+        </div>
+      </div>
+      <div class="member">
+        <img loading="lazy" decoding="async" src="{{IMG:04-katherine-gage-boulud.jpg}}" alt="Katherine Gage Boulud">
+        <div>
+          <h4>Katherine Gage Boulud</h4>
+          <div class="role">Senior Advisor and Events Chair</div>
+          <p>Brand ambassador and strategic partnership officer for Chef Daniel Boulud's global restaurant group. She produces high-level events for global leaders and luxury brands, and has reached 100k+ children through Spoons Across America.</p>
+        </div>
+      </div>
+      <div class="member">
+        <img loading="lazy" decoding="async" src="{{IMG:05-brenda-exline.jpg}}" alt="Brenda Exline">
+        <div>
+          <h4>Brenda Exline</h4>
+          <div class="role">Senior Advisor</div>
+          <p>Serial entrepreneur and brand strategist who built and sold two media companies, including a top-25 woman-owned US communications agency. She now leads Gravitaz and advises Richemont's global PR team across 20 watch and jewellery maisons.</p>
+        </div>
+      </div>
+      <div class="member">
+        <img loading="lazy" decoding="async" src="{{IMG:06-benton-bohannon.jpg}}" alt="Benton Bohannon">
+        <div>
+          <h4>Benton Bohannon</h4>
+          <div class="role">Executive Producer</div>
+          <p>Executive producer and media agency partner behind hit shows for MTV, Netflix, NBC Universal, Hulu and Fox Corporation, specialising in content for streaming platforms, social media and live events.</p>
+        </div>
+      </div>
+      <div class="member">
+        <img loading="lazy" decoding="async" src="{{IMG:07-aurore-pasquet.jpg}}" alt="Aurore Pasquet">
+        <div>
+          <h4>Aurore Pasquet</h4>
+          <div class="role">Communications and Development</div>
+          <p>Advisor in private equity, art and real estate, a fellow at Chatham House and formerly at the OECD. Head of strategy for the Donà dalle Rose Foundation in Venice, producing global art initiatives and heritage conservation projects.</p>
+        </div>
+      </div>
+      <div class="member">
+        <img loading="lazy" decoding="async" src="{{IMG:08-john-blaffer-royall.jpg}}" alt="John Blaffer Royall">
+        <div>
+          <h4>John Blaffer Royall</h4>
+          <div class="role">Founder and Chairman</div>
+          <p>Chief Business Officer of PMB Capital, previously at Health Enterprise Partners, DLJ Merchant Banking and UBS Warburg. Producer of art initiatives including the Antarctic Biennale and Healing Arts.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -528,53 +504,53 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
 
     <div class="cal">
       <article class="ev past">
-        <div class="im"><img src="{{IMG:42-dallas.jpg}}" alt="Dallas skyline"></div>
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:42-dallas.jpg}}" alt="Dallas skyline"></div>
         <div class="bar"></div>
         <div class="tag">Past</div>
         <h3>Dallas</h3>
       </article>
       <article class="ev past">
-        <div class="im"><img src="{{IMG:43-new-york.jpg}}" alt="New York skyline"></div>
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:43-new-york.jpg}}" alt="New York skyline"></div>
         <div class="bar"></div>
         <div class="tag">Past</div>
         <h3>New York</h3>
       </article>
       <article class="ev past">
-        <div class="im"><img src="{{IMG:44-paris.jpg}}" alt="Paris skyline"></div>
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:44-paris.jpg}}" alt="Paris skyline"></div>
         <div class="bar"></div>
         <div class="tag">Past</div>
         <h3>Paris</h3>
       </article>
       <article class="ev past">
-        <div class="im"><img src="{{IMG:09-tower-bridge-london.jpg}}" alt="Tower Bridge, London"></div>
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:09-tower-bridge-london.jpg}}" alt="Tower Bridge, London"></div>
         <div class="bar"></div>
         <div class="tag">Past</div>
         <h3>London</h3>
         <div class="when">18–19 June 2025</div>
       </article>
       <article class="ev past">
-        <div class="im"><img src="{{IMG:10-worth-avenue-palm-beach.jpg}}" alt="Worth Avenue, Palm Beach"></div>
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:10-worth-avenue-palm-beach.jpg}}" alt="Worth Avenue, Palm Beach"></div>
         <div class="bar"></div>
         <div class="tag">Past</div>
         <h3>Palm Beach</h3>
         <div class="when">17–19 February 2026</div>
       </article>
       <article class="ev next">
-        <div class="im"><img src="{{IMG:11-munich.jpg}}" alt="Munich"></div>
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:11-munich.jpg}}" alt="Munich"></div>
         <div class="bar"></div>
         <div class="tag">Next summit</div>
         <h3>Munich</h3>
         <div class="when">30 Sept – 2 Oct 2026</div>
       </article>
       <article class="ev">
-        <div class="im"><img src="{{IMG:12-united-arab-emirates-coastline.jpg}}" alt="United Arab Emirates coastline"></div>
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:12-united-arab-emirates-coastline.jpg}}" alt="United Arab Emirates coastline"></div>
         <div class="bar"></div>
         <div class="tag">Upcoming</div>
         <h3>United Arab Emirates</h3>
         <div class="when">November 2026</div>
       </article>
       <article class="ev">
-        <div class="im"><img src="{{IMG:13-salzburg-and-the-hohensalzburg-fortress.jpg}}" alt="Salzburg and the Hohensalzburg Fortress"></div>
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:13-salzburg-and-the-hohensalzburg-fortress.jpg}}" alt="Salzburg and the Hohensalzburg Fortress"></div>
         <div class="bar"></div>
         <div class="tag">Upcoming</div>
         <h3>Salzburg</h3>
@@ -589,6 +565,18 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
   </div>
 </section>
 
+<section id="speakers" class="dark">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">Speakers</div>
+      <h2>The people who take the floor.</h2>
+      <p>Founders, investors, scientists, diplomats and journalists. Below is the faculty from Palm Beach, February 2026 — select any name to read more. The Munich programme is announced to guests ahead of the summit.</p>
+    </div>
+    <div class="spk-grid" id="spkgrid"></div>
+    <p class="note">Speaking at a GPS summit is by invitation. If you would like to propose a speaker or a session theme, write to us.</p>
+  </div>
+</section>
+
 <section id="sponsors">
   <div class="wrap">
     <div class="head">
@@ -598,18 +586,18 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
     </div>
 
     <div class="logos">
-      <div><img src="{{IMG:14-rtw-innovation.png}}" alt="RTW Innovation"><p>A $7B biotech group</p></div>
-      <div><img src="{{IMG:15-parkway.png}}" alt="Parkway"><p>Leading New York-based AI venture capital firm</p></div>
-      <div><img src="{{IMG:16-hggc.png}}" alt="HGGC" style="max-height:32px"><p>$7B San Francisco-based mid-market private equity firm</p></div>
-      <div><img src="{{IMG:17-burgess.png}}" alt="Burgess" style="max-height:26px"><p>Leader in superyachts for over 50 years</p></div>
-      <div><img src="{{IMG:18-aescuvest.png}}" alt="aescuvest"><p>Munich-based MedTech venture capital firm</p></div>
-      <div><img src="{{IMG:19-washington-harbour.png}}" alt="Washington Harbour"><p>Private capital for government IT, defence technology, software and cybersecurity</p></div>
-      <div><img src="{{IMG:20-dla-piper.png}}" alt="DLA Piper" style="max-height:46px"><p>Leading global law firm with offices in 40 countries</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:14-rtw-innovation.png}}" alt="RTW Innovation"><p>A $7B biotech group</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:15-parkway.png}}" alt="Parkway"><p>Leading New York-based AI venture capital firm</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:16-hggc.png}}" alt="HGGC" style="max-height:32px"><p>$7B San Francisco-based mid-market private equity firm</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:17-burgess.png}}" alt="Burgess" style="max-height:26px"><p>Leader in superyachts for over 50 years</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:18-aescuvest.png}}" alt="aescuvest"><p>Munich-based MedTech venture capital firm</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:19-washington-harbour.png}}" alt="Washington Harbour"><p>Private capital for government IT, defence technology, software and cybersecurity</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:20-dla-piper.png}}" alt="DLA Piper" style="max-height:46px"><p>Leading global law firm with offices in 40 countries</p></div>
       <div><span style="font-family:var(--serif);font-size:21px;color:var(--ink);letter-spacing:.01em;line-height:1.15;display:block;margin-bottom:14px">Willkie Farr<br>&amp; Gallagher <span style="font-size:15px;color:var(--slate)">LLP</span></span><p>International law firm advising on complex, business-critical matters</p></div>
     </div>
 
     <div class="partner-cta">
-      <p>Partner with us<br><a class="eml" data-u="ZmVsaXg=" data-d="Z2xvYmFscGFzc3BvcnRzZXJpZXMuY29t" data-s="Global Passport Series — sponsorship">Email us about sponsorship</a><noscript><br><span class="nojs">felix (at) globalpassportseries (dot) com</span></noscript></p>
+      <p>Partner with us<br><a class="eml" data-show data-u="ZmVsaXg=" data-d="Z2xvYmFscGFzc3BvcnRzZXJpZXMuY29t" data-s="Global Passport Series — sponsorship">Email us about sponsorship</a><noscript><br><span class="nojs">felix (at) globalpassportseries (dot) com</span></noscript></p>
     </div>
 
     <p class="sponsor-why">Sponsorship at GPS is a working relationship: a seat in the room, a voice in the programme, and a role in the cultural moments that surround each summit.</p>
@@ -632,7 +620,7 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
       </div>
     </div>
     <div class="colophon">
-      <img src="{{IMG:logo-footer.png}}" alt="Global Passport Series">
+      <img loading="lazy" decoding="async" src="{{IMG:logo-footer.png}}" alt="Global Passport Series">
       <span>An Adelphi Global LLC production &nbsp;·&nbsp; © 2026 Global Passport Series
         &nbsp;·&nbsp; <button type="button" class="privacy-link" id="privacy-open">Privacy and cookies</button></span>
     </div>
@@ -671,7 +659,7 @@ function build(){
     b.setAttribute('aria-controls','bio-panel');
     b.id = 'spk-' + i;
     b.dataset.i = i;
-    b.innerHTML = '<div class="ph"><img src="'+s.img+'" alt="'+s.name+'" loading="lazy"></div>'+
+    b.innerHTML = '<div class="ph"><img src="'+s.img+'" alt="'+s.name+'" loading="lazy" decoding="async"></div>'+
                   '<h4>'+s.name+'</h4><div class="role">'+s.role+'</div>'+
                   '<div class="more">Read bio</div>';
     grid.appendChild(b);
@@ -731,6 +719,9 @@ menu.addEventListener('click', e=>{ if(e.target.tagName==='A'){ menu.classList.r
         var e = atob(a.getAttribute('data-u')) + String.fromCharCode(64) + atob(a.getAttribute('data-d'));
         var subj = a.getAttribute('data-s');
         a.setAttribute('href','mailto:' + e + (subj ? '?subject=' + encodeURIComponent(subj) : ''));
+        /* data-show: render the address as the link's own text. Requested by the
+           client for the sponsorship CTA. Still absent from the source. */
+        if(a.hasAttribute('data-show')){ a.textContent = e; a.removeAttribute('data-show'); }
         a.removeAttribute('data-u'); a.removeAttribute('data-d'); a.removeAttribute('data-s');
       }catch(err){}
     });

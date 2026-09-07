@@ -457,6 +457,35 @@ script to gate on. **If analytics are ever added, they must check it** — and a
 point the copy above stops being true and must be rewritten to describe what is actually
 collected.
 
+### 7.8 Two build shapes, and why
+
+`build.py` emits two things from the same source:
+
+| | shape | html | use |
+|---|---|---|---|
+| default | one self-contained file | 4.33 MB | WhatsApp, offline |
+| `--linked DIR` | index.html + real asset files | 64 KB | hosting |
+
+The single file is right for a file you send someone and wrong for a web page.
+Inlined, 4.3 MB of base64 has to arrive before anything paints, no asset can be
+cached separately or deferred, and base64 is a third larger than the bytes it
+encodes. Measured on a throttle-free local server at 390px, which *understates*
+the gap because there is no real network in play:
+
+```
+hosted   (linked)  11 requests   1.31 MB before load   LCP 108 ms
+artefact (single)   1 request    4.33 MB before load   LCP 128 ms
+```
+
+The rest of the images arrive as you scroll rather than never being needed at
+all. Over a phone connection the 3 MB that no longer blocks first paint is the
+whole story.
+
+Both shapes share one template. `loading="lazy"` and `decoding="async"` sit on
+every below-the-fold image and are inert in the single-file build, where the data
+URI is already local. The hero carries `fetchpriority="high"` and is never lazy —
+it is the LCP element.
+
 ### 7.7 What was deliberately not added
 
 - **JSON-LD `Event` structured data.** Standard practice for an events site, and wrong
@@ -635,3 +664,59 @@ are wiped after use, and there are no console errors.
 the Willkie logo, the greyscale Gregg Hill and Brenda Exline files and the Christmas
 market hero are all blocked on client-supplied assets — none of them can be invented,
 and §2.4 rules out the one shortcut that looks like a fix.
+
+---
+
+## 11. Changelog — client review round
+
+Three voice notes and a WhatsApp message from the client. What each asked for
+and what happened:
+
+**Already done before the request landed** — worth recording so nobody redoes them:
+
+- *"Add Willkie Farr & Gallagher as a sponsor."* Present as the eighth cell since
+  the previous round. Still typeset text rather than a mark (§8) — willkie.com is
+  outside the sandbox network allowlist, confirmed again this round, so the logo
+  still cannot be fetched here.
+- *"Replace 'Partner with us in Munich' with 'Partner with us'."* The string was
+  already just "Partner with us"; no "in Munich" variant existed.
+- *"Remove 80 seats per Summit, three days together, five cities."* These were the
+  three `.facts` stat tiles, already removed from the markup earlier. The dead
+  `.facts` CSS is now gone too, along with the `.venues` rules left behind by the
+  §2.1 venue-grid deletion.
+- *"Add Dallas, New York and Paris to past events."* Already in the calendar.
+
+**Changed this round:**
+
+- **Section order.** *"Bring the Munich 2026 programme up and move the speakers
+  further down."* Was about → leadership → munich → speakers → calendar. Now
+  **about → munich → leadership → calendar → speakers**. The nav follows the same
+  order, or the anchors read as jumbled.
+
+  The `band` classes were reassigned rather than moved with their sections: the
+  page alternates paper / grey / paper / grey / dark, and simply relocating the
+  sections would have put two paper sections and then two grey ones back to back.
+  `munich` gains `band`, `leadership` loses it.
+
+- **The contact address is now visible** under "Partner with us", as asked. It is
+  still absent from the HTML source: a `data-show` attribute tells the existing
+  runtime assembler to write the address into the link's own text. Verified — the
+  link reads as the address, and a regex for a bare address over the served source
+  finds nothing. This costs no privacy that the `mailto:` href did not already
+  give away to anything running JavaScript. §2.2 holds.
+
+- **Hosted build shape** (§7.8) and the GitHub Pages preview deploy.
+
+**Explicitly retracted by the client mid-sentence:** using the logo instead of the
+Munich hero image — *"although no, I think you can leave that."* Not changed.
+
+**Still blocked:**
+
+- **Logo colours.** *"Make the Global Passport Series logo congruent with the
+  colours of the logo I sent, and adjust the colours."* The referenced logo file
+  has not reached this repo. Note that §5 already describes this exercise being
+  done once: the palette was measured off the supplied artwork, giving `#A0322D`
+  and `#273D68`, and the nav SVG carries the same fills, so mark and accents are
+  identical by construction. Either a different logo file is meant, or the earlier
+  work was not seen. **Get the file before changing any colour** — the current
+  palette is measured, not guessed, and replacing it blind would undo §5.

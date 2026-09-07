@@ -19,6 +19,18 @@ Usage:
     python3 build.py --check         # verify every placeholder resolves, write nothing
     python3 build.py --hash "Some Venue"   # print a denylist entry (see below)
     python3 build.py --noindex       # add robots noindex (preview deploys only)
+    python3 build.py --linked _site  # hosted build: linked assets, not inlined
+
+Two output shapes, same source:
+
+  default   ONE file, every asset base64-inlined. For WhatsApp. Works offline.
+  --linked  index.html plus real asset files. For hosting.
+
+The single file is the right answer for a file you send someone and wrong for a
+web page: 4.3 MB of base64 has to arrive before anything paints, none of it can
+be cached separately, none of it can be deferred, and base64 is a third larger
+than the bytes it encodes. Linked, the HTML is ~60 KB, images stream in as
+needed and the browser caches them across visits.
 """
 
 import argparse
@@ -26,6 +38,7 @@ import base64
 import hashlib
 import mimetypes
 import re
+import shutil
 import sys
 import unicodedata
 from pathlib import Path
@@ -107,16 +120,22 @@ def digest(term: str) -> str:
     return hashlib.sha256(SALT + norm(term).encode("utf-8")).hexdigest()
 
 
-def inline(template_text: str) -> str:
+def inline(template_text: str, link_dir: Path = None) -> str:
+    """Resolve placeholders. Inlines as base64, or rewrites to relative paths
+    and copies the files when link_dir is given."""
     missing = []
+    used = []
 
-    def make_sub(directory, kind):
+    def make_sub(directory, kind, rel):
         def sub(match):
             name = match.group(1)
             path = directory / name
             if not path.exists():
                 missing.append(f"{directory.relative_to(ROOT)}/{name}")
                 return match.group(0)
+            if link_dir is not None:
+                used.append((path, rel + "/" + name))
+                return rel + "/" + name
             if kind == "font":
                 mime = "font/woff2"
             else:
@@ -126,14 +145,19 @@ def inline(template_text: str) -> str:
             return f"data:{mime};base64,{data}"
         return sub
 
-    result = IMG_PLACEHOLDER.sub(make_sub(IMG_DIR, "img"), template_text)
-    result = FONT_PLACEHOLDER.sub(make_sub(FONT_DIR, "font"), result)
+    result = IMG_PLACEHOLDER.sub(make_sub(IMG_DIR, "img", "assets/img"), template_text)
+    result = FONT_PLACEHOLDER.sub(make_sub(FONT_DIR, "font", "assets/fonts"), result)
 
     if missing:
         print(f"ERROR: {len(missing)} asset(s) referenced but not found:", file=sys.stderr)
         for name in missing:
             print(f"  {name}", file=sys.stderr)
         sys.exit(1)
+
+    for src, rel in used:
+        dst = link_dir / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, dst)
 
     return result
 
@@ -221,6 +245,9 @@ def main():
     ap.add_argument("--noindex", action="store_true",
                     help="inject a robots noindex meta tag; for preview deploys of "
                          "an invitation-only event, not for the real launch")
+    ap.add_argument("--linked", metavar="DIR", type=Path,
+                    help="hosted build: write DIR/index.html with linked assets "
+                         "instead of one self-contained file")
     args = ap.parse_args()
 
     if args.hash:
@@ -234,7 +261,12 @@ def main():
     if not FONT_DIR.is_dir():
         sys.exit(f"ERROR: {FONT_DIR} not found. Run: python3 tools/fetch_fonts.py")
 
-    html = inline(TEMPLATE.read_text(encoding="utf-8"))
+    link_dir = args.linked
+    if link_dir is not None:
+        link_dir.mkdir(parents=True, exist_ok=True)
+        args.out = link_dir / "index.html"
+
+    html = inline(TEMPLATE.read_text(encoding="utf-8"), link_dir)
 
     if args.noindex:
         assert "</head>" in html, "no </head> to inject the robots tag into"
@@ -254,9 +286,10 @@ def main():
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(html, encoding="utf-8")
 
-    print(f"built {args.out}  ({size_mb:.2f} MB, {n_img} images + {n_font} fonts inlined)"
+    shape = "linked" if args.linked else "inlined"
+    print(f"built {args.out}  ({size_mb:.2f} MB html, {n_img} images + {n_font} fonts {shape})"
           + ("  [noindex]" if args.noindex else ""))
-    if size_mb > SIZE_WARN_MB:
+    if size_mb > SIZE_WARN_MB and not args.linked:
         print(f"WARNING: {size_mb:.2f} MB exceeds the {SIZE_WARN_MB} MB comfort limit "
               f"for sending as a single file. See docs/BRIEF.md section 7.1.")
     if problems:

@@ -45,9 +45,12 @@ jobs:
       - name: Audit redactions
         run: python3 build.py --check
 
+      # --linked, not the single-file artefact. The WhatsApp build inlines 4.3 MB
+      # of base64 that must all arrive before anything paints and that no browser
+      # can cache per-asset. Hosted, the HTML is ~64 KB and images stream in.
       - name: Build
         run: |
-          python3 build.py --noindex --out _site/index.html
+          python3 build.py --linked _site --noindex
           printf 'User-agent: *\nDisallow: /\n' > _site/robots.txt
 
       - name: Confirm the deployed file is clean
@@ -62,11 +65,13 @@ jobs:
             || { echo "::error::noindex tag missing"; exit 1; }
           echo "clean: $(du -h _site/index.html | cut -f1)"
 
-      # enablement:true turns Pages on via the API if it is not already on, so
-      # this needs no click in repo settings.
+      # NOTE: no `enablement: true`. Creating a Pages site needs the
+      # `administration` permission, which is not one a workflow GITHUB_TOKEN can
+      # be granted at all, so enablement always fails with "Resource not
+      # accessible by integration". Pages has to be switched on once by a repo
+      # admin: Settings -> Pages -> Source: GitHub Actions. After that this
+      # workflow deploys on every push with no further clicks.
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:

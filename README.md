@@ -62,6 +62,7 @@ python3 build.py                 # build to dist/
 python3 build.py --check         # validate only, write nothing, non-zero exit on problems
 python3 build.py --out foo.html  # build somewhere else
 python3 build.py --hash "Name"   # print a denylist digest to paste into build.py
+python3 build.py --linked _site  # hosted build: linked assets, ~64 KB html
 
 python3 tools/fetch_fonts.py     # re-download the woff2 faces (the only network step)
 ```
@@ -139,7 +140,13 @@ new weight will synthesise from the nearest embedded one.
 Working and current. The build is 4.32 MB, 45 images and 8 font faces, and makes no
 network requests.
 
-**Done in the latest pass** (BRIEF §10): the three "Date to confirm" placeholders
+**Latest round** (BRIEF §11): sections reordered so the Munich programme sits
+directly under About and the speakers move below the calendar; the contact
+address is now visible under "Partner with us" while still absent from the
+source; a hosted build shape (`--linked`) that ships 64 KB of HTML instead of
+4.33 MB, deployed to GitHub Pages by `.github/workflows/pages.yml`.
+
+**Earlier pass** (BRIEF §10): the three "Date to confirm" placeholders
 removed, which clears the blocker on sending the file to guests; fonts embedded so the offline file keeps its
 typography; the redaction denylist moved to salted hashes so this public repo carries
 no venue names; anchor targets no longer land under the sticky navbar; `--nav`
