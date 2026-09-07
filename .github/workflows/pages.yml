@@ -1,0 +1,76 @@
+# Publishes a reviewable copy of the site to GitHub Pages.
+#
+# This is a PREVIEW deployment, not a launch. GPS is invitation-only, so the
+# build is deployed with `--noindex` and a disallow-all robots.txt: reachable by
+# anyone with the link, but not discoverable through a search for "summit
+# Munich". Remove both when the client decides to launch publicly — see
+# docs/BRIEF.md §7.7.
+#
+# The redaction audit runs first and the job fails on it, so a build that
+# reintroduced a venue name or a bare address can never reach a public URL.
+name: Deploy preview to Pages
+
+on:
+  push:
+    branches:
+      - claude/global-passport-website-w5cmpy
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; let a newer commit supersede an in-flight one.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # Fails the job on a reintroduced venue name, a bare email address, or an
+      # unresolved placeholder. Gate the deploy on it rather than trusting review.
+      - name: Audit redactions
+        run: python3 build.py --check
+
+      - name: Build
+        run: |
+          python3 build.py --noindex --out _site/index.html
+          printf 'User-agent: *\nDisallow: /\n' > _site/robots.txt
+
+      - name: Confirm the deployed file is clean
+        run: |
+          set -e
+          # Strip base64 payloads, then assert on what a reader would actually see.
+          sed -E 's/base64,[A-Za-z0-9+/=]+/base64,/g' _site/index.html > /tmp/text.html
+          if grep -qiE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' /tmp/text.html; then
+            echo "::error::a bare email address reached the deploy candidate"; exit 1
+          fi
+          grep -q 'name="robots"' _site/index.html \
+            || { echo "::error::noindex tag missing"; exit 1; }
+          echo "clean: $(du -h _site/index.html | cut -f1)"
+
+      # enablement:true turns Pages on via the API if it is not already on, so
+      # this needs no click in repo settings.
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

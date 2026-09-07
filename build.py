@@ -18,6 +18,7 @@ Usage:
     python3 build.py --out other.html
     python3 build.py --check         # verify every placeholder resolves, write nothing
     python3 build.py --hash "Some Venue"   # print a denylist entry (see below)
+    python3 build.py --noindex       # add robots noindex (preview deploys only)
 """
 
 import argparse
@@ -45,6 +46,13 @@ ANY_PLACEHOLDER = re.compile(r"\{\{(?:IMG|FONT):[^}]+\}\}")
 
 # Anything above this in the finished file is a problem for WhatsApp / email.
 SIZE_WARN_MB = 5.0
+
+# Injected by --noindex. GPS is invitation-only, so a publicly *reachable* preview
+# should still not be a publicly *discoverable* one: a review link that turns up in
+# a search for "summit Munich" is the thing §2.1 exists to prevent, one step removed.
+# Deliberately not in index.template.html — baking it into the source would risk
+# shipping a launched site that quietly tells search engines to ignore it.
+NOINDEX_TAG = '<meta name="robots" content="noindex, nofollow">'
 
 # ---------------------------------------------------------------------------
 # Redaction audit
@@ -210,6 +218,9 @@ def main():
     ap.add_argument("--hash", metavar="TERM",
                     help="print the denylist entry for TERM and exit; "
                          "paste it into FORBIDDEN_HASHES")
+    ap.add_argument("--noindex", action="store_true",
+                    help="inject a robots noindex meta tag; for preview deploys of "
+                         "an invitation-only event, not for the real launch")
     args = ap.parse_args()
 
     if args.hash:
@@ -224,6 +235,11 @@ def main():
         sys.exit(f"ERROR: {FONT_DIR} not found. Run: python3 tools/fetch_fonts.py")
 
     html = inline(TEMPLATE.read_text(encoding="utf-8"))
+
+    if args.noindex:
+        assert "</head>" in html, "no </head> to inject the robots tag into"
+        html = html.replace("</head>", f"{NOINDEX_TAG}\n</head>", 1)
+
     problems = audit(html)
 
     n_img = len(list(IMG_DIR.glob("*")))
@@ -238,7 +254,8 @@ def main():
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(html, encoding="utf-8")
 
-    print(f"built {args.out}  ({size_mb:.2f} MB, {n_img} images + {n_font} fonts inlined)")
+    print(f"built {args.out}  ({size_mb:.2f} MB, {n_img} images + {n_font} fonts inlined)"
+          + ("  [noindex]" if args.noindex else ""))
     if size_mb > SIZE_WARN_MB:
         print(f"WARNING: {size_mb:.2f} MB exceeds the {SIZE_WARN_MB} MB comfort limit "
               f"for sending as a single file. See docs/BRIEF.md section 7.1.")
