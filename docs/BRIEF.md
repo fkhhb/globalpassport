@@ -223,8 +223,8 @@ Everything lives in `:root`. There is no CSS framework and no preprocessor.
 ```css
 --ink:      #132339   /* body text, dark section backgrounds */
 --ink-deep: #0C1727   /* mobile nav drawer */
---crimson:  #A0322D   /* primary accent — GPS Red, measured from the logo */
---navy:     #273D68   /* secondary accent — GPS Navy, measured from the logo */
+--crimson:  #AD2625   /* primary accent — GPS Red, picked from the logo file */
+--navy:     #203D6A   /* secondary accent — GPS Navy, picked from the logo file */
 --paper:    #FCFBFA   /* page background */
 --grey:     #E7EAEE   /* .band section background */
 --slate:    #5B6879   /* secondary text */
@@ -259,16 +259,25 @@ change it without being asked.
   nothing sits on dark. All crimson *text* is on light at 5.8:1–6.8:1, comfortably above
   the 4.5:1 AA threshold. Measured across the rebuilt page, every foreground/background
   pair passes AA; the lowest is 5.49:1, slate on paper.
-- **The palette is derived from the logo, not from a brand manual.** The client first
-  specified `#8B1A1A` red and `#1E3A6E` navy as "read from the original", but measurement
-  of the supplied logo artwork gives `#A0322D` and `#273D68` — the stated red was
-  noticeably darker. Asked to make everything congruent with the logo, we switched the
-  palette to the measured values, and the nav SVG carries the same fills, so logo and
-  accents are now identical by construction. Two independent logo files were measured and
-  agreed to within two units per channel. Side effect: contrast on light dropped from
-  ~9:1 to ~6.8:1 (still AA) and improved on dark from 1.93:1 to 2.56:1, which slightly
-  helps the decorative rules. If a designer ever supplies an official SVG, check which red
-  it carries before dropping it in.
+- **The palette is derived from the logo, not from a brand manual, and has now been
+  corrected three times.** Round one: the client specified `#8B1A1A` red and `#1E3A6E`
+  navy as "read from the original". Round two: measuring the artwork then available gave
+  `#A0322D` and `#273D68` — the stated red was noticeably darker than the real one.
+  Round three, current: the client supplied the logo lockups with a colour-picker reading
+  off the files themselves — **`#AD2625` red and `#203D6A` navy** — and those are the
+  values in use.
+
+  The nav SVG carries the same fills, so logo and accents are identical by construction.
+  **They must move together.** Changing the palette without the mark, or the reverse,
+  destroys the one property this exercise exists to produce.
+
+  The pattern across all three rounds is worth internalising: every value that came from
+  memory, from a description, or from looking at a screenshot was wrong, and every
+  correction came from sampling the actual file. If a designer supplies an official SVG,
+  sample it before dropping it in — do not trust the accompanying hex values.
+
+  Current contrast: crimson text on paper 6.60:1, navy on paper 10.49:1, white on the
+  navy bar 10.84:1.
 
 **Breakpoints: 1080px, 860px, 480px.** Note 860, not 900. Layout shifts:
 
@@ -856,3 +865,44 @@ Two things that would have broken silently and were caught by checking rather th
 assuming: the mobile drawer needed a shadow it never needed while dark, and the
 privacy bar and skip link had to be moved off `--nav` onto `--navy` explicitly —
 both were relying on that variable being dark and would have gone white on white.
+
+---
+
+## 15. Changelog — logo-sampled palette, navy header
+
+**The palette now comes from the logo files** — red `#AD2625`, navy `#203D6A`,
+replacing `#A0322D` / `#273D68`. Both inline `fill=` attributes on the nav SVG changed
+in the same commit; see §5 on why they cannot drift apart.
+
+**The header is navy again**, at the client's request ("I feel like the header menu
+could be blue"). It is `--navy`, the brand colour shared with the footer, rather than
+the old near-black `#0E162B` or the white it briefly carried. Navy bookends the page
+top and bottom with white content between, closer to the client's own document than an
+all-white treatment.
+
+**The mark goes back to white fills in the navbar, and that is forced rather than
+chosen:** on its own brand navy, the logo's navy `P` measures 1.6:1 against the bar and
+disappears. A coloured mark cannot sit on one of its own colours. The inline fills still
+carry the real values for every other context.
+
+Re-audited after both changes: 20 pairs measured in-browser against real computed
+backgrounds, no AA failures, lowest 5.49:1. No overflow or console errors at 1440, 1080,
+860 or 390px. The mobile drawer follows `--nav`, so it returned to navy with the bar.
+
+**Which lockup goes where** (three were supplied):
+
+| lockup | use |
+|---|---|
+| mark only | the navbar — already correct, the traced SVG is this one |
+| mark + wordmark | the footer colophon (`logo-footer.png`, reversed to white) |
+| mark + wordmark + tagline | the full lockup |
+
+The site sets "For families by families" as **live text** beside the navbar mark rather
+than baking it into an image. Worth keeping: it stays selectable, translatable and sharp
+at any size, and it means the tagline is not a 480px raster.
+
+**Still not landed:** the logo files themselves never reached the repo — they were
+pasted into chat as images, which renders them visible but writes no file, so only the
+colour values crossed over. `assets/img/favicon.png` and `logo-footer.png` are both
+still the original 480x295 extractions, and the favicon in particular is a 480x295
+rectangle being used as a square icon.
