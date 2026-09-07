@@ -927,3 +927,88 @@ a commit that had already deployed successfully from `main` seconds earlier.
 
 To redeploy without a code change, use the workflow's **Run workflow** button on
 `main`, or `workflow_dispatch` via the API.
+
+---
+
+## 17. Changelog — security, speed, and the README
+
+### Security
+
+**Content Security Policy, generated per build.** `build.py` now hashes the page's one
+`<style>` block and three `<script>` blocks (SHA-256 of their exact contents, on the
+final HTML after every placeholder is resolved) and emits a `<meta http-equiv="Content-Security-Policy">`
+with `default-src 'none'`, `img-src`/`font-src` limited to `'self' data:`, `connect-src
+'none'`, and the style/script directives allowing *only* those hashes. No
+`'unsafe-inline'` anywhere. Editing a script needs no manual step; the hash follows.
+
+Two consequences had to be engineered rather than declared:
+
+- **Every `style=""` attribute is gone** — eight of them, moved into classes. A hash-only
+  `style-src` refuses inline attributes, and allowing them would have needed
+  `'unsafe-inline'`, which is the whole thing we are trying not to say.
+- **`innerHTML` is gone.** The speaker tiles and the bio panel are built with
+  `createElement`/`textContent` through a five-line `el()` helper. Side effect: the five
+  `&amp;` entities inside the speakers data became plain `&`, because text nodes do not
+  decode entities. Verified in the browser: "M&A" and "H&S Capital" render correctly.
+
+**Tested where it could fail silently.** A wrong CSP does not break the page for the
+developer; it breaks it for the user, visibly only in the console. Four runs — the
+single file over `file://` (the WhatsApp artefact, the risky one), and the hosted build at
+390@3x, 1440@2x and 2560@2x — **zero CSP violations, zero errors**, fonts loaded, all
+twenty tiles, drawer opens.
+
+**What a `<meta>` CSP cannot do, and is therefore missing on purpose:** `frame-ancestors`
+(clickjacking) and `report-uri`. Both need a real HTTP header, which GitHub Pages cannot
+send. Same for HSTS. Recorded in `SECURITY.md` with the fix: a header-capable host when
+the site moves to its domain.
+
+**`<meta name="referrer" content="no-referrer">`.** Nothing to leak, so leak nothing.
+
+**Actions pinned to commit SHAs.** All five `uses:` lines in the workflow now reference a
+full SHA with the release recorded in a trailing comment. A tag like `@v4` is a pointer
+someone else controls. Resolved via `git ls-remote` against the peeled tag refs, because
+the session's GitHub API access is scoped to this repository only.
+
+### Speed
+
+**Responsive hero.** The hero was 1019 KB of the page's 3091 KB of images — a third — and
+it is the LCP element. Three width variants (1000 / 1600 / 2400) were resampled through
+Chromium's canvas (`imageSmoothingQuality:'high'`; a conventional resample, permitted
+under §2.4 because it invents nothing) and the hosted build emits a `srcset` over them
+plus the original, with `sizes="(max-width:860px) 100vw, 53vw"`.
+
+Measured on a local server, which understates every gap:
+
+| | requests | before `load` | hero |
+|---|---|---|---|
+| hosted, phone 390@3x | 11 | **0.56 MB** | 249 KB |
+| hosted, laptop 1440@2x | 10 | 0.54 MB | 249 KB |
+| hosted, before this round | 11 | 1.31 MB | 1019 KB |
+| single file | 1 | 4.33 MB | inlined |
+
+Verified which variant the browser actually chose: 1600w on both the phone and the laptop,
+the full 3720 original on a 2560@2x display. The picker is doing exactly what the `sizes`
+attribute tells it to.
+
+The variants come from `tools/make_hero_variants.js`. It needs Node and Playwright, which
+breaks the repo's "standard library only" rule — so it is labelled an optional dev tool,
+and `build.py` emits a srcset **only for variants that exist**. A checkout without them
+builds and serves the original. **When the hero photograph changes, re-run the tool**, or
+the srcset points at the old picture while `src` points at the new one.
+
+**Font preloads**, hosted build only, for the four faces used above the fold. Text renders
+in the right face on first paint. Pointless with `data:` URIs, so the single file skips it.
+
+**Not done, and why:** minification (Pages gzips; ~15 KB gain, nonzero risk) and WebP (no
+encoder in the build environment, and JPEG at these sizes is within ~20% of it). PNG
+optimisation of the seven logo files — `logo-footer.png` is 4.5 bits/px and
+`19-washington-harbour.png` 14 bits/px, both poorly compressed — needs `oxipng` or
+similar, none of which is available here. Worth a few KB when a tool is to hand.
+
+### Documentation
+
+`README.md` rewritten around the two build shapes, with new *Security*, *Performance* and
+*Deploy* sections, corrected colour values, the current section order and band rhythm, and
+a status that separates "blocked on a file" from "blocked on a decision". `SECURITY.md`
+added. `assets/manifest.json` gained the three hero variants (51 entries).
+

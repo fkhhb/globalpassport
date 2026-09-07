@@ -1,5 +1,44 @@
 [
  {
+  "path": "assets/fallback-silhouettes/42-dallas.svg",
+  "w": null,
+  "h": null,
+  "kb": 1.2,
+  "note": "drawn SVG fallback"
+ },
+ {
+  "path": "assets/fallback-silhouettes/43-new-york.svg",
+  "w": null,
+  "h": null,
+  "kb": 1.4,
+  "note": "drawn SVG fallback"
+ },
+ {
+  "path": "assets/fallback-silhouettes/44-paris.svg",
+  "w": null,
+  "h": null,
+  "kb": 1.1,
+  "note": "drawn SVG fallback"
+ },
+ {
+  "path": "assets/img/01-hero-w1000.jpg",
+  "w": 1000,
+  "h": 545,
+  "kb": 122.0
+ },
+ {
+  "path": "assets/img/01-hero-w1600.jpg",
+  "w": 1600,
+  "h": 872,
+  "kb": 249.2
+ },
+ {
+  "path": "assets/img/01-hero-w2400.jpg",
+  "w": 2400,
+  "h": 1308,
+  "kb": 508.7
+ },
+ {
   "path": "assets/img/01-marienplatz-and-the-frauenkirche-at-dusk-mun.jpg",
   "w": 3720,
   "h": 2028,
@@ -268,26 +307,5 @@
   "w": 480,
   "h": 295,
   "kb": 78.6
- },
- {
-  "path": "assets/fallback-silhouettes/42-dallas.svg",
-  "w": null,
-  "h": null,
-  "kb": 1.2,
-  "note": "drawn SVG fallback"
- },
- {
-  "path": "assets/fallback-silhouettes/43-new-york.svg",
-  "w": null,
-  "h": null,
-  "kb": 1.4,
-  "note": "drawn SVG fallback"
- },
- {
-  "path": "assets/fallback-silhouettes/44-paris.svg",
-  "w": null,
-  "h": null,
-  "kb": 1.1,
-  "note": "drawn SVG fallback"
  }
 ]

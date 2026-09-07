@@ -55,7 +55,44 @@ LOCAL_TERMS = ROOT / "redactions.local.txt"
 
 IMG_PLACEHOLDER = re.compile(r"\{\{IMG:([^}]+)\}\}")
 FONT_PLACEHOLDER = re.compile(r"\{\{FONT:([^}]+)\}\}")
-ANY_PLACEHOLDER = re.compile(r"\{\{(?:IMG|FONT):[^}]+\}\}")
+ANY_PLACEHOLDER = re.compile(r"\{\{(?:IMG|FONT|CSP|FONT_PRELOAD|HERO_SRCSET):[^}]*\}\}|\{\{(?:CSP|FONT_PRELOAD|HERO_SRCSET)\}\}")
+
+# ---------------------------------------------------------------------------
+# Hosted-build-only tokens. Each expands to "" in the single-file artefact.
+#
+# {{HERO_SRCSET}}   srcset/sizes for the hero <img>, from whichever of these
+#                   width variants exist in assets/img/. The hero is the LCP
+#                   element and a third of all image bytes; a phone needs ~1200px
+#                   of it, not 3720. Variants come from tools/make_hero_variants.js
+#                   (optional, needs Playwright) - a missing one is simply skipped,
+#                   so the build never depends on that tool.
+# {{FONT_PRELOAD}}  <link rel=preload> for the faces used above the fold, so
+#                   text renders in the right face on first paint instead of after
+#                   the stylesheet has been parsed and the fonts discovered.
+#                   Pointless with data: URIs, hence linked-only.
+# ---------------------------------------------------------------------------
+HERO_FILE = "01-marienplatz-and-the-frauenkirche-at-dusk-mun.jpg"
+HERO_VARIANTS = [("01-hero-w1000.jpg", 1000), ("01-hero-w1600.jpg", 1600),
+                 ("01-hero-w2400.jpg", 2400), (HERO_FILE, 3720)]
+# The hero panel is 100vw on phones/tablets and 53vw of the viewport above 860px.
+HERO_SIZES = "(max-width: 860px) 100vw, 53vw"
+PRELOAD_FONTS = ["newsreader-latin-300.woff2", "newsreader-latin-300italic.woff2",
+                 "ibm-plex-sans-latin-300.woff2", "ibm-plex-sans-latin-500.woff2"]
+
+# ---------------------------------------------------------------------------
+# Content Security Policy, delivered as a <meta> because GitHub Pages cannot
+# set response headers. Everything the page needs is itself or a data: URI, so
+# default-src can be 'none'. The three inline <script> blocks and the one
+# <style> block are allowed by SHA-256 hash of their exact contents, computed
+# on the FINAL html after every placeholder is resolved - which is also why
+# there are no inline style= attributes left in the template: a hash-only
+# style-src forbids them, and 'unsafe-inline' would defeat the point.
+#
+# Not expressible in a <meta> CSP and therefore absent, not forgotten:
+# frame-ancestors (clickjacking) and report-uri. Both need a real header, which
+# means a host that can send one; GitHub Pages cannot. See README.
+# ---------------------------------------------------------------------------
+INLINE_BLOCK = re.compile(r"<(script|style)>(.*?)</\1>", re.S)
 
 # Anything above this in the finished file is a problem for WhatsApp / email.
 SIZE_WARN_MB = 5.0
@@ -160,6 +197,54 @@ def inline(template_text: str, link_dir: Path = None) -> str:
         shutil.copyfile(src, dst)
 
     return result
+
+
+def hero_srcset(link_dir: Path) -> str:
+    """srcset attribute for whichever hero variants exist; copies them alongside."""
+    parts = []
+    for name, w in HERO_VARIANTS:
+        src = IMG_DIR / name
+        if not src.exists():
+            continue
+        dst = link_dir / "assets" / "img" / name
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        if not dst.exists():
+            shutil.copyfile(src, dst)
+        parts.append(f"assets/img/{name} {w}w")
+    if len(parts) < 2:          # only the original: a srcset would say nothing
+        return ""
+    return f' srcset="{", ".join(parts)}" sizes="{HERO_SIZES}"'
+
+
+def font_preload() -> str:
+    links = []
+    for name in PRELOAD_FONTS:
+        if (FONT_DIR / name).exists():
+            # crossorigin is required on font preloads even same-origin, or the
+            # browser fetches the file twice with mismatched credentials modes.
+            links.append(f'<link rel="preload" href="assets/fonts/{name}" '
+                         f'as="font" type="font/woff2" crossorigin>')
+    return "\n".join(links)
+
+
+def csp_for(html: str) -> str:
+    """Build the CSP meta tag from hashes of the page's own inline blocks."""
+    scripts, styles = [], []
+    for kind, body in INLINE_BLOCK.findall(html):
+        h = base64.b64encode(hashlib.sha256(body.encode("utf-8")).digest()).decode()
+        (scripts if kind == "script" else styles).append(f"'sha256-{h}'")
+    policy = "; ".join([
+        "default-src 'none'",
+        "img-src 'self' data:",
+        "font-src 'self' data:",
+        "style-src " + " ".join(styles),
+        "script-src " + " ".join(scripts),
+        "connect-src 'none'",
+        "object-src 'none'",
+        "base-uri 'none'",
+        "form-action 'none'",
+    ])
+    return f'<meta http-equiv="Content-Security-Policy" content="{policy}">'
 
 
 def strip_payloads(html: str) -> str:
@@ -267,6 +352,13 @@ def main():
         args.out = link_dir / "index.html"
 
     html = inline(TEMPLATE.read_text(encoding="utf-8"), link_dir)
+
+    # Hosted-only tokens; empty in the single file.
+    html = html.replace("{{HERO_SRCSET}}", hero_srcset(link_dir) if link_dir else "")
+    html = html.replace("{{FONT_PRELOAD}}", font_preload() if link_dir else "")
+
+    # Last, once nothing else will touch the inline blocks: their hashes.
+    html = html.replace("{{CSP}}", csp_for(html))
 
     if args.noindex:
         assert "</head>" in html, "no </head> to inject the robots tag into"
