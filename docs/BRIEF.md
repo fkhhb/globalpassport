@@ -769,3 +769,45 @@ Munich hero image — *"although no, I think you can leave that."* Not changed.
   licensed stock, or extending the drawn SVGs already in
   `assets/fallback-silhouettes/` via `tools/make_city_silhouettes.py`, which owe
   nobody a licence. See §8.
+
+---
+
+## 13. Changelog — monochrome calendar, and the autumn hero attempt
+
+**Calendar cards are now all greyscale.** Client's request. Previously only
+`.ev.past` was desaturated, so past summits were monochrome and Munich, the UAE
+and Salzburg were in colour. Now every card image is `grayscale(1)` and the past
+ones keep the extra `opacity:.72`.
+
+Worth knowing why the opacity step stayed: colour was doing the past/upcoming
+separation, and removing it without a replacement would have flattened the row
+into eight equal tiles. The fade now carries that hierarchy, and the crimson
+`.ev.next` bar and "Next summit" tag read *louder* against a fully monochrome
+field than they did against seven colour photographs.
+
+**Autumn hero (§7.5) — generated, not yet landed.** Four candidates at
+5056x3392, `nano_banana_pro` 4K 3:2, 4 credits total, preflighted with
+`get_cost` first. The prompt names the Neues Rathaus, the Frauenkirche's green
+copper onion domes and the Mariensaeule explicitly, per §8's lesson that naming
+the landmark is what fixed Dallas.
+
+**They cannot be pulled into the repo from this sandbox.** `*.cloudfront.net`,
+where Higgsfield serves its outputs, is denied by this environment's network
+policy (403 on CONNECT, confirmed against the proxy's own status endpoint).
+§9.7 records CloudFront as being *inside* the allowlist — that was a previous
+sandbox and is no longer true. So the loop is now: generate here, client reviews
+in the widget, client sends the chosen PNG back as a file attachment, and only
+then can it be committed.
+
+**Whoever picks the frame must check it against the real square**, not against
+whether it looks plausible — §8, and the two Dallas attempts that were rejected
+for missing Reunion Tower. For Marienplatz the three tells are: the Neues
+Rathaus tower (neo-Gothic openwork stone spire, not a plain steeple), the
+Frauenkirche's two *onion* domes (green copper, rounded — not pointed spires),
+and the Mariensaeule column standing free in the square. A Munich audience will
+catch any of the three being wrong, and this client's guests are Munich-based.
+
+Note also that replacing the hero with a generated frame makes it the **fourth**
+AI image on the page and by far the most prominent. §8's consequence stands and
+grows: if GPS ever has to state that its imagery is photographic, the hero would
+be the first thing to fail that claim.

@@ -185,8 +185,12 @@ section.dark{background:var(--ink);color:#fff}
 .cal{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
 .ev{position:relative}
 .ev .im{overflow:hidden;aspect-ratio:4/3;background:var(--grey)}
-.ev img{width:100%;height:100%;object-fit:cover}
-.ev.past img{filter:grayscale(1) opacity(.72)}
+.ev img{width:100%;height:100%;object-fit:cover;filter:grayscale(1)}
+/* Every card is monochrome at the client's request. Past summits keep the extra
+   fade so the row still reads past -> next -> upcoming; with colour gone, that
+   hierarchy now rests on the opacity step and the crimson bar and tag, which
+   the monochrome field actually makes louder rather than quieter. */
+.ev.past img{opacity:.72}
 .ev .bar{height:2px;background:var(--navy);opacity:.5;margin:16px 0 12px}
 .ev.next .bar{background:var(--crimson);opacity:1}
 .ev h3{font-family:var(--serif);font-style:italic;font-size:22px}
