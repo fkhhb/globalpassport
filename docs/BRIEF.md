@@ -720,3 +720,52 @@ Munich hero image — *"although no, I think you can leave that."* Not changed.
   identical by construction. Either a different logo file is meant, or the earlier
   work was not seen. **Get the file before changing any colour** — the current
   palette is measured, not guessed, and replacing it blind would undo §5.
+
+---
+
+## 12. Changelog — second client review round
+
+**Done:**
+
+- **The speakers section is now "Past participants and speakers."** The client asked
+  for these people to be described as previous participants and speakers rather than
+  as a speaker line-up. The old framing ("Speakers" / "the faculty from Palm Beach")
+  read as a promise that the same faculty returns for Munich. Nav item is
+  "Participants" — checked at 1440/1200/1080/900/870px, the menu still clears the
+  logo by 24px at its tightest, just above the 860px drawer breakpoint.
+
+**Client decisions recorded, no code change needed:**
+
+- **The AI-generated Dallas, New York and Paris cards stay** ("so lassen passt").
+  §8's note still applies: if GPS ever has to claim its imagery is photographic,
+  these three do not qualify.
+- **Domain is `globalpassportseries.com`**, but it is not being pointed at the site
+  yet. When it is: add a `CNAME` file to the Pages deploy, and set `og:url`.
+- **FAQ and News stay as placeholders for now** — read as "leave them for later",
+  so no empty sections were added to a live page. Worth confirming, since the
+  German could also be read as "add them as placeholders".
+
+**Blocked, and specifically why:**
+
+- **Logo colours.** The logo was shown in chat as a pasted image rather than an
+  attached file, so its pixels cannot be sampled here. This matters more than it
+  sounds. §5 records that the client's own stated values (`#8B1A1A` red,
+  `#1E3A6E` navy, "read from the original") were both wrong when the artwork was
+  actually measured, which is how the palette became `#A0322D` / `#273D68`. Judging
+  a colour by eye off a recompressed screenshot is the same mistake with extra
+  steps. The supplied logo does confirm the *structure* is right: red G and S,
+  navy P, which is exactly what the traced SVG carries. **Get the PNG or SVG as a
+  file, measure it, then change `--crimson`, `--navy` and both SVG fills together**
+  — they are one system, and moving the palette without the mark breaks §5's
+  congruence-by-construction.
+- **Autumn hero photograph.** Client prefers autumn over the Christmas market
+  (§7.5) — agreed, but no such photo exists in the asset set and every image
+  source is outside the sandbox network allowlist, re-confirmed this round
+  (unsplash, pexels, wikimedia and willkie.com all fail at the proxy).
+- **City silhouettes.** The client has none and asked whether images can be pulled
+  from the internet. Two separate problems with that: the sandbox cannot reach
+  image hosts, and more importantly a photograph found online is not licensed for
+  a commercial site just because it is reachable. The safe answers are properly
+  licensed stock, or extending the drawn SVGs already in
+  `assets/fallback-silhouettes/` via `tools/make_city_silhouettes.py`, which owe
+  nobody a licence. See §8.

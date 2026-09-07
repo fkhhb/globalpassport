@@ -140,7 +140,10 @@ new weight will synthesise from the nearest embedded one.
 Working and current. The build is 4.32 MB, 45 images and 8 font faces, and makes no
 network requests.
 
-**Latest round** (BRIEF §11): sections reordered so the Munich programme sits
+**Latest round** (BRIEF §12): the speakers section reframed as "Past participants
+and speakers" at the client's request.
+
+**Previous round** (BRIEF §11): sections reordered so the Munich programme sits
 directly under About and the speakers move below the calendar; the contact
 address is now visible under "Partner with us" while still absent from the
 source; a hosted build shape (`--linked`) that ships 64 KB of HTML instead of
