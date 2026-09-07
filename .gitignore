@@ -1,0 +1,22 @@
+# Build output — regenerate with `python3 build.py`
+dist/
+
+# NEVER COMMIT — these contain the redacted venue names and the plain
+# contact address. See docs/BRIEF.md §2.3: git history is permanent.
+*.pdf
+source-pdfs/
+pre-redaction/
+*-original.html
+*-backup.html
+
+# Cruft
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Plaintext redaction denylist — build.py uses salted hashes so the repo itself
+# never carries the venue names. This local copy must stay out of git history.
+redactions.local.txt

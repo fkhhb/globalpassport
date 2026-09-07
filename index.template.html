@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Global Passport Series — Summits for families, by families</title>
+<meta name="description" content="Global Passport Series hosts intimate, invitation-only summits for families, entrepreneurs and global leaders. Munich, 30 September – 2 October 2026.">
+<link rel="icon" href="{{IMG:favicon.png}}">
+<meta name="theme-color" content="#0E162B">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Global Passport Series">
+<meta property="og:locale" content="en_GB">
+<meta property="og:title" content="Global Passport Series — Summits for families, by families">
+<meta property="og:description" content="Intimate, invitation-only summits for families, entrepreneurs and global leaders. Munich, 30 September – 2 October 2026.">
+<style>
+/* ---------- type ----------
+   Both families are embedded as base64 woff2 rather than linked from Google
+   Fonts, so the single file keeps its typography with no network — which is the
+   whole point of the artefact. Latin subset, and only the weights used below.
+   Regenerate the files with: python3 tools/fetch_fonts.py
+   Licences: assets/fonts/OFL.txt                                            */
+@font-face{font-family:"Newsreader";font-style:normal;font-weight:300;src:url({{FONT:newsreader-latin-300.woff2}}) format("woff2")}
+@font-face{font-family:"Newsreader";font-style:normal;font-weight:400;src:url({{FONT:newsreader-latin-400.woff2}}) format("woff2")}
+@font-face{font-family:"Newsreader";font-style:normal;font-weight:500;src:url({{FONT:newsreader-latin-500.woff2}}) format("woff2")}
+@font-face{font-family:"Newsreader";font-style:italic;font-weight:300;src:url({{FONT:newsreader-latin-300italic.woff2}}) format("woff2")}
+@font-face{font-family:"Newsreader";font-style:italic;font-weight:400;src:url({{FONT:newsreader-latin-400italic.woff2}}) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:300;src:url({{FONT:ibm-plex-sans-latin-300.woff2}}) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;src:url({{FONT:ibm-plex-sans-latin-400.woff2}}) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:500;src:url({{FONT:ibm-plex-sans-latin-500.woff2}}) format("woff2")}
+:root{
+  --ink:#132339;
+  --ink-deep:#0C1727;
+  --crimson:#A0322D;
+  --paper:#FCFBFA;
+  --grey:#E7EAEE;
+  --slate:#5B6879;
+  --brass:#A9853F;
+  --navy:#273D68;
+  --nav:#0E162B;
+  --line:rgba(19,35,57,.16);
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+/* Anchor targets clear the 66px sticky navbar, which would otherwise
+   cover the eyebrow and the first line of every section heading. */
+section[id],header[id],footer[id]{scroll-margin-top:66px}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-weight:300;font-size:17px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+figure{margin:0}
+a{color:inherit}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.01em}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+.label{font-size:12.5px;letter-spacing:.14em;text-transform:none;color:var(--slate);font-weight:500}
+
+/* ---------- nav ---------- */
+nav{
+  position:sticky;top:0;z-index:60;background:var(--nav);
+  backdrop-filter:saturate(140%) blur(6px);border-bottom:1px solid rgba(255,255,255,.12);
+}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;gap:24px}
+nav .mark{display:flex;align-items:center;gap:11px;text-decoration:none;flex-shrink:0}
+nav .mark svg{height:26px;width:auto;opacity:.92;display:block}
+nav .mark svg path{fill:#fff}
+nav .mark span{font-family:var(--serif);color:rgba(255,255,255,.82);font-size:15px;
+  font-style:italic;letter-spacing:.02em;white-space:nowrap}
+nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+nav a.lnk{
+  color:rgba(255,255,255,.74);text-decoration:none;font-size:14px;letter-spacing:.02em;
+  padding:6px 0;border-bottom:1px solid transparent;transition:color .18s,border-color .18s;
+}
+nav a.lnk:hover,nav a.lnk:focus-visible{color:#fff;border-color:var(--crimson)}
+.navtoggle{display:none;background:none;border:1px solid rgba(255,255,255,.3);color:#fff;
+  border-radius:2px;padding:6px 11px;font-family:var(--sans);font-size:13px}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:47% 53%;min-height:calc(100vh - 66px)}
+.hero-copy{background:var(--ink);color:#fff;padding:76px 56px 60px;display:flex;flex-direction:column;justify-content:center}
+.hero-copy .inner{max-width:520px;opacity:0;transform:translateY(14px);animation:rise .9s .12s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.hero h1{font-size:clamp(38px,4.3vw,62px);line-height:1.06;color:#fff;font-weight:300}
+.hero h1 em{font-style:italic;font-weight:300}
+.hero .rule{width:64px;height:2px;background:var(--crimson);margin:26px 0}
+.hero p{color:rgba(255,255,255,.76);font-size:18px;max-width:44ch}
+.stamp{
+  margin-top:38px;border:1px solid rgba(255,255,255,.28);padding:20px 22px 18px;
+  max-width:400px;position:relative;
+}
+.stamp:before{content:"";position:absolute;left:-1px;top:-1px;width:34px;height:2px;background:var(--brass)}
+.stamp .k{font-size:12.5px;letter-spacing:.15em;color:rgba(255,255,255,.55)}
+.stamp .city{font-family:var(--serif);font-style:italic;font-size:29px;color:#fff;margin-top:6px;line-height:1.15}
+.stamp .dt{font-size:15px;color:rgba(255,255,255,.8);margin-top:4px}
+.hero-photo{position:relative;background:var(--ink-deep) center/cover no-repeat}
+.hero-photo img{width:100%;height:100%;object-fit:cover}
+.hero-photo figcaption{
+  position:absolute;left:0;bottom:0;right:0;padding:44px 32px 22px;color:#fff;font-size:13.5px;
+  letter-spacing:.06em;background:linear-gradient(to top,rgba(12,23,39,.8),transparent);
+}
+
+/* ---------- sections ---------- */
+section{padding:96px 0}
+section.band{background:var(--grey)}
+section.dark{background:var(--ink);color:#fff}
+.head{max-width:760px;margin-bottom:52px}
+.head h2{font-size:clamp(28px,3.1vw,41px);line-height:1.14;margin-top:10px}
+.head p{color:var(--slate);font-size:18px;margin:18px 0 0}
+.dark .head p,.dark .label{color:rgba(255,255,255,.68)}
+.dark h2,.dark h3{color:#fff}
+
+/* about */
+.creed{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--line)}
+.creed div{padding:34px 40px 34px 0}
+.creed div+div{padding-left:40px;border-left:1px solid var(--line)}
+.creed h3{font-size:24px;font-style:italic}
+.creed p{margin:12px 0 0;color:var(--slate)}
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:56px}
+.pillar{border-top:2px solid var(--navy);padding-top:16px}
+.pillar h4{font-family:var(--serif);font-size:20px;font-weight:500;margin:0 0 6px}
+.pillar p{margin:0;font-size:15.5px;color:var(--slate)}
+
+/* founder */
+.founder{display:grid;grid-template-columns:0.85fr 1fr;gap:60px;align-items:center}
+.founder figure{margin:0}
+.founder figure img{width:100%;filter:saturate(.92)}
+.founder figcaption{font-size:13.5px;color:var(--slate);margin-top:12px;font-style:italic;font-family:var(--serif)}
+.founder blockquote{margin:0 0 24px;font-family:var(--serif);font-size:clamp(22px,2.4vw,30px);
+  line-height:1.32;font-style:italic;font-weight:300}
+.founder p{color:var(--slate)}
+.team{display:grid;grid-template-columns:repeat(3,1fr);gap:44px 40px;margin-top:76px}
+.member{display:flex;gap:18px;align-items:flex-start}
+.member img{width:78px;height:78px;border-radius:50%;object-fit:cover;flex-shrink:0;background:var(--grey)}
+.member h4{font-family:var(--serif);font-size:19px;font-weight:500;margin:0}
+.member .role{font-size:13.5px;color:var(--crimson);letter-spacing:.03em;margin:2px 0 8px}
+.member p{margin:0;font-size:15px;color:var(--slate);line-height:1.55}
+
+/* speakers */
+.spk-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:26px 22px}
+.spk{
+  background:none;border:0;padding:0;text-align:left;cursor:pointer;font:inherit;color:inherit;
+  display:block;
+}
+.spk .ph{position:relative;overflow:hidden;background:#8f98a6;aspect-ratio:1/1.12}
+.spk .ph:after{content:"";position:absolute;inset:0;background:rgba(19,35,57,.34);
+  mix-blend-mode:multiply;transition:opacity .35s ease}
+.spk:hover .ph:after,.spk:focus-visible .ph:after{opacity:.25}
+.spk .ph img{width:100%;height:100%;object-fit:cover;object-position:center 18%;
+  filter:grayscale(1) contrast(1.03);transition:filter .35s ease,transform .5s ease}
+.spk:hover .ph img,.spk:focus-visible .ph img{filter:grayscale(0);transform:scale(1.035)}
+.spk h4{font-family:var(--serif);font-size:17.5px;font-weight:500;margin:12px 0 0;line-height:1.25}
+.dark .spk h4{color:#fff}
+.spk .role{font-size:13px;color:rgba(255,255,255,.6);margin-top:3px;line-height:1.4}
+.spk .more{font-size:12.5px;color:var(--brass);margin-top:7px;letter-spacing:.05em}
+.spk[aria-expanded="true"] .more{color:#fff}
+.bio{
+  grid-column:1/-1;background:rgba(255,255,255,.06);border-left:2px solid var(--crimson);
+  padding:26px 30px;margin:2px 0 10px;display:none;
+}
+.bio.open{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.bio h4{font-family:var(--serif);font-size:23px;font-weight:500;margin:0;color:#fff}
+.bio .role{color:var(--brass);font-size:14px;margin:3px 0 14px}
+.bio p{margin:0;color:rgba(255,255,255,.78);max-width:78ch;font-size:16px}
+.bio button{margin-top:16px;background:none;border:1px solid rgba(255,255,255,.35);color:#fff;
+  font:inherit;font-size:13.5px;padding:6px 14px;cursor:pointer}
+.bio button:hover{border-color:#fff}
+.note{margin-top:40px;font-size:15px;color:rgba(255,255,255,.58);border-top:1px solid rgba(255,255,255,.14);padding-top:20px}
+
+/* programme */
+.prog{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.day{border-top:2px solid var(--crimson);padding-top:18px}
+.day h3{font-family:var(--serif);font-size:23px;font-style:italic}
+.day .venue{font-size:14px;color:var(--slate);margin:4px 0 18px}
+.day ul{list-style:none;margin:0;padding:0}
+.day li{display:flex;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15.5px}
+.day li:last-child{border-bottom:0}
+.day li time{flex:0 0 92px;color:var(--crimson);font-variant-numeric:tabular-nums;font-size:14px;padding-top:2px}
+.day li .dress{display:block;color:var(--slate);font-size:13.5px}
+
+/* calendar */
+.cal{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.ev{position:relative}
+.ev .im{overflow:hidden;aspect-ratio:4/3;background:var(--grey)}
+.ev img{width:100%;height:100%;object-fit:cover}
+.ev.past img{filter:grayscale(1) opacity(.72)}
+.ev .bar{height:2px;background:var(--navy);opacity:.5;margin:16px 0 12px}
+.ev.next .bar{background:var(--crimson);opacity:1}
+.ev h3{font-family:var(--serif);font-style:italic;font-size:22px}
+.ev .when{font-size:14.5px;color:var(--slate);margin-top:3px}
+.ev .tag{font-size:12px;letter-spacing:.13em;color:var(--slate)}
+.ev.next .tag{color:var(--crimson)}
+.deleg{margin-top:56px;border-top:1px solid var(--line);padding-top:24px;display:flex;
+  gap:14px 40px;flex-wrap:wrap;align-items:baseline}
+.deleg strong{font-family:var(--serif);font-weight:500;font-size:19px}
+.deleg span{color:var(--slate);font-size:16px}
+
+/* sponsors */
+.logos{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.logos div{background:var(--paper);padding:38px 26px 30px;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-start;gap:20px;text-align:center;min-height:196px}
+.logos img{max-height:40px;max-width:74%;width:auto;object-fit:contain}
+.logos p{margin:0;font-size:14px;color:var(--slate);line-height:1.45}
+.partner-cta{margin-top:34px;padding:26px 0 0;border-top:1px solid var(--line)}
+.partner-cta p{margin:0;font-family:var(--serif);font-size:21px;color:var(--ink);line-height:1.45}
+.partner-cta a{color:var(--crimson);text-decoration:none;border-bottom:1px solid var(--crimson);padding-bottom:2px}
+.partner-cta a:hover{border-color:var(--ink)}
+.partner-cta .nojs{font-size:15px;color:var(--slate)}
+.sponsor-why{max-width:620px;margin-top:44px;color:var(--slate)}
+
+/* contact */
+footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
+.contact{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:start}
+.contact h2{font-size:clamp(28px,3vw,40px);color:#fff}
+.contact p{color:rgba(255,255,255,.72);max-width:46ch}
+.mail{display:inline-block;margin-top:26px;font-family:var(--serif);font-size:clamp(20px,2.4vw,30px);
+  color:#fff;text-decoration:none;border-bottom:1px solid var(--crimson);padding-bottom:5px}
+.mail:hover{border-color:#fff}
+.fmeta{font-size:14.5px;color:rgba(255,255,255,.6)}
+.fmeta div{padding:12px 0;border-top:1px solid rgba(255,255,255,.16)}
+.fmeta strong{display:block;color:#fff;font-weight:400;font-family:var(--serif);font-size:17px;margin-bottom:2px}
+.colophon{margin-top:64px;padding-top:22px;border-top:1px solid rgba(255,255,255,.16);
+  display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  font-size:13px;color:rgba(255,255,255,.5)}
+.colophon img{height:52px;width:auto;filter:brightness(0) invert(1);opacity:.85}
+
+/* ---------- privacy notice ----------
+   The site sets no cookies and makes no third-party requests, so this is a
+   statement of fact with an acknowledgement, not a consent gate. See BRIEF 7.6. */
+.privacy{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--nav);
+  border-top:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.78);
+  padding:18px 0;transform:translateY(101%);transition:transform .4s cubic-bezier(.2,.7,.3,1);
+}
+.privacy.show{transform:none}
+.privacy .wrap{display:flex;gap:18px 32px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.privacy p{margin:0;font-size:14.5px;line-height:1.5;max-width:74ch}
+.privacy strong{color:#fff;font-weight:500}
+.privacy .btns{display:flex;gap:10px;flex-shrink:0}
+.privacy button{
+  font:inherit;font-size:13.5px;letter-spacing:.02em;padding:9px 20px;cursor:pointer;
+  background:none;border:1px solid rgba(255,255,255,.35);color:#fff;
+  transition:background .18s,border-color .18s;
+}
+.privacy button:hover{border-color:#fff}
+.privacy button.ok{background:var(--crimson);border-color:var(--crimson)}
+.privacy button.ok:hover{background:#b4382f;border-color:#b4382f}
+.privacy-link{background:none;border:0;padding:0;font:inherit;font-size:13px;
+  color:rgba(255,255,255,.5);cursor:pointer;text-decoration:underline;
+  text-underline-offset:3px}
+.privacy-link:hover{color:rgba(255,255,255,.85)}
+@media(max-width:620px){
+  .privacy .wrap{align-items:stretch}
+  .privacy .btns{width:100%}
+  .privacy .btns button{flex:1}
+}
+.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--nav);color:#fff;
+  padding:12px 18px;text-decoration:none;font-size:14px}
+.skip:focus{left:0}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+@media(max-width:1080px){
+  .spk-grid{grid-template-columns:repeat(4,1fr)}
+  .cal{grid-template-columns:repeat(3,1fr)}
+  .logos{grid-template-columns:repeat(3,1fr)}
+  .pillars{grid-template-columns:repeat(2,1fr);gap:26px 28px}
+  .team{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:860px){
+  body{font-size:16.5px}
+  .wrap{padding:0 22px}
+  section{padding:70px 0}
+  nav ul{position:absolute;top:66px;left:0;right:0;background:var(--ink-deep);flex-direction:column;
+    gap:0;padding:8px 22px 18px;display:none;border-bottom:1px solid rgba(255,255,255,.14)}
+  nav ul.open{display:flex}
+  nav ul li{border-top:1px solid rgba(255,255,255,.1)}
+  nav a.lnk{display:block;padding:12px 0}
+  .navtoggle{display:block}
+  .hero{grid-template-columns:1fr;min-height:0}
+  .hero-photo{order:-1;height:46vh;min-height:280px}
+  .hero-copy{padding:48px 22px 52px}
+  .creed,.prog,.founder{grid-template-columns:1fr}
+  .creed div{padding:24px 0}
+  .creed div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .founder{gap:36px}
+  .cal{grid-template-columns:repeat(2,1fr)}
+  .spk-grid{grid-template-columns:repeat(2,1fr);gap:22px 16px}
+  .logos{grid-template-columns:repeat(2,1fr)}
+  .team{grid-template-columns:1fr;gap:30px;margin-top:52px}
+  .contact{grid-template-columns:1fr;gap:36px}
+  .bio{padding:22px}
+}
+@media(max-width:480px){
+  .pillars{grid-template-columns:1fr}
+  .cal{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#about">Skip to content</a>
+
+<nav>
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="Global Passport Series"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 775 313" role="img" aria-label="Global Passport Series"><path class="gps-r" fill="#A0322D" fill-rule="evenodd" d="M282.5,305.8L218.5,305.9L217.2,304.9L203.5,304.9L202.2,303.9L190.5,303.9L189.2,302.9L182.5,302.9L181.2,301.9L177.2,301.8L176.2,300.9L169.5,300.9L168.5,299.9L165.5,299.9L164.2,298.9L158.5,298.9L157.5,297.9L155.2,297.8L154.2,296.9L150.5,296.9L149.2,295.9L146.5,295.9L145.2,294.9L142.5,294.9L141.2,293.9L138.5,293.9L137.5,292.9L135.2,292.8L134.5,291.9L131.5,291.9L130.5,290.9L128.2,290.8L127.5,289.9L124.2,289.8L123.5,288.9L122.2,288.8L121.5,287.9L119.2,287.8L118.5,286.9L116.2,286.8L115.5,285.9L114.2,285.8L113.5,284.9L111.2,284.8L110.5,283.9L109.2,283.8L108.5,282.9L106.2,282.8L105.5,281.9L104.2,281.8L103.5,280.9L101.2,280.8L100.5,279.9L99.2,279.8L98.5,278.9L96.2,278.8L94.5,276.9L93.2,276.8L92.2,275.9L90.2,275.8L88.5,273.9L86.2,273.8L84.5,271.9L83.2,271.8L82.5,270.9L81.2,270.8L80.5,269.9L79.2,269.8L77.5,267.9L76.2,267.8L73.5,264.9L72.2,264.8L71.5,263.9L70.2,263.8L68.5,261.9L67.2,261.8L65.5,259.9L64.2,259.8L62.5,257.9L61.2,257.8L60.6,256.0L59.2,255.8L57.5,253.9L56.2,253.8L51.6,249.0L50.2,248.8L49.8,247.2L48.2,246.8L38.0,236.6L37.8,235.2L32.0,229.6L31.8,228.2L28.0,224.6L27.8,223.2L25.0,220.6L24.8,219.2L22.9,217.5L22.8,216.2L21.9,215.5L21.8,214.2L19.9,212.5L19.8,211.2L18.9,210.5L18.8,209.2L17.9,208.5L17.8,207.2L15.9,205.5L15.8,203.2L14.9,202.5L14.8,201.2L13.9,200.5L13.8,199.2L12.9,198.5L12.8,197.2L11.9,196.5L11.8,195.2L10.9,194.5L10.8,191.2L9.9,190.5L9.8,189.2L8.9,188.5L8.8,185.2L7.9,184.5L7.8,183.2L6.9,182.2L6.9,178.5L5.9,177.5L5.8,175.2L4.9,174.5L4.9,169.5L3.9,168.2L3.9,162.5L2.9,161.2L2.9,152.5L1.9,151.2L1.9,139.5L2.9,138.2L2.9,131.5L3.9,130.2L3.9,124.5L4.9,123.2L4.9,119.5L5.8,118.5L5.9,116.2L6.9,115.2L6.9,111.2L7.8,110.5L7.9,109.2L8.8,108.5L8.9,106.2L9.8,105.5L9.9,104.2L10.8,103.5L10.9,101.5L11.8,100.5L11.9,98.2L12.8,97.5L12.9,96.2L13.8,95.5L13.9,94.2L14.8,93.5L14.9,92.2L15.8,91.5L15.9,90.2L16.8,89.5L16.9,88.2L17.8,87.5L17.9,86.2L19.8,84.5L19.9,83.2L20.8,82.5L20.9,81.2L22.8,79.5L23.0,78.2L26.8,74.6L26.9,73.2L28.8,71.5L29.0,70.2L38.8,60.6L39.2,59.0L40.8,58.6L41.2,57.0L42.8,56.6L43.2,55.0L44.6,54.8L49.2,50.0L50.6,49.8L54.2,46.0L55.6,45.8L58.2,43.0L59.5,42.8L61.2,40.9L62.5,40.8L64.2,38.9L65.5,38.8L67.2,36.9L68.5,36.8L70.2,34.9L71.5,34.8L72.2,33.9L73.5,33.8L74.2,32.9L75.5,32.8L76.2,31.9L77.5,31.8L79.2,29.9L80.5,29.8L81.2,28.9L82.5,28.8L83.2,27.9L84.5,27.8L85.2,26.9L86.5,26.8L87.2,25.9L88.5,25.8L89.2,24.9L91.5,24.8L92.2,23.9L93.5,23.8L94.2,22.9L96.5,22.8L97.2,21.9L98.5,21.8L99.2,20.9L101.5,20.8L102.2,19.9L103.5,19.8L104.2,18.9L107.2,18.9L108.2,17.9L110.5,17.8L111.2,16.9L113.5,16.8L114.2,15.9L118.2,15.9L119.2,14.9L120.5,14.8L121.2,13.9L125.2,13.9L126.2,12.9L127.5,12.8L128.2,11.9L133.2,11.9L134.2,10.9L137.2,10.9L138.5,9.9L143.2,9.9L144.5,8.9L148.2,8.9L149.5,7.9L153.2,7.9L154.5,6.9L163.2,6.9L164.5,5.9L169.2,5.9L170.5,4.9L183.2,4.9L184.5,3.9L197.2,3.9L198.5,2.9L225.2,2.9L226.5,1.9L270.2,1.9L271.5,2.9L296.2,2.9L297.2,3.8L299.5,3.9L300.8,5.2L300.8,5.6L298.9,7.2L298.8,8.6L297.2,9.0L284.6,21.8L283.2,22.0L282.6,23.8L281.2,23.9L276.6,28.8L275.2,29.0L268.6,35.8L267.0,36.2L266.6,37.8L265.2,38.0L259.6,43.8L258.2,43.9L256.5,45.8L223.5,45.9L222.2,46.9L203.5,46.9L202.2,47.9L197.5,47.9L196.2,48.9L188.5,48.9L187.5,49.8L185.2,49.9L184.2,50.9L178.5,50.9L177.5,51.8L175.2,51.9L174.5,52.8L170.5,52.9L169.2,53.9L166.5,53.9L165.5,54.8L163.2,54.9L162.5,55.8L159.2,55.9L158.5,56.8L157.2,56.9L156.5,57.8L153.2,57.9L152.5,58.8L151.2,58.9L150.5,59.8L148.2,59.9L147.5,60.8L146.2,60.9L145.5,61.8L144.2,61.9L143.5,62.8L141.2,62.9L139.5,64.8L138.2,64.9L137.5,65.8L136.2,65.9L135.5,66.8L134.2,66.9L132.6,68.8L131.2,68.9L129.5,70.8L128.2,70.9L127.5,71.8L126.2,71.9L124.5,73.8L123.2,73.9L121.5,75.8L120.2,76.0L119.8,77.6L118.2,78.0L115.6,80.8L114.2,81.0L113.8,82.6L112.2,83.0L103.0,92.2L102.8,93.6L99.9,96.2L99.8,97.6L95.9,101.2L95.8,102.5L94.9,103.2L94.8,104.5L93.9,105.2L93.8,106.5L91.9,108.2L91.8,109.5L90.9,110.2L90.8,111.5L89.9,112.2L89.8,113.5L88.9,114.2L88.8,116.5L86.9,118.2L86.8,121.5L85.9,122.2L85.8,123.5L84.9,124.2L84.9,128.2L83.9,129.2L83.9,132.2L82.9,133.5L82.9,137.2L81.9,138.5L81.9,147.2L80.9,148.5L80.9,158.2L81.9,159.5L81.9,169.2L82.9,170.5L82.9,174.2L83.9,175.5L83.9,179.2L84.9,180.5L84.9,183.2L85.8,184.2L85.9,186.5L86.8,187.2L86.9,190.5L87.8,191.2L87.9,192.5L88.8,193.2L88.9,195.5L90.8,197.2L90.9,199.5L91.8,200.2L91.9,201.5L92.8,202.2L92.9,203.5L93.8,204.2L93.9,205.5L95.8,207.2L95.9,208.5L97.8,210.2L97.9,211.5L99.8,213.2L100.0,214.6L102.8,217.2L103.0,218.6L106.8,222.2L107.0,223.6L108.6,224.0L108.9,225.5L110.8,226.2L111.2,227.8L112.6,228.0L117.2,232.8L118.6,233.0L122.2,236.8L123.5,236.9L125.2,238.8L126.5,238.9L127.2,239.8L128.5,239.9L129.2,240.8L130.5,240.9L132.2,242.8L133.5,242.9L134.2,243.8L135.5,243.9L137.2,245.8L139.5,245.9L141.2,247.8L143.5,247.9L144.2,248.8L145.5,248.9L146.2,249.8L148.5,249.9L149.5,250.9L151.5,250.9L152.2,251.8L154.5,251.9L155.2,252.8L157.5,252.9L158.2,253.8L159.5,253.9L160.2,254.8L164.2,254.9L165.2,255.8L167.5,255.9L168.5,256.9L172.2,256.9L173.2,257.8L176.2,257.9L177.5,258.9L183.2,258.9L184.5,259.9L190.2,259.9L191.5,260.9L201.2,260.9L202.5,261.9L218.2,261.9L219.5,262.9L229.2,262.9L230.2,261.9L231.5,261.8L231.9,261.2L231.8,188.2L230.2,186.9L212.5,186.9L211.2,185.9L168.2,185.8L165.9,183.2L165.9,164.5L166.8,163.5L165.9,162.2L165.9,137.5L166.9,136.2L166.9,132.2L168.5,130.9L219.2,130.9L220.5,131.9L249.2,131.9L250.5,132.9L282.6,133.0L283.9,134.5L283.9,274.2L284.9,275.5L284.9,302.2L283.9,303.2L283.8,304.5L282.5,305.8Z M568.5,55.8L516.2,55.8L514.9,54.5L514.8,53.2L513.9,52.2L514.0,6.2L515.5,4.9L717.2,4.9L718.5,3.9L719.5,3.9L720.8,5.2L720.8,8.5L717.0,12.2L716.8,13.6L705.6,24.8L704.2,25.0L701.6,27.8L700.2,27.9L698.5,29.8L697.2,29.9L696.5,30.8L695.2,30.9L693.5,32.8L692.2,32.9L691.5,33.8L690.2,33.9L689.5,34.8L688.2,34.9L687.5,35.8L685.2,35.9L684.5,36.8L683.2,36.9L682.5,37.8L680.2,37.9L679.5,38.8L678.2,38.9L677.5,39.8L674.2,39.9L673.5,40.8L672.2,40.9L671.5,41.8L668.5,41.9L667.5,42.8L665.2,42.9L664.2,43.9L661.2,43.9L660.2,44.9L656.5,44.9L655.2,45.9L652.5,45.9L651.2,46.9L646.5,46.9L645.5,47.8L642.5,47.9L641.2,48.9L633.5,48.9L632.5,49.8L629.5,49.9L628.2,50.9L619.5,50.9L618.2,51.9L610.5,51.9L609.2,52.9L600.5,52.9L599.2,53.9L586.5,53.9L585.2,54.9L569.5,54.9L568.5,55.8Z M567.5,310.8L410.5,310.9L409.0,309.6L408.8,308.2L407.9,307.2L407.9,278.5L408.9,277.2L408.8,276.2L407.9,275.2L407.9,272.5L410.5,269.9L557.2,269.9L558.5,268.9L584.2,268.9L585.5,267.9L599.2,267.9L600.5,266.9L607.2,266.9L608.5,265.9L618.2,265.9L619.5,264.9L623.2,264.9L624.5,263.9L630.2,263.9L631.2,262.9L634.2,262.9L635.5,261.9L638.2,261.9L639.5,260.9L643.2,260.9L644.2,259.9L646.5,259.8L647.2,258.9L650.5,258.8L651.2,257.9L652.5,257.8L653.2,256.9L655.5,256.8L656.2,255.9L657.5,255.8L658.2,254.9L660.5,254.8L661.2,253.9L662.5,253.8L663.2,252.9L665.5,252.8L666.2,251.9L667.6,251.8L669.2,249.9L671.5,249.8L673.2,247.9L674.5,247.8L676.2,245.9L677.5,245.8L679.2,243.9L680.5,243.8L682.2,241.9L683.6,241.8L692.8,232.6L692.9,231.2L694.8,229.5L694.9,228.2L696.8,226.5L696.9,225.2L698.8,223.5L698.9,222.2L699.8,221.5L699.9,220.2L700.8,219.5L700.9,218.2L701.8,217.5L701.9,215.2L702.8,214.5L702.9,213.2L703.8,212.5L703.9,209.5L704.8,208.5L704.9,206.2L705.9,205.2L705.9,200.5L706.9,199.2L706.9,189.5L706.2,188.9L703.2,188.8L702.2,187.9L505.2,187.8L503.9,186.5L503.9,185.2L505.8,183.5L505.9,182.2L506.8,181.5L506.9,180.2L507.8,179.5L507.9,178.2L508.8,177.5L508.9,176.2L509.8,175.5L509.9,174.2L510.8,173.5L510.9,170.2L511.8,169.5L511.9,168.2L512.9,167.2L512.9,162.5L513.8,161.5L513.9,157.5L514.9,156.2L514.9,137.5L515.8,136.5L515.9,134.2L517.2,133.0L767.2,132.9L768.8,134.2L768.9,135.5L769.9,136.5L769.9,142.2L770.9,143.5L770.9,157.2L771.9,158.5L771.9,166.2L772.9,167.5L772.9,185.2L771.9,186.5L771.9,194.2L770.9,195.5L770.9,205.2L769.9,206.5L769.9,210.2L768.9,211.5L768.9,215.2L767.9,216.2L767.9,219.2L766.9,220.2L766.8,222.5L765.9,223.2L765.8,225.5L764.9,226.2L764.8,227.5L763.9,228.2L763.8,231.5L761.9,233.2L761.8,235.5L760.9,236.2L760.8,237.5L759.9,238.2L759.8,239.5L757.9,241.2L757.8,242.5L756.9,243.2L756.8,244.5L754.9,246.2L754.8,247.5L753.9,248.2L753.8,249.5L751.9,251.2L751.8,252.6L748.0,256.2L747.8,257.6L738.6,266.8L737.2,267.0L736.6,268.8L735.2,268.9L732.6,271.8L731.2,271.9L729.5,273.8L728.2,273.9L725.6,276.8L724.2,276.9L722.5,278.8L721.2,278.9L719.5,280.8L718.2,280.9L716.5,282.8L714.2,282.9L712.5,284.8L710.2,284.9L709.5,285.8L708.2,285.9L707.5,286.8L706.2,286.9L705.5,287.8L704.2,287.9L703.5,288.8L702.2,288.9L701.5,289.8L699.2,289.9L698.5,290.8L697.2,290.9L696.5,291.8L693.2,291.9L692.5,292.8L691.2,292.9L690.5,293.8L688.2,293.9L687.5,294.8L685.2,294.9L684.5,295.8L682.2,295.9L681.2,296.9L678.2,296.9L677.5,297.8L676.2,297.9L675.2,298.9L670.2,298.9L669.5,299.8L668.2,299.9L667.2,300.9L662.5,300.9L661.5,301.8L659.2,301.9L658.2,302.9L653.5,302.9L652.2,303.9L647.5,303.9L646.2,304.9L640.5,304.9L639.2,305.9L631.5,305.9L630.2,306.9L625.5,306.9L624.2,307.9L611.5,307.9L610.2,308.9L601.5,308.9L600.2,309.9L568.5,309.9L567.5,310.8Z"/><path class="gps-n" fill="#273D68" fill-rule="evenodd" d="M379.5,310.8L318.5,310.9L316.9,309.5L316.9,134.5L317.2,133.9L318.5,133.8L319.5,132.9L414.2,132.9L415.5,133.9L422.2,133.9L423.2,132.9L425.5,132.8L428.8,129.6L428.9,128.2L429.9,127.2L429.8,58.2L429.2,57.9L397.5,57.9L396.2,56.9L377.5,56.9L376.2,55.9L333.5,55.9L332.2,54.9L318.5,54.9L317.2,53.9L295.5,53.9L294.2,52.9L285.2,52.8L284.5,51.9L283.0,51.6L282.9,50.2L283.8,49.5L284.2,48.0L285.6,47.8L299.2,34.0L300.6,33.8L301.0,32.2L302.6,31.8L315.2,19.0L316.6,18.8L326.2,9.0L327.5,8.8L331.2,5.0L332.5,4.8L333.5,3.9L485.5,3.9L487.9,6.5L487.9,70.2L486.9,71.5L486.9,90.2L487.9,91.5L487.9,101.2L486.9,102.5L486.9,115.2L487.9,116.5L487.9,142.2L486.9,143.5L486.9,151.2L485.9,152.5L485.8,155.5L484.9,156.5L484.9,161.2L483.9,162.2L483.8,163.5L482.9,164.2L482.8,167.5L480.9,169.2L480.8,170.5L479.9,171.2L479.8,172.6L476.0,176.2L475.8,177.5L473.6,179.8L472.2,179.9L470.6,181.8L469.2,181.9L467.5,183.8L466.2,183.9L465.5,184.8L464.2,184.9L463.5,185.8L462.2,185.9L461.5,186.8L459.2,186.9L458.2,187.9L455.5,187.9L454.2,188.9L448.5,188.9L447.5,189.8L443.5,189.9L442.2,190.9L383.5,190.9L382.5,191.8L381.0,192.2L380.9,309.2L379.5,310.8Z"/></svg><span>For families by families</span></a>
+    <button class="navtoggle" aria-expanded="false" aria-controls="menu">Menu</button>
+    <ul id="menu">
+      <li><a class="lnk" href="#about">About</a></li>
+      <li><a class="lnk" href="#munich">Munich 2026</a></li>
+      <li><a class="lnk" href="#leadership">Who we are</a></li>
+      <li><a class="lnk" href="#calendar">Summits</a></li>
+      <li><a class="lnk" href="#speakers">Speakers</a></li>
+      <li><a class="lnk" href="#sponsors">Sponsors</a></li>
+      <li><a class="lnk" href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-copy">
+    <div class="inner">
+      <h1>Summits for families,<br><em>by families.</em></h1>
+      <div class="rule"></div>
+      <p>A small number of intimate, invitation-only gatherings across the world, built on a rare set of relationships with families, entrepreneurs and global leaders.</p>
+      <div class="stamp">
+        <div class="k">Next summit</div>
+        <div class="city">Munich</div>
+        <div class="dt">30 September – 2 October 2026</div>
+      </div>
+    </div>
+  </div>
+  <figure class="hero-photo">
+    <img fetchpriority="high" decoding="async" src="{{IMG:01-marienplatz-and-the-frauenkirche-at-dusk-mun.jpg}}" alt="Marienplatz and the Frauenkirche at dusk, Munich">
+    <figcaption>Marienplatz, Munich</figcaption>
+  </figure>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">About us</div>
+      <h2>Global Passport Series emerged from families who wanted more agency over their own agenda.</h2>
+      <p>GPS is not an investment banking or commercial summit. It is designed by families for families — for their inner circle of advisors, business associates and friends — to discuss the global agenda in business, policy, leadership, philanthropy and culture.</p>
+    </div>
+
+    <div class="creed">
+      <div>
+        <h3>Mission</h3>
+        <p>Build exceptional business, philanthropic, leadership and cultural ties across borders and political divides.</p>
+      </div>
+      <div>
+        <h3>Vision</h3>
+        <p>Mix leadership, philanthropic and entrepreneurial spirits to foster a trusted community of affinity.</p>
+      </div>
+    </div>
+
+
+    <div class="pillars">
+      <div class="pillar">
+        <h4>Authentic</h4>
+        <p>By invitation only, hosted and anchored by families for families.</p>
+      </div>
+      <div class="pillar">
+        <h4>Themes</h4>
+        <p>Technology, deeptech and AI, energy transition, health and wellbeing, geopolitics, leadership, philanthropy.</p>
+      </div>
+      <div class="pillar">
+        <h4>Cultural</h4>
+        <p>Local, regional and global engagements in arts, sport and culture.</p>
+      </div>
+      <div class="pillar">
+        <h4>Delegations</h4>
+        <p>Participation in Davos, FII, COP, UNGA, Art Basel and regional visits.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="munich" class="band">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">Munich 2026</div>
+      <h2>Three days of closed-door sessions, dinners and Oktoberfest.</h2>
+      <p>GPS promotes regional and global trade, diplomacy, welfare and cultural exchange. Over three days we evaluate the roles and ambitions we hold for ourselves, our businesses and society — and engage with some of the most pressing opportunities facing the world today.</p>
+    </div>
+
+    <div class="prog">
+      <div class="day">
+        <h3>Wednesday 30 September</h3>
+        <div class="venue">Venue shared with confirmed guests</div>
+        <ul>
+          <li><time>19:00</time><span>Welcome dinner<span class="dress">Casual</span></span></li>
+        </ul>
+      </div>
+      <div class="day">
+        <h3>Thursday 1 October</h3>
+        <div class="venue">Venue shared with confirmed guests</div>
+        <ul>
+          <li><time>09:30</time><span>Registration and breakfast</span></li>
+          <li><time>10:00</time><span>Morning sessions</span></li>
+          <li><time>12:00</time><span>Seated lunch</span></li>
+          <li><time>14:00</time><span>Afternoon sessions</span></li>
+          <li><time>19:00</time><span>Dinner<span class="dress">Black tie</span></span></li>
+        </ul>
+      </div>
+      <div class="day">
+        <h3>Friday 2 October</h3>
+        <div class="venue">Venue shared with confirmed guests</div>
+        <ul>
+          <li><time>09:30</time><span>Registration and breakfast</span></li>
+          <li><time>10:00</time><span>Morning sessions</span></li>
+          <li><time>12:00</time><span>Seated lunch</span></li>
+          <li><time>14:00</time><span>Afternoon sessions</span></li>
+          <li><time>19:00</time><span>Oktoberfest<span class="dress">Tracht</span></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="leadership">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">Who we are</div>
+      <h2>A founder, and a small team who produce every edition by hand.</h2>
+    </div>
+
+    <div class="founder">
+      <figure>
+        <img loading="lazy" decoding="async" src="{{IMG:02-john-blaffer-royall-at-a-global-passport-ser.jpg}}" alt="John Blaffer Royall at a Global Passport Series summit">
+        <figcaption>John Blaffer Royall, Founder and Chairman</figcaption>
+      </figure>
+      <div>
+        <blockquote>“Build exceptional ties across borders and political divides.”</blockquote>
+        <p>John is Chief Business Officer of PMB Capital, a London-based merchant bank and private equity fund founded in 2013 as part of Edmond de Rothschild and later spun out independently. He has 25 years across private equity, operating and corporate finance roles for growth equity businesses, having previously invested at Health Enterprise Partners and DLJ Merchant Banking (Credit Suisse), served as CFO of Time Link International Corp., and begun his career as an M&amp;A analyst at UBS Warburg.</p>
+        <p>He sits on the boards of Firemind, Global Passport Series, Texas Gulf Bank, the Blaffer Museum, Culturunners and the Autotelic Foundation, and has produced several global art initiatives and documentary films, including the Antarctic Biennale and Culturunners Healing Arts. He holds a BA from Southern Methodist University and an MBA from Columbia Business School.</p>
+      </div>
+    </div>
+
+    <div class="team">
+      <div class="member">
+        <img loading="lazy" decoding="async" src="{{IMG:03-felix-elkmann.jpg}}" alt="Felix Elkmann">
+        <div>
+          <h4>Felix Elkmann</h4>
+          <div class="role">Executive Director</div>
+          <p>15+ years in media and technology at SAP, Datawords, Yext and Axel Springer, opening new markets across the US and Europe. Founder of the tequila brand InCorrupto and of Opera Dinners, a transatlantic charity supporting emerging opera singers and musicians.</p>
+        </div>
+      </div>
+      <div class="member">
+        <img loading="lazy" decoding="async" src="{{IMG:04-katherine-gage-boulud.jpg}}" alt="Katherine Gage Boulud">
+        <div>
+          <h4>Katherine Gage Boulud</h4>
+          <div class="role">Senior Advisor and Events Chair</div>
+          <p>Brand ambassador and strategic partnership officer for Chef Daniel Boulud's global restaurant group. She produces high-level events for global leaders and luxury brands, and has reached 100k+ children through Spoons Across America.</p>
+        </div>
+      </div>
+      <div class="member">
+        <img loading="lazy" decoding="async" src="{{IMG:05-brenda-exline.jpg}}" alt="Brenda Exline">
+        <div>
+          <h4>Brenda Exline</h4>
+          <div class="role">Senior Advisor</div>
+          <p>Serial entrepreneur and brand strategist who built and sold two media companies, including a top-25 woman-owned US communications agency. She now leads Gravitaz and advises Richemont's global PR team across 20 watch and jewellery maisons.</p>
+        </div>
+      </div>
+      <div class="member">
+        <img loading="lazy" decoding="async" src="{{IMG:06-benton-bohannon.jpg}}" alt="Benton Bohannon">
+        <div>
+          <h4>Benton Bohannon</h4>
+          <div class="role">Executive Producer</div>
+          <p>Executive producer and media agency partner behind hit shows for MTV, Netflix, NBC Universal, Hulu and Fox Corporation, specialising in content for streaming platforms, social media and live events.</p>
+        </div>
+      </div>
+      <div class="member">
+        <img loading="lazy" decoding="async" src="{{IMG:07-aurore-pasquet.jpg}}" alt="Aurore Pasquet">
+        <div>
+          <h4>Aurore Pasquet</h4>
+          <div class="role">Communications and Development</div>
+          <p>Advisor in private equity, art and real estate, a fellow at Chatham House and formerly at the OECD. Head of strategy for the Donà dalle Rose Foundation in Venice, producing global art initiatives and heritage conservation projects.</p>
+        </div>
+      </div>
+      <div class="member">
+        <img loading="lazy" decoding="async" src="{{IMG:08-john-blaffer-royall.jpg}}" alt="John Blaffer Royall">
+        <div>
+          <h4>John Blaffer Royall</h4>
+          <div class="role">Founder and Chairman</div>
+          <p>Chief Business Officer of PMB Capital, previously at Health Enterprise Partners, DLJ Merchant Banking and UBS Warburg. Producer of art initiatives including the Antarctic Biennale and Healing Arts.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="calendar" class="band">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">Past and future summits</div>
+      <h2>The conversation keeps moving.</h2>
+      <p>GPS keeps the dialogue going year-round, exploring new locations and regions.</p>
+    </div>
+
+    <div class="cal">
+      <article class="ev past">
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:42-dallas.jpg}}" alt="Dallas skyline"></div>
+        <div class="bar"></div>
+        <div class="tag">Past</div>
+        <h3>Dallas</h3>
+      </article>
+      <article class="ev past">
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:43-new-york.jpg}}" alt="New York skyline"></div>
+        <div class="bar"></div>
+        <div class="tag">Past</div>
+        <h3>New York</h3>
+      </article>
+      <article class="ev past">
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:44-paris.jpg}}" alt="Paris skyline"></div>
+        <div class="bar"></div>
+        <div class="tag">Past</div>
+        <h3>Paris</h3>
+      </article>
+      <article class="ev past">
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:09-tower-bridge-london.jpg}}" alt="Tower Bridge, London"></div>
+        <div class="bar"></div>
+        <div class="tag">Past</div>
+        <h3>London</h3>
+        <div class="when">18–19 June 2025</div>
+      </article>
+      <article class="ev past">
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:10-worth-avenue-palm-beach.jpg}}" alt="Worth Avenue, Palm Beach"></div>
+        <div class="bar"></div>
+        <div class="tag">Past</div>
+        <h3>Palm Beach</h3>
+        <div class="when">17–19 February 2026</div>
+      </article>
+      <article class="ev next">
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:11-munich.jpg}}" alt="Munich"></div>
+        <div class="bar"></div>
+        <div class="tag">Next summit</div>
+        <h3>Munich</h3>
+        <div class="when">30 Sept – 2 Oct 2026</div>
+      </article>
+      <article class="ev">
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:12-united-arab-emirates-coastline.jpg}}" alt="United Arab Emirates coastline"></div>
+        <div class="bar"></div>
+        <div class="tag">Upcoming</div>
+        <h3>United Arab Emirates</h3>
+        <div class="when">November 2026</div>
+      </article>
+      <article class="ev">
+        <div class="im"><img loading="lazy" decoding="async" src="{{IMG:13-salzburg-and-the-hohensalzburg-fortress.jpg}}" alt="Salzburg and the Hohensalzburg Fortress"></div>
+        <div class="bar"></div>
+        <div class="tag">Upcoming</div>
+        <h3>Salzburg</h3>
+        <div class="when">2027</div>
+      </article>
+    </div>
+
+    <div class="deleg">
+      <strong>Delegations</strong>
+      <span>Between summits, GPS travels as a group to Davos, FII, COP, UNGA and Art Basel, alongside regional visits.</span>
+    </div>
+  </div>
+</section>
+
+<section id="speakers" class="dark">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">Speakers</div>
+      <h2>The people who take the floor.</h2>
+      <p>Founders, investors, scientists, diplomats and journalists. Below is the faculty from Palm Beach, February 2026 — select any name to read more. The Munich programme is announced to guests ahead of the summit.</p>
+    </div>
+    <div class="spk-grid" id="spkgrid"></div>
+    <p class="note">Speaking at a GPS summit is by invitation. If you would like to propose a speaker or a session theme, write to us.</p>
+  </div>
+</section>
+
+<section id="sponsors">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">Global sponsors 2026</div>
+      <h2>Sponsors help shape the programme, not just fund it.</h2>
+      <p>We work with our sponsors to identify investment themes and industry trends, to open access to premier speakers and global leaders, and to produce the cultural events around each summit.</p>
+    </div>
+
+    <div class="logos">
+      <div><img loading="lazy" decoding="async" src="{{IMG:14-rtw-innovation.png}}" alt="RTW Innovation"><p>A $7B biotech group</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:15-parkway.png}}" alt="Parkway"><p>Leading New York-based AI venture capital firm</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:16-hggc.png}}" alt="HGGC" style="max-height:32px"><p>$7B San Francisco-based mid-market private equity firm</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:17-burgess.png}}" alt="Burgess" style="max-height:26px"><p>Leader in superyachts for over 50 years</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:18-aescuvest.png}}" alt="aescuvest"><p>Munich-based MedTech venture capital firm</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:19-washington-harbour.png}}" alt="Washington Harbour"><p>Private capital for government IT, defence technology, software and cybersecurity</p></div>
+      <div><img loading="lazy" decoding="async" src="{{IMG:20-dla-piper.png}}" alt="DLA Piper" style="max-height:46px"><p>Leading global law firm with offices in 40 countries</p></div>
+      <div><span style="font-family:var(--serif);font-size:21px;color:var(--ink);letter-spacing:.01em;line-height:1.15;display:block;margin-bottom:14px">Willkie Farr<br>&amp; Gallagher <span style="font-size:15px;color:var(--slate)">LLP</span></span><p>International law firm advising on complex, business-critical matters</p></div>
+    </div>
+
+    <div class="partner-cta">
+      <p>Partner with us<br><a class="eml" data-show data-u="ZmVsaXg=" data-d="Z2xvYmFscGFzc3BvcnRzZXJpZXMuY29t" data-s="Global Passport Series — sponsorship">Email us about sponsorship</a><noscript><br><span class="nojs">felix (at) globalpassportseries (dot) com</span></noscript></p>
+    </div>
+
+    <p class="sponsor-why">Sponsorship at GPS is a working relationship: a seat in the room, a voice in the programme, and a role in the cultural moments that surround each summit.</p>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact">
+      <div>
+        <div class="label" style="color:rgba(255,255,255,.6)">Contact</div>
+        <h2 style="margin-top:10px">Come to Munich, or tell us where we should go next.</h2>
+        <p>Attendance is by invitation. Write to us for the Munich programme, sponsorship, or an introduction to the series.</p>
+        <a class="mail eml" data-u="ZmVsaXg=" data-d="Z2xvYmFscGFzc3BvcnRzZXJpZXMuY29t" data-s="Global Passport Series — enquiry">Email us</a><noscript><p style="font-size:15px;color:rgba(255,255,255,.6);margin-top:12px">felix (at) globalpassportseries (dot) com</p></noscript>
+      </div>
+      <div class="fmeta">
+        <div><strong>Munich 2026</strong>30 September – 2 October 2026</div>
+        <div><strong>United Arab Emirates</strong>November 2026</div>
+        <div><strong>Salzburg</strong>2027</div>
+      </div>
+    </div>
+    <div class="colophon">
+      <img loading="lazy" decoding="async" src="{{IMG:logo-footer.png}}" alt="Global Passport Series">
+      <span>An Adelphi Global LLC production &nbsp;·&nbsp; © 2026 Global Passport Series
+        &nbsp;·&nbsp; <button type="button" class="privacy-link" id="privacy-open">Privacy and cookies</button></span>
+    </div>
+  </div>
+</footer>
+
+<aside class="privacy" id="privacy" role="region" aria-label="Privacy and cookies" hidden>
+  <div class="wrap">
+    <p><strong>This site uses no tracking cookies.</strong> It loads no fonts, scripts,
+      analytics or embeds from third parties, and sends nothing about your visit anywhere.
+      The only thing it can store on your device is a note that you dismissed this
+      message.</p>
+    <div class="btns">
+      <button type="button" class="ok" id="privacy-ok">Accept</button>
+      <button type="button" id="privacy-no">Decline</button>
+    </div>
+  </div>
+</aside>
+
+<script>
+const speakers = [{"name": "Brett Adcock", "role": "Founder and CEO, Figure AI", "img": "{{IMG:22-speaker-brett-adcock.jpg}}", "bio": "Technology entrepreneur and the founder of Vettery, Archer, Figure, Cover and Hark. Figure AI is an AI robotics company developing a general-purpose humanoid. In 2023 he founded Cover, an AI security company whose imaging technology scans for concealed weapons in K-12 schools across the United States. In 2018 he founded Archer Aviation (NYSE: ACHR), an aerospace company building an all-electric vertical take-off and landing aircraft for city mobility, and in 2013 Vettery, an online talent marketplace acquired by The Adecco Group in 2018 for $110M."}, {"name": "John Blaffer Royall", "role": "Chief Business Officer, PMB Capital", "img": "{{IMG:23-speaker-john-blaffer-royall.jpg}}", "bio": "Chief Business Officer of PMB Capital, a London-based merchant bank and private equity fund founded in 2013 as part of Edmond de Rothschild and later spun out independently. He has 25 years across private equity, operating and corporate finance roles, previously investing at Health Enterprise Partners and DLJ Merchant Banking (Credit Suisse), serving as CFO of Time Link International Corp., and starting his career as an M&amp;A analyst at UBS Warburg. He sits on the boards of Firemind, Global Passport Series, Texas Gulf Bank, the Blaffer Museum, Culturunners and the Autotelic Foundation, and has produced global art initiatives and documentary films including the Antarctic Biennale. He holds an MBA from Columbia Business School."}, {"name": "Wasiq Bokhari", "role": "Executive Chairman, Pasqal", "img": "{{IMG:24-speaker-wasiq-bokhari.jpg}}", "bio": "Executive Chairman of Pasqal, a global quantum computing leader, with more than 20 years in entrepreneurship, investment and scientific innovation. He co-founded multiple startups in software, sensors and robotics with two successful exits. At Google he was general manager at Sidewalk Labs, and at Amazon he helped launch ventures in quantum computing and consumer devices."}, {"name": "Jesse Coors-Blankenship", "role": "Founder, Parkway VC", "img": "{{IMG:25-speaker-jesse-coors-blankenship.jpg}}", "bio": "Managing General Partner of Parkway and the entrepreneur behind Frustum Inc., where he developed a new form of AI software and holds multiple patents. He built Frustum over five years and sold it to PTC in 2018, returning 9x for early investors. Previously a senior engineer at Autodesk working on experimental generative design technology, with research and teaching roles at Columbia and Cornell."}, {"name": "John Dawson", "role": "Former Anchor, Bloomberg TV", "img": "{{IMG:26-speaker-john-dawson.jpg}}", "bio": "Managing Director of Acara Strategy and a former Bloomberg TV anchor known for high-profile interviews with world leaders, CEOs and Nobel laureates. As Bloomberg's Chief TMT Correspondent he anchored from Davos, the IMF and OPEC, interviewing figures including Bill Clinton, Tony Blair, Jack Ma and Christine Lagarde. After two decades in journalism he founded Acara in 2019 to advise on reputation management, media strategy and executive training, and moderates panels at conferences worldwide."}, {"name": "Felix Elkmann", "role": "Executive Director, Global Passport Series", "img": "{{IMG:27-speaker-felix-elkmann.jpg}}", "bio": "Felix joined Global Passport Series as Executive Director in January 2026, following operating and business development roles as a global technology executive across a number of VC-backed businesses. He is also Global Head of Business Development for Munich-based Knooing, a generative AI business optimising software portfolio performance for medium and large enterprises. He spent 15 years in media and technology at SAP, Datawords Group, Yext and Axel Springer, and founded the tequila brand InCorrupto and Opera Dinners, a transatlantic charity supporting emerging opera singers and musicians."}, {"name": "Katherine Gage Boulud", "role": "Boulud Restaurants", "img": "{{IMG:28-speaker-katherine-gage-boulud.jpg}}", "bio": "Entrepreneur and social impact leader working at the intersection of food, policy, business and philanthropy. She founded KGB Collective, an advisory firm producing hospitality-driven experiences for cultural, financial and luxury brands including Carolina Herrera, Nardos Design, Barnes International Realty and the restaurant group of Chef Daniel Boulud. As Vice President of the board of Spoons Across America she leads fundraising for national nutrition education, and advises government agencies on sustainability and nutrition education. She studied at the Florida Culinary Institute, trained in Michelin-starred kitchens, and graduated from Trinity College."}, {"name": "Emma Hague", "role": "Medtech entrepreneur", "img": "{{IMG:29-speaker-emma-hague.jpg}}", "bio": "Philanthropist, investor and advisor with more than 30 years in healthcare, AI and data-driven innovation. She has led teams of 500+, managed budgets over $500M, and exited a healthcare technology company to IQVIA. She serves on the boards of Mynd Group, Hologen, Dana Brain Vital, Smile House LLC and the GLO Good Foundation, is a Managing Director at surgical.ai and advises ACP Capital. She previously held leadership roles at Bayer, Wyeth and Roche."}, {"name": "Gregg Hill", "role": "Founder, Parkway VC", "img": "{{IMG:30-speaker-gregg-hill.jpg}}", "bio": "Co-Founder and Managing General Partner of Parkway. Over his career he has invested more than $1B across venture capital and real estate. Before Parkway he was a founding partner of H&amp;S Capital, investing in early-stage technology companies, and he is also Co-Founder and CEO of Hill Gray Seven, which has developed early-stage, self-storage, multi-family and retail properties. One of the top college tennis recruits in America and a doubles partner of Tommy Haas, he competed at Wimbledon and elsewhere before a major accident ended his professional tennis career."}, {"name": "Mary Kissel", "role": "Former Senior Advisor to Secretary of State Pompeo", "img": "{{IMG:31-speaker-mary-kissel.jpg}}", "bio": "Senior executive and foreign policy expert with over 20 years advising political leaders, Fortune 500 CEOs and institutional investors. She is Executive Vice President and Senior Policy Advisor at Stephens Inc., Vice Chairman of RXO and a director of QXO. From 2018 to 2021 she was Senior Advisor to Secretary of State Mike Pompeo, playing a key role in US-China policy including the 2021 genocide designation and the launch of the Commission on Unalienable Rights. She spent 14 years at The Wall Street Journal, including as Asia-Pacific editorial page editor, and holds degrees from Harvard and Johns Hopkins SAIS."}, {"name": "Joe Lamastra", "role": "CEO, RiverWest Capital Group", "img": "{{IMG:32-speaker-joe-lamastra.jpg}}", "bio": "Founder and CEO of RiverWest Capital Group with over 40 years in public and private markets, focused on consumer private equity and large-scale equity trading. Before founding RiverWest in 2024 he was CEO and CIO of T Capital Management, Tommy Hilfiger's family office, advising on the $1.2B sale of Tommy Hilfiger to Apax and its later $3.4B sale to PVH. He co-founded Sandbridge Capital and was a partner at Graham Curtin leading major M&amp;A transactions. He holds a J.D. from Seton Hall and a B.S. in Finance from Villanova."}, {"name": "Tom Landstreet", "role": "Co-Founder, N3L Fund", "img": "{{IMG:33-speaker-tom-landstreet.jpg}}", "bio": "A Wall Street veteran with experience as an institutional broker and capital markets head. In 2006 he joined Dr. Arthur Laffer, mastering the Laffer economic framework he now applies as manager of the N3L Fund and co-founder of Trusco Investment Management, serving high-net-worth clients. A bold economic commentator and investor, he studied English literature at Auburn University and lives in Nashville."}, {"name": "David Malpass", "role": "Former President, World Bank", "img": "{{IMG:34-speaker-david-malpass.jpg}}", "bio": "President of the World Bank from 2019 to 2023 and US Treasury Undersecretary for International Affairs from 2017 to 2019, following 24 years as a leading Wall Street economist and columnist for Forbes and The Wall Street Journal. From 1984 to 1993 he served in political appointments at Treasury, State and Congressional committees. He is a Distinguished Fellow in International Finance at Purdue University, and his consulting and speaking focus on economics, markets, geopolitics and leadership."}, {"name": "Drew McKnight", "role": "Co-CEO, Fortress", "img": "{{IMG:35-speaker-drew-mcknight.jpg}}", "bio": "Co-Chief Executive Officer and Managing Partner at Fortress, based in Dallas, serving on the board of directors, the leadership committee and several investment committees. Before joining Fortress in 2005 he traded high yield and convertible bonds, bank debt, derivatives and equities at Fir Tree Partners, and previously worked at Goldman Sachs in leveraged finance and distressed bank debt trading. He is a trustee of the American Enterprise Institute, an overseer at the Hoover Institution and a member of the Council on Foreign Relations."}, {"name": "Steve Moore", "role": "Former Senior Economic Advisor to Donald Trump", "img": "{{IMG:36-speaker-steve-moore.jpg}}", "bio": "Economist, author and senior fellow at the Heritage Foundation, and co-founder of the Committee to Unleash Prosperity. A leading advocate for free-market policies, he served as a senior economic advisor to the 2016 Trump campaign, helping shape tax, budget and energy policy, and was previously president of Club for Growth and a senior economics writer for The Wall Street Journal. He has written six books including Trumponomics, and holds an M.A. in economics from George Mason University."}, {"name": "Uma Naidoo", "role": "Nutritional psychiatrist", "img": "{{IMG:37-speaker-uma-naidoo.jpg}}", "bio": "Harvard-trained nutritional psychiatrist, professional chef and bestselling author of This Is Your Brain on Food. A pioneer in nutritional psychiatry, she founded the first hospital-based programme of its kind at Massachusetts General Hospital and teaches at Harvard Medical School. She is co-founder of Tiarra, a women's mental health chatbot, and advises the World Economic Forum and a United Nations mental health task force. Named one of the Top 100 Women in Health Tech in 2024."}, {"name": "Charles Roberts", "role": "Chief Investment Strategist, Private Equity, ARK Invest", "img": "{{IMG:38-speaker-charles-roberts.jpg}}", "bio": "Chief Investment Strategist for private equity at ARK Invest, focused on AI and multiomics across public and private markets and venture capital. A deep tech entrepreneur, he co-founded Freenome, Relation Therapeutics and other biotech companies whose ventures have raised over $2B from leading investors. He has advised Oxford University's spin-out fund and led a venture studio family office."}, {"name": "David Shedd", "role": "Former Director, Defense Intelligence Agency", "img": "{{IMG:39-speaker-david-shedd.jpg}}", "bio": "Nearly 33 years in the US intelligence and national security community, including as Acting Director and Deputy Director of the Defense Intelligence Agency. He held senior roles at the CIA, the Office of the Director of National Intelligence and the National Security Council, where he was Senior Director for Intelligence Programs and Special Assistant to the President, and served overseas in Costa Rica and Mexico. He sits on the boards of Geneva College, Patrick Henry College, Noblis, Hexagon US Federal and Moneycorp Ltd., and co-authored The Great Heist: China's Epic Campaign to Steal America's Secrets."}, {"name": "Stephanie Sirota", "role": "Chief Business Officer, RTW", "img": "{{IMG:40-speaker-stephanie-sirota.jpg}}", "bio": "Leads business development, strategic partnerships, communications and investor relations at RTW, managing global relationships across banks, corporations, academic institutions, NGOs and investors, and playing a key role in the firm's expansion into the UK and Europe. She is a director of RTW Biotech Opportunities Ltd., listed on the London Stock Exchange. Previously a director at Valhalla Capital Advisors and at Lehman Brothers in New York and London. She is President of the RTW Charitable Foundation."}, {"name": "Deepak Srivastava", "role": "President, Gladstone Institutes", "img": "{{IMG:41-speaker-deepak-srivastava.jpg}}", "bio": "President of Gladstone Institutes and Director of the Roddenberry Stem Cell Center, and an attending pediatric cardiologist at UCSF Benioff Children's Hospital. An expert in cardiovascular genetics and regeneration, he has identified key genetic causes of heart disease, developed new therapies and co-founded several biotech companies to bring discoveries into clinical trials. He has published over 200 scientific papers, trained more than 50 scientists globally, and is an elected member of the National Academy of Medicine and the American Academy of Arts and Sciences."}];
+
+const grid = document.getElementById('spkgrid');
+const cols = () => {
+  const w = window.innerWidth;
+  return w <= 860 ? 2 : (w <= 1080 ? 4 : 5);
+};
+
+function build(){
+  grid.innerHTML = '';
+  speakers.forEach((s,i)=>{
+    const b = document.createElement('button');
+    b.className = 'spk';
+    b.type = 'button';
+    b.setAttribute('aria-expanded','false');
+    b.setAttribute('aria-controls','bio-panel');
+    b.id = 'spk-' + i;
+    b.dataset.i = i;
+    b.innerHTML = '<div class="ph"><img src="'+s.img+'" alt="'+s.name+'" loading="lazy" decoding="async"></div>'+
+                  '<h4>'+s.name+'</h4><div class="role">'+s.role+'</div>'+
+                  '<div class="more">Read bio</div>';
+    grid.appendChild(b);
+  });
+}
+build();
+
+let openIdx = null;
+grid.addEventListener('click', e=>{
+  const btn = e.target.closest('.spk');
+  if(!btn) return;
+  const i = +btn.dataset.i;
+  document.querySelectorAll('.bio').forEach(n=>n.remove());
+  document.querySelectorAll('.spk').forEach(n=>n.setAttribute('aria-expanded','false'));
+  if(openIdx === i){ openIdx = null; return; }
+  openIdx = i;
+  btn.setAttribute('aria-expanded','true');
+  const s = speakers[i];
+  const panel = document.createElement('div');
+  panel.className = 'bio open';
+  panel.id = 'bio-panel';
+  panel.setAttribute('role','region');
+  panel.setAttribute('aria-labelledby', btn.id);
+  panel.innerHTML = '<h4>'+s.name+'</h4><div class="role">'+s.role+'</div><p>'+s.bio+'</p>'+
+                    '<button type="button" class="closebio">Close</button>';
+  const n = cols();
+  const rowEnd = (Math.floor(i/n)+1)*n;
+  const nodes = grid.querySelectorAll('.spk');
+  if(nodes[rowEnd]) grid.insertBefore(panel, nodes[rowEnd]);
+  else grid.appendChild(panel);
+  panel.querySelector('.closebio').addEventListener('click', ()=>{
+    panel.remove(); btn.setAttribute('aria-expanded','false'); openIdx=null; btn.focus();
+  });
+});
+
+let lastCols = cols();
+window.addEventListener('resize', ()=>{
+  if(cols()!==lastCols){ lastCols = cols();
+    document.querySelectorAll('.bio').forEach(n=>n.remove());
+    document.querySelectorAll('.spk').forEach(n=>n.setAttribute('aria-expanded','false'));
+    openIdx=null; }
+});
+
+const tog = document.querySelector('.navtoggle'), menu = document.getElementById('menu');
+tog.addEventListener('click', ()=>{
+  const open = menu.classList.toggle('open');
+  tog.setAttribute('aria-expanded', open);
+});
+menu.addEventListener('click', e=>{ if(e.target.tagName==='A'){ menu.classList.remove('open'); tog.setAttribute('aria-expanded','false'); }});
+</script>
+<script>
+/* contact address assembled at runtime so harvesters scraping raw HTML find no address */
+(function(){
+  function build(){
+    document.querySelectorAll('a.eml').forEach(function(a){
+      try{
+        var e = atob(a.getAttribute('data-u')) + String.fromCharCode(64) + atob(a.getAttribute('data-d'));
+        var subj = a.getAttribute('data-s');
+        a.setAttribute('href','mailto:' + e + (subj ? '?subject=' + encodeURIComponent(subj) : ''));
+        /* data-show: render the address as the link's own text. Requested by the
+           client for the sponsorship CTA. Still absent from the source. */
+        if(a.hasAttribute('data-show')){ a.textContent = e; a.removeAttribute('data-show'); }
+        a.removeAttribute('data-u'); a.removeAttribute('data-d'); a.removeAttribute('data-s');
+      }catch(err){}
+    });
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',build);}else{build();}
+})();
+</script>
+<script>
+/* Privacy notice.
+   The page sets no cookies and makes no third-party requests, so there is nothing
+   to gate: this is an acknowledgement, not a consent wall. It is built to stay
+   honest if that ever changes.
+
+   - Declining stores nothing that outlives the tab. Refusing must not be punished
+     by a banner on every visit, and must not itself leave a persistent trace.
+   - Accepting is not a precondition for anything, and the choice can be reopened
+     from the footer, because withdrawing has to be as easy as giving.
+   - Skipped entirely on file:// — the WhatsApp leave-behind is a local file with
+     no server, no cookies and no controller. A consent notice there would be
+     theatre, and storage is unreliable on file:// anyway.
+   - Every storage access is wrapped: private mode and file:// can throw on
+     access, not just return null, and a privacy notice must never be the thing
+     that breaks the page. */
+(function(){
+  var KEY='gps-privacy-notice';
+  var bar=document.getElementById('privacy');
+  if(!bar) return;
+  if(location.protocol==='file:') return;
+
+  function read(store){ try{ return window[store].getItem(KEY); }catch(e){ return null; } }
+  function write(store,v){ try{ window[store].setItem(KEY,v); }catch(e){} }
+  function clear(store){ try{ window[store].removeItem(KEY); }catch(e){} }
+
+  function settled(){ return read('localStorage') || read('sessionStorage'); }
+
+  function show(){
+    bar.hidden=false;
+    requestAnimationFrame(function(){ bar.classList.add('show'); });
+  }
+  function hide(){
+    bar.classList.remove('show');
+    window.setTimeout(function(){ bar.hidden=true; }, 400);
+  }
+
+  document.getElementById('privacy-ok').addEventListener('click', function(){
+    write('localStorage','accepted');
+    window.gpsPrivacyChoice='accepted';
+    hide();
+  });
+  document.getElementById('privacy-no').addEventListener('click', function(){
+    /* Nothing persistent: the refusal lasts this tab only. */
+    clear('localStorage');
+    write('sessionStorage','declined');
+    window.gpsPrivacyChoice='declined';
+    hide();
+  });
+  document.getElementById('privacy-open').addEventListener('click', function(){
+    clear('localStorage'); clear('sessionStorage');
+    window.gpsPrivacyChoice=null;
+    show();
+    document.getElementById('privacy-ok').focus();
+  });
+
+  window.gpsPrivacyChoice = settled() || null;
+  if(!settled()) window.setTimeout(show, 900);
+})();
+</script>
+</body>
+</html>
