@@ -240,19 +240,25 @@ change it without being asked.
 
 **Colour rules learned the hard way:**
 
-- The navbar background is `#0E162B` and **opaque**. It was previously
-  `rgba(12,23,39,.97)` with a backdrop blur; the client specified the exact hex, and
-  "exact" is only achievable opaque, because at 97% the scrolling content behind tints
-  it. If translucency is ever wanted back, that is the trade. It is now the `--nav`
-  variable rather than a hardcoded literal (the `<meta name="theme-color">` still
-  repeats the hex, because meta content cannot take a `var()`).
-- **Navy only works on light backgrounds.** `#1E3A6E` on `--ink` is 1.61:1 — effectively
-  invisible. Its two current uses (`.pillar` top border, `.ev .bar` at 50% opacity) are
-  both in light sections. Using it in the hero, speakers or footer needs a lightened
-  variant.
-- **Crimson on dark is decorative only.** `#A0322D` on the navbar is 2.56:1. That is fine
-  for the four 1–2px rules that use it and unacceptable for text. All crimson *text* sits
-  on light backgrounds at 5.8:1–6.8:1, comfortably above the 4.5:1 AA threshold.
+- **The navbar is now white** (`--nav:#FCFBFA`), superseding the earlier `#0E162B`.
+  That hex had been specified by the client and is why the bar is opaque rather than
+  the original `rgba(12,23,39,.97)` with a backdrop blur — at 97% the scrolling
+  content behind tints it, so "exact" is only achievable opaque. That reasoning still
+  holds if a dark bar ever comes back. See §14 for why it changed.
+
+  One good side effect: `nav .mark svg path{fill:#fff}` is gone. The mark now renders
+  in the fills it actually carries, so the logo's red and navy are visible in the
+  navbar for the first time.
+- **Navy only works on light backgrounds** — still true, and the page is now built
+  around it rather than around the exception. `#273D68` on `--paper` is **10.40:1**, so
+  navy is the headline colour throughout: hero, speaker names, bio headings. The old
+  warning that navy in the hero, speakers or footer would need a lightened variant only
+  applied while those sections were dark. The footer inverts it — navy as the
+  *background*, white text at 10.75:1.
+- **Crimson on dark is decorative only.** That barely binds any more, because almost
+  nothing sits on dark. All crimson *text* is on light at 5.8:1–6.8:1, comfortably above
+  the 4.5:1 AA threshold. Measured across the rebuilt page, every foreground/background
+  pair passes AA; the lowest is 5.49:1, slate on paper.
 - **The palette is derived from the logo, not from a brand manual.** The client first
   specified `#8B1A1A` red and `#1E3A6E` navy as "read from the original", but measurement
   of the supplied logo artwork gives `#A0322D` and `#273D68` — the stated red was
@@ -811,3 +817,42 @@ Note also that replacing the hero with a generated frame makes it the **fourth**
 AI image on the page and by far the most prominent. §8's consequence stands and
 grows: if GPS ever has to state that its imagery is photographic, the hero would
 be the first thing to fail that claim.
+
+---
+
+## 14. Changelog — white, red and blue
+
+The client sent a page from their own GPS document and asked whether the site could
+work "mit weiss und rot und blau wie hier". That document is white-led: navy serif
+headline, red italic tagline, letterspaced caps eyebrow. The site was the opposite —
+near-black navbar, dark hero panel, dark speakers section, near-black footer, white
+text on all of them.
+
+| | was | now |
+|---|---|---|
+| navbar | `#0E162B` | `--nav:#FCFBFA`, navy links, crimson hover rule |
+| nav mark | forced white | its own red and navy fills |
+| hero panel | `--ink`, white text | `--paper`, navy headline, crimson italic |
+| speakers | `.dark` | light, navy names, grey bio panel |
+| sponsors | paper | `.band`, to keep the alternation |
+| footer | `--ink-deep` near-black | `--navy` |
+
+**The band rhythm had to be re-cut, not just recoloured.** Sections alternate paper
+and grey. Turning speakers light without touching sponsors would have left two paper
+sections adjacent, so sponsors took the `band` class. The page now runs paper, grey,
+paper, grey, paper, grey, navy from About to the footer.
+
+**Added the client's own eyebrow line**, "An invitation-only circuit for global
+families", above the hero headline. Their copy, lifted from the document they sent,
+and it says what GPS *is* before the headline says what it does.
+
+**This is an accessibility improvement, not only a cosmetic one.** §5 used to warn
+that navy was unusable outside light sections at 1.61:1 on `--ink`. Navy is now the
+headline colour on paper at 10.40:1. Every pair on the rebuilt page was measured in
+the browser against its real computed background: 20 checks, no failures, lowest
+5.49:1. Verified at 1440, 860 and 390px — no horizontal overflow, no console errors.
+
+Two things that would have broken silently and were caught by checking rather than
+assuming: the mobile drawer needed a shadow it never needed while dark, and the
+privacy bar and skip link had to be moved off `--nav` onto `--navy` explicitly —
+both were relying on that variable being dark and would have gone white on white.

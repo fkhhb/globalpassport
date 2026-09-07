@@ -102,7 +102,8 @@ Sections are `#about`, `#leadership`, `#speakers`, `#munich`, `#calendar`, `#spo
 
 **Colours** → the `:root` block. `--crimson` (#A0322D) and `--navy` (#273D68) are the
 brand accents, both measured from the logo artwork so the mark and the accents match
-exactly. Note that navy is unreadable on the dark sections — see BRIEF §5.
+exactly. The page is white-led: navy headlines on paper at 10.4:1, crimson accents at
+6.8:1, navy footer with white text. See BRIEF §5 before changing any of it.
 
 **Type** → Newsreader for headlines, IBM Plex Sans for everything else. Client-chosen
 from five options. Do not change unasked.
@@ -140,7 +141,11 @@ new weight will synthesise from the nearest embedded one.
 Working and current. The build is 4.32 MB, 45 images and 8 font faces, and makes no
 network requests.
 
-**Latest round** (BRIEF §12): the speakers section reframed as "Past participants
+**Latest round** (BRIEF §14): reworked to the client's white / red / blue —
+white navbar with the logo in its real colours, navy headlines, crimson accents,
+navy footer. Every colour pair measured in-browser: 20 checks, no AA failures.
+
+**Previous round** (BRIEF §12): the speakers section reframed as "Past participants
 and speakers" at the client's request.
 
 **Previous round** (BRIEF §11): sections reordered so the Munich programme sits

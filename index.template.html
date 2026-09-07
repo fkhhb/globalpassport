@@ -6,7 +6,7 @@
 <title>Global Passport Series — Summits for families, by families</title>
 <meta name="description" content="Global Passport Series hosts intimate, invitation-only summits for families, entrepreneurs and global leaders. Munich, 30 September – 2 October 2026.">
 <link rel="icon" href="{{IMG:favicon.png}}">
-<meta name="theme-color" content="#0E162B">
+<meta name="theme-color" content="#FCFBFA">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Global Passport Series">
 <meta property="og:locale" content="en_GB">
@@ -36,7 +36,7 @@
   --slate:#5B6879;
   --brass:#A9853F;
   --navy:#273D68;
-  --nav:#0E162B;
+  --nav:#FCFBFA;        /* navbar: white-led, per the client's own document */
   --line:rgba(19,35,57,.16);
   --serif:"Newsreader",Georgia,"Times New Roman",serif;
   --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
@@ -61,40 +61,41 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.01em
 /* ---------- nav ---------- */
 nav{
   position:sticky;top:0;z-index:60;background:var(--nav);
-  backdrop-filter:saturate(140%) blur(6px);border-bottom:1px solid rgba(255,255,255,.12);
+  backdrop-filter:saturate(140%) blur(6px);border-bottom:1px solid var(--line);
 }
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;gap:24px}
 nav .mark{display:flex;align-items:center;gap:11px;text-decoration:none;flex-shrink:0}
 nav .mark svg{height:26px;width:auto;opacity:.92;display:block}
-nav .mark svg path{fill:#fff}
-nav .mark span{font-family:var(--serif);color:rgba(255,255,255,.82);font-size:15px;
+nav .mark span{font-family:var(--serif);color:var(--slate);font-size:15px;
   font-style:italic;letter-spacing:.02em;white-space:nowrap}
 nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
 nav a.lnk{
-  color:rgba(255,255,255,.74);text-decoration:none;font-size:14px;letter-spacing:.02em;
+  color:var(--slate);text-decoration:none;font-size:14px;letter-spacing:.02em;
   padding:6px 0;border-bottom:1px solid transparent;transition:color .18s,border-color .18s;
 }
-nav a.lnk:hover,nav a.lnk:focus-visible{color:#fff;border-color:var(--crimson)}
-.navtoggle{display:none;background:none;border:1px solid rgba(255,255,255,.3);color:#fff;
+nav a.lnk:hover,nav a.lnk:focus-visible{color:var(--navy);border-color:var(--crimson)}
+.navtoggle{display:none;background:none;border:1px solid var(--line);color:var(--navy);
   border-radius:2px;padding:6px 11px;font-family:var(--sans);font-size:13px}
 
 /* ---------- hero ---------- */
 .hero{display:grid;grid-template-columns:47% 53%;min-height:calc(100vh - 66px)}
-.hero-copy{background:var(--ink);color:#fff;padding:76px 56px 60px;display:flex;flex-direction:column;justify-content:center}
+.hero-copy{background:var(--paper);color:var(--ink);padding:76px 56px 60px;display:flex;flex-direction:column;justify-content:center}
 .hero-copy .inner{max-width:520px;opacity:0;transform:translateY(14px);animation:rise .9s .12s cubic-bezier(.2,.7,.3,1) forwards}
 @keyframes rise{to{opacity:1;transform:none}}
-.hero h1{font-size:clamp(38px,4.3vw,62px);line-height:1.06;color:#fff;font-weight:300}
-.hero h1 em{font-style:italic;font-weight:300}
+.hero .eyebrow{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--slate);margin-bottom:20px;font-weight:500}
+.hero h1{font-size:clamp(38px,4.3vw,62px);line-height:1.06;color:var(--navy);font-weight:300}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--crimson)}
 .hero .rule{width:64px;height:2px;background:var(--crimson);margin:26px 0}
-.hero p{color:rgba(255,255,255,.76);font-size:18px;max-width:44ch}
+.hero p{color:var(--slate);font-size:18px;max-width:44ch}
 .stamp{
-  margin-top:38px;border:1px solid rgba(255,255,255,.28);padding:20px 22px 18px;
+  margin-top:38px;border:1px solid var(--line);padding:20px 22px 18px;
   max-width:400px;position:relative;
 }
 .stamp:before{content:"";position:absolute;left:-1px;top:-1px;width:34px;height:2px;background:var(--brass)}
-.stamp .k{font-size:12.5px;letter-spacing:.15em;color:rgba(255,255,255,.55)}
-.stamp .city{font-family:var(--serif);font-style:italic;font-size:29px;color:#fff;margin-top:6px;line-height:1.15}
-.stamp .dt{font-size:15px;color:rgba(255,255,255,.8);margin-top:4px}
+.stamp .k{font-size:12.5px;letter-spacing:.15em;color:var(--slate)}
+.stamp .city{font-family:var(--serif);font-style:italic;font-size:29px;color:var(--navy);margin-top:6px;line-height:1.15}
+.stamp .dt{font-size:15px;color:var(--ink);margin-top:4px}
 .hero-photo{position:relative;background:var(--ink-deep) center/cover no-repeat}
 .hero-photo img{width:100%;height:100%;object-fit:cover}
 .hero-photo figcaption{
@@ -105,12 +106,10 @@ nav a.lnk:hover,nav a.lnk:focus-visible{color:#fff;border-color:var(--crimson)}
 /* ---------- sections ---------- */
 section{padding:96px 0}
 section.band{background:var(--grey)}
-section.dark{background:var(--ink);color:#fff}
+
 .head{max-width:760px;margin-bottom:52px}
 .head h2{font-size:clamp(28px,3.1vw,41px);line-height:1.14;margin-top:10px}
 .head p{color:var(--slate);font-size:18px;margin:18px 0 0}
-.dark .head p,.dark .label{color:rgba(255,255,255,.68)}
-.dark h2,.dark h3{color:#fff}
 
 /* about */
 .creed{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--line)}
@@ -151,24 +150,23 @@ section.dark{background:var(--ink);color:#fff}
 .spk .ph img{width:100%;height:100%;object-fit:cover;object-position:center 18%;
   filter:grayscale(1) contrast(1.03);transition:filter .35s ease,transform .5s ease}
 .spk:hover .ph img,.spk:focus-visible .ph img{filter:grayscale(0);transform:scale(1.035)}
-.spk h4{font-family:var(--serif);font-size:17.5px;font-weight:500;margin:12px 0 0;line-height:1.25}
-.dark .spk h4{color:#fff}
-.spk .role{font-size:13px;color:rgba(255,255,255,.6);margin-top:3px;line-height:1.4}
-.spk .more{font-size:12.5px;color:var(--brass);margin-top:7px;letter-spacing:.05em}
-.spk[aria-expanded="true"] .more{color:#fff}
+.spk h4{font-family:var(--serif);font-size:17.5px;font-weight:500;margin:12px 0 0;line-height:1.25;color:var(--navy)}
+.spk .role{font-size:13px;color:var(--slate);margin-top:3px;line-height:1.4}
+.spk .more{font-size:12.5px;color:var(--crimson);margin-top:7px;letter-spacing:.05em}
+.spk[aria-expanded="true"] .more{color:var(--navy)}
 .bio{
-  grid-column:1/-1;background:rgba(255,255,255,.06);border-left:2px solid var(--crimson);
+  grid-column:1/-1;background:var(--grey);border-left:2px solid var(--crimson);
   padding:26px 30px;margin:2px 0 10px;display:none;
 }
 .bio.open{display:block;animation:fade .3s ease}
 @keyframes fade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-.bio h4{font-family:var(--serif);font-size:23px;font-weight:500;margin:0;color:#fff}
-.bio .role{color:var(--brass);font-size:14px;margin:3px 0 14px}
-.bio p{margin:0;color:rgba(255,255,255,.78);max-width:78ch;font-size:16px}
-.bio button{margin-top:16px;background:none;border:1px solid rgba(255,255,255,.35);color:#fff;
+.bio h4{font-family:var(--serif);font-size:23px;font-weight:500;margin:0;color:var(--navy)}
+.bio .role{color:var(--crimson);font-size:14px;margin:3px 0 14px}
+.bio p{margin:0;color:var(--ink);max-width:78ch;font-size:16px}
+.bio button{margin-top:16px;background:none;border:1px solid var(--line);color:var(--ink);
   font:inherit;font-size:13.5px;padding:6px 14px;cursor:pointer}
-.bio button:hover{border-color:#fff}
-.note{margin-top:40px;font-size:15px;color:rgba(255,255,255,.58);border-top:1px solid rgba(255,255,255,.14);padding-top:20px}
+.bio button:hover{border-color:var(--navy)}
+.note{margin-top:40px;font-size:15px;color:var(--slate);border-top:1px solid var(--line);padding-top:20px}
 
 /* programme */
 .prog{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
@@ -216,7 +214,7 @@ section.dark{background:var(--ink);color:#fff}
 .sponsor-why{max-width:620px;margin-top:44px;color:var(--slate)}
 
 /* contact */
-footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
+footer{background:var(--navy);color:#fff;padding:84px 0 44px}
 .contact{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:start}
 .contact h2{font-size:clamp(28px,3vw,40px);color:#fff}
 .contact p{color:rgba(255,255,255,.72);max-width:46ch}
@@ -235,8 +233,8 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
    The site sets no cookies and makes no third-party requests, so this is a
    statement of fact with an acknowledgement, not a consent gate. See BRIEF 7.6. */
 .privacy{
-  position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--nav);
-  border-top:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.78);
+  position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--navy);
+  border-top:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.82);
   padding:18px 0;transform:translateY(101%);transition:transform .4s cubic-bezier(.2,.7,.3,1);
 }
 .privacy.show{transform:none}
@@ -253,7 +251,7 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
 .privacy button.ok{background:var(--crimson);border-color:var(--crimson)}
 .privacy button.ok:hover{background:#b4382f;border-color:#b4382f}
 .privacy-link{background:none;border:0;padding:0;font:inherit;font-size:13px;
-  color:rgba(255,255,255,.5);cursor:pointer;text-decoration:underline;
+  color:rgba(255,255,255,.62);cursor:pointer;text-decoration:underline;
   text-underline-offset:3px}
 .privacy-link:hover{color:rgba(255,255,255,.85)}
 @media(max-width:620px){
@@ -261,7 +259,7 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
   .privacy .btns{width:100%}
   .privacy .btns button{flex:1}
 }
-.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--nav);color:#fff;
+.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--navy);color:#fff;
   padding:12px 18px;text-decoration:none;font-size:14px}
 .skip:focus{left:0}
 :focus-visible{outline:2px solid var(--brass);outline-offset:3px}
@@ -278,10 +276,11 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
   body{font-size:16.5px}
   .wrap{padding:0 22px}
   section{padding:70px 0}
-  nav ul{position:absolute;top:66px;left:0;right:0;background:var(--ink-deep);flex-direction:column;
-    gap:0;padding:8px 22px 18px;display:none;border-bottom:1px solid rgba(255,255,255,.14)}
+  nav ul{position:absolute;top:66px;left:0;right:0;background:var(--nav);flex-direction:column;
+    gap:0;padding:8px 22px 18px;display:none;border-bottom:1px solid var(--line);
+    box-shadow:0 14px 24px rgba(19,35,57,.08)}
   nav ul.open{display:flex}
-  nav ul li{border-top:1px solid rgba(255,255,255,.1)}
+  nav ul li{border-top:1px solid var(--line)}
   nav a.lnk{display:block;padding:12px 0}
   .navtoggle{display:block}
   .hero{grid-template-columns:1fr;min-height:0}
@@ -327,6 +326,7 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
 <header class="hero" id="top">
   <div class="hero-copy">
     <div class="inner">
+      <div class="eyebrow">An invitation-only circuit for global families</div>
       <h1>Summits for families,<br><em>by families.</em></h1>
       <div class="rule"></div>
       <p>A small number of intimate, invitation-only gatherings across the world, built on a rare set of relationships with families, entrepreneurs and global leaders.</p>
@@ -569,7 +569,7 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
   </div>
 </section>
 
-<section id="speakers" class="dark">
+<section id="speakers">
   <div class="wrap">
     <div class="head">
       <div class="label">Past participants and speakers</div>
@@ -581,7 +581,7 @@ footer{background:var(--ink-deep);color:#fff;padding:84px 0 44px}
   </div>
 </section>
 
-<section id="sponsors">
+<section id="sponsors" class="band">
   <div class="wrap">
     <div class="head">
       <div class="label">Global sponsors 2026</div>
