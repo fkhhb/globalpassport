@@ -1105,3 +1105,41 @@ choosing the coloured mark, and with it the light bar. That closes the question:
 Build drops 4.33 MB → 4.14 MB. Re-verified: 20 contrast pairs all AA (lowest 5.49:1),
 zero CSP violations and zero errors across all four runs, no overflow at any breakpoint.
 
+---
+
+## 20. Changelog — past events lose their dates; Newport pending
+
+**Dates are off every past event.** The client, asked whether Newport had a date:
+*"Ne war nur past Event" … "Kann man bei past events generell rauslassen"*. So London
+(18–19 June 2025) and Palm Beach (17–19 February 2026) lost theirs too, joining Dallas,
+New York and Paris which never had any (§10).
+
+All six past cards now read tag + city, and **Munich is the only card carrying a date** —
+which is the right emphasis anyway: the one summit a visitor can still attend is the one
+with a date on it. This supersedes §10's note about adding years back if they surface;
+the client has since said they are not wanted.
+
+**Newport, Rhode Island is requested and not yet in.** Four candidates generated with
+Higgsfield (`nano_banana_pro`, 2400×1792, 4:3, 2 credits, preflighted). The prompt names
+the Claiborne Pell Newport Bridge, the harbour and the Gilded Age mansion rooflines
+explicitly, per §8's rule that generated cityscapes must be told which landmarks matter.
+
+**They cannot be fetched into the repo.** `*.cloudfront.net`, where Higgsfield serves its
+output, is denied by this environment's egress policy, and `/root/.ccr/README.md` is
+explicit that such denials are to be reported rather than routed around. §13 already
+recorded this; it has not changed. The loop stays: generate here → client picks and
+downloads → client drops the file into `assets/img/` → card wired in.
+
+**The card was deliberately not added yet.** A card referencing a missing file fails
+`build.py` outright, and one with an empty image slot would show a grey hole among five
+photographs on a live page. Better to add it complete. When the file lands:
+
+1. `assets/img/45-newport-rhode-island.jpg`
+2. an `<article class="ev past">` before Dallas, with `<div class="tag">Past</div>`,
+   `<h3>Newport, Rhode Island</h3>` and **no** `.when` line
+3. add it to `assets/manifest.json`
+
+Whoever does it should check the frame against the real place first — the bridge is a
+suspension span, and Newport's harbour is full of sailing yachts rather than motor
+cruisers. §8: generated cityscapes get landmarks wrong by default, not by exception.
+
