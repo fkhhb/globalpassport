@@ -20,8 +20,10 @@ Summits to date and planned:
 | 18–19 June 2025 | London | past |
 | 17–19 February 2026 | Palm Beach | past |
 | **30 September – 2 October 2026** | **Munich** | **next** |
-| November 2026 | United Arab Emirates | upcoming |
-| 2027 | Salzburg | upcoming |
+| November 2026 | United Arab Emirates | *removed from the site, §19* |
+| 2027 | Salzburg | *removed from the site, §19* |
+
+Dallas, New York and Paris were later added as past summits with no dates (§10).
 
 The current artefact is a **single self-contained HTML file** with every image
 embedded as base64. It is distributed by sending that one file over WhatsApp to
@@ -240,7 +242,8 @@ change it without being asked.
 
 **Colour rules learned the hard way:**
 
-- **The navbar is now white** (`--nav:#FCFBFA`), superseding the earlier `#0E162B`.
+- **The navbar is white** (`--nav:#FCFBFA`) — set here, reverted to navy in §15, and set
+  back to white in §19 when the client chose the coloured mark over the dark bar.
   That hex had been specified by the client and is why the bar is opaque rather than
   the original `rgba(12,23,39,.97)` with a backdrop blur — at 97% the scrolling
   content behind tints it, so "exact" is only achievable opaque. That reasoning still
@@ -1052,4 +1055,53 @@ violations and zero errors across all four runs (single file over `file://`, hos
 390@3x / 1440@2x / 2560@2x), no horizontal overflow at any breakpoint. The reverted
 logo rules are byte-identical to the pre-attempt version, checked with `diff` against
 the file in git rather than by eye.
+
+---
+
+## 19. Changelog — white header with the coloured mark; three removals
+
+### The header, resolved
+
+§18 concluded that a coloured logo and a navy navbar are mutually exclusive. The client
+then sent a screenshot of their own header and asked for "Header so mit den Farben" —
+choosing the coloured mark, and with it the light bar. That closes the question:
+
+- `--nav` back to `#FCFBFA`, `theme-color` with it, nav links slate → navy on hover with
+  the crimson underline, toggle and drawer restyled for a light bar (the drawer needs the
+  shadow again; it never did while dark).
+- **The `fill:#fff` override is gone.** The mark renders in the `#AD2625` / `#203D6A` it
+  actually carries — verified in the browser, not assumed.
+- **The wordmark is now in the navbar**, matching the reference: mark, then "Global
+  Passport Series" in navy serif with "FOR FAMILIES, BY FAMILIES" in letterspaced caps
+  beneath. It replaces the single italic tagline line.
+
+  It is **live text, not a raster** — selectable, translatable, sharp at any size, and no
+  extra image bytes. The supplied lockup PNG would have been a 480×295 file rendered at
+  30px.
+
+  Measured at every width, because the mark block is now much wider: the menu still
+  clears it by 254px at 1440, 154px at 1080 and **24px at 920 and 870** — the tightest
+  point, just above the 860px drawer breakpoint. No overflow anywhere.
+
+### Three removals, all client-requested
+
+- **The United Arab Emirates and Salzburg cards** are gone from the calendar *and* from
+  the footer event list, which would otherwise have contradicted the calendar. Six cards
+  remain: five past, plus Munich in colour. The image files stay in `assets/img/` —
+  unreferenced assets are not copied into the hosted build, so they cost nothing, and the
+  events may return.
+- **The detailed three-day programme** is gone from the Munich section, with its `.prog`
+  and `.day` CSS. What remains is the eyebrow, "Three days of closed-door sessions,
+  dinners and Oktoberfest", and the paragraph — which still reads as a complete summary.
+
+  Note this also removes the session times and dress codes. §2.1 had listed those among
+  the things that *stay* when the venue names go; that was a redaction judgement, and this
+  is the client overriding it on editorial grounds. Nothing about §2.1's actual constraint
+  changes.
+- **A dead 52px margin** surfaced by the above: `.head` carries `margin-bottom:52px` to
+  separate it from the section body, and Munich no longer has one. Added
+  `.head:last-child{margin-bottom:0}` rather than special-casing that section.
+
+Build drops 4.33 MB → 4.14 MB. Re-verified: 20 contrast pairs all AA (lowest 5.49:1),
+zero CSP violations and zero errors across all four runs, no overflow at any breakpoint.
 

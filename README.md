@@ -39,7 +39,7 @@ The site exists in two shapes, produced from the same template and assets:
 
 | | shape | HTML | for |
 |---|---|---|---|
-| `build.py` | **one self-contained file**, every image and font inlined as base64 | 4.3 MB | sending to guests over WhatsApp; works with no network |
+| `build.py` | **one self-contained file**, every image and font inlined as base64 | 4.1 MB | sending to guests over WhatsApp; works with no network |
 | `build.py --linked DIR` | `index.html` + real asset files | 64 KB | hosting |
 
 The single file is the right answer for a file you hand someone and the wrong answer
@@ -189,7 +189,9 @@ the text goes through `textContent`, so entities would render literally.
 
 **Colours** → the `:root` block. `--crimson` **#AD2625** and `--navy` **#203D6A** are picked
 from the logo files. The nav SVG carries the same two values as inline fills — **change
-them together** or the mark and the accents drift apart. Navy headlines on paper measure
+them together** or the mark and the accents drift apart. The navbar is white so the mark
+can show those colours: on a navy bar the logo's own navy `P` measures 1.6:1 and vanishes,
+so a coloured mark and a dark bar cannot coexist (BRIEF §18–19). Navy headlines on paper measure
 10.5:1, crimson text 6.6:1, white on the navy bar 10.8:1. See BRIEF §5 for how these were
 arrived at (three corrections; every eyeballed value was wrong).
 
