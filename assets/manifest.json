@@ -1,5 +1,29 @@
 [
  {
+  "path": "assets/img/01-newport-cliff-walk-hero.jpg",
+  "w": 2400,
+  "h": 1792,
+  "kb": 955.4
+ },
+ {
+  "path": "assets/img/01-newport-cliff-walk-hero-w1600.jpg",
+  "w": 1600,
+  "h": 1195,
+  "kb": 440.9
+ },
+ {
+  "path": "assets/img/01-newport-cliff-walk-hero-w2000.jpg",
+  "w": 2000,
+  "h": 1493,
+  "kb": 632.3
+ },
+ {
+  "path": "assets/img/01-newport-cliff-walk-hero-w1000.jpg",
+  "w": 1000,
+  "h": 747,
+  "kb": 169.5
+ },
+ {
   "path": "assets/fallback-silhouettes/42-dallas.svg",
   "w": null,
   "h": null,
@@ -19,30 +43,6 @@
   "h": null,
   "kb": 1.1,
   "note": "drawn SVG fallback"
- },
- {
-  "path": "assets/img/01-hero-w1000.jpg",
-  "w": 1000,
-  "h": 545,
-  "kb": 122.0
- },
- {
-  "path": "assets/img/01-hero-w1600.jpg",
-  "w": 1600,
-  "h": 872,
-  "kb": 249.2
- },
- {
-  "path": "assets/img/01-hero-w2400.jpg",
-  "w": 2400,
-  "h": 1308,
-  "kb": 508.7
- },
- {
-  "path": "assets/img/01-marienplatz-and-the-frauenkirche-at-dusk-mun.jpg",
-  "w": 3720,
-  "h": 2028,
-  "kb": 1018.7
  },
  {
   "path": "assets/img/02-john-blaffer-royall-at-a-global-passport-ser.jpg",
@@ -297,10 +297,10 @@
   "kb": 131.0
  },
  {
-  "path": "assets/img/45-newport-cliff-walk-rhode-island.jpg",
+  "path": "assets/img/45-newport-rhode-island.jpg",
   "w": 1200,
   "h": 900,
-  "kb": 329.3
+  "kb": 268.6
  },
  {
   "path": "assets/img/favicon.png",

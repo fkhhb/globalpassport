@@ -71,9 +71,11 @@ ANY_PLACEHOLDER = re.compile(r"\{\{(?:IMG|FONT|CSP|FONT_PRELOAD|HERO_SRCSET):[^}
 #                   the stylesheet has been parsed and the fonts discovered.
 #                   Pointless with data: URIs, hence linked-only.
 # ---------------------------------------------------------------------------
-HERO_FILE = "01-marienplatz-and-the-frauenkirche-at-dusk-mun.jpg"
-HERO_VARIANTS = [("01-hero-w1000.jpg", 1000), ("01-hero-w1600.jpg", 1600),
-                 ("01-hero-w2400.jpg", 2400), (HERO_FILE, 3720)]
+HERO_FILE = "01-newport-cliff-walk-hero.jpg"
+HERO_VARIANTS = [("01-newport-cliff-walk-hero-w1000.jpg", 1000),
+                 ("01-newport-cliff-walk-hero-w1600.jpg", 1600),
+                 ("01-newport-cliff-walk-hero-w2000.jpg", 2000),
+                 (HERO_FILE, 2400)]
 # The hero panel is 100vw on phones/tablets and 53vw of the viewport above 860px.
 HERO_SIZES = "(max-width: 860px) 100vw, 53vw"
 PRELOAD_FONTS = ["newsreader-latin-300.woff2", "newsreader-latin-300italic.woff2",

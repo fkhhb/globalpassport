@@ -109,17 +109,25 @@ real network):
 
 | | requests | bytes before `load` | hero image |
 |---|---|---|---|
-| hosted, phone 390px @3× | 11 | **0.56 MB** | 249 KB (1600w variant) |
-| hosted, laptop 1440px @2× | 10 | 0.54 MB | 249 KB (1600w variant) |
-| hosted, before the srcset (previous round) | 11 | 1.31 MB | 1019 KB (full) |
-| single file, any device | 1 | 4.33 MB | 1019 KB (inlined) |
+| hosted, phone 390px @3× | 9 | **0.61 MB** | 438 KB (1600w variant) |
+| hosted, laptop 1440px @2× | 8 | 0.59 MB | 438 KB (1600w variant) |
+| hosted, tablet 860px @2× | 9 | 0.79 MB | 628 KB (2000w variant) |
+| single file, any device | 1 | 4.41 MB | 955 KB (inlined) |
+
+The Newport hero encodes larger than the Munich one it replaced (438 KB against 249 KB at
+1600w) and no amount of tuning closes that: surf, foliage and dense rooftops are
+high-frequency detail, where a smooth dusk sky was not. Quality 0.76 rather than 0.82 buys
+back ~16% with no visible difference at these sizes; below about 0.7 the surf starts to
+ring.
 
 What does the work:
 
-- **Responsive hero.** The hero is the LCP element and, at 3720×2028 / 1 MB, a third of
+- **Responsive hero.** The hero is the LCP element and, at 2400×1792 / 955 KB, a third of
   every image byte on the page. The hosted build emits `srcset` over four widths
-  (1000 / 1600 / 2400 / 3720) with `sizes="(max-width:860px) 100vw, 53vw"`; the browser
-  picks the smallest that covers its box. A 4K display still gets the full original.
+  (1000 / 1600 / 2000 / 2400) with `sizes="(max-width:860px) 100vw, 53vw"`; the browser
+  picks the smallest that covers its box. The 2000 rung is not decoration: 860px is where
+  the hero goes full width, so an 860px screen at 2× asks for ~1720px and without it jumps
+  straight to the full-size file.
   Variants come from `tools/make_hero_variants.js` (Chromium canvas resample — conventional,
   invents nothing); `build.py` emits a srcset only for variants that exist, so a checkout
   without them still builds. **Regenerate them when the hero photograph changes.**
@@ -127,7 +135,7 @@ What does the work:
   in the right face on first paint instead of after the stylesheet is parsed.
 - `loading="lazy"` + `decoding="async"` on every below-the-fold image; `fetchpriority="high"`
   on the hero. Inert in the single file, where every image is already local.
-- 64 KB of HTML instead of 4.3 MB, so first paint does not wait for images.
+- 64 KB of HTML instead of 4.4 MB, so first paint does not wait for images.
 
 Deliberately not done: minification (GitHub Pages gzips; the gain is ~15 KB and the risk
 is not worth it) and WebP (no encoder available in the build environment; JPEG at these
@@ -160,7 +168,7 @@ not discoverable by searching for the city and the dates.
 ```
 index.template.html      markup + inline CSS/JS, {{IMG:}} / {{FONT:}} / {{CSP}} / {{HERO_SRCSET}} / {{FONT_PRELOAD}}
 build.py                 inliner, CSP generator, redaction audit
-assets/img/              49 images (46 + 3 hero srcset variants)
+assets/img/              49 images (45 + hero + 3 hero srcset variants)
 assets/fonts/            8 woff2 faces + OFL.txt licences
 assets/manifest.json     path, dimensions, byte size for every asset
 assets/fallback-silhouettes/   drawn SVG city silhouettes (Dallas, New York, Paris)
@@ -238,10 +246,11 @@ on both builds, 20 colour pairs all AA, no horizontal overflow or console errors
 
 **Blocked on files from the client:**
 
-1. **Autumn Munich hero.** The client has chosen a photograph (a real one — better than
-   any generated candidate). It has been shown, not yet supplied as a file. Once it is:
-   drop it into `assets/img/`, point the hero `{{IMG:}}` at it, re-run
-   `make_hero_variants.js`, update `HERO_FILE` in `build.py`.
+1. **Hero photograph.** The hero is currently the Newport aerial, at the client's request.
+   An autumn Munich photograph was chosen earlier and never supplied as a file; if it
+   arrives and the client wants it back, drop it into `assets/img/`, point the hero
+   `{{IMG:}}` at it, update `HERO_FILE` in `build.py` and re-run `make_hero_variants.js`
+   (the tool derives variant filenames from the source, so nothing else needs editing).
 2. **Logo files.** Colour values were extracted; the PNG/SVG files themselves have not
    arrived. `favicon.png` is a 480×295 rectangle being used as a square icon.
 3. Willkie Farr & Gallagher logo — the cell is typeset text as a placeholder.

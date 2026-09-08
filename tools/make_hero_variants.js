@@ -6,10 +6,14 @@
  * Python; it emits a srcset only for variant files that exist, so a checkout
  * without them still builds. Run this when the hero photograph changes.
  *
- * Why it exists: the hero is the LCP element and, at 3720x2028 / ~1 MB, about a
- * third of every image byte on the page. A 390px phone at 3x needs ~1200px of
- * width, not 3720. With a srcset the browser picks the smallest variant that
- * covers its box; measured, the 1600px variant is ~250 KB.
+ * Why it exists: the hero is the LCP element and the largest single image on the
+ * page. A 390px phone at 3x needs ~1200px of width, not the full source. With a
+ * srcset the browser picks the smallest variant that covers its box.
+ *
+ * Widths are 1000 / 1600 / 2000, with the source itself as the top rung. The
+ * 2000 rung exists because 860px is a real breakpoint here: the hero goes full
+ * width below it, so an 860px viewport at 2x asks for ~1720px and would
+ * otherwise jump straight to the full-size file.
  *
  * Why Chromium and not PIL/ImageMagick: neither is available in the build
  * environment this repo is maintained from, Playwright's Chromium is. Canvas
@@ -26,9 +30,12 @@ const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path');
 
 const ROOT   = path.resolve(__dirname, '..');
-const SRC    = process.argv[2] || path.join(ROOT, 'assets/img/01-marienplatz-and-the-frauenkirche-at-dusk-mun.jpg');
-const WIDTHS = [1000, 1600, 2400];      // the source itself is the largest candidate
-const QUALITY = 0.82;
+const SRC    = process.argv[2] || path.join(ROOT, 'assets/img/01-newport-cliff-walk-hero.jpg');
+const WIDTHS = [1000, 1600, 2000];      // the source itself is the largest candidate
+// 0.76, not 0.82: this hero is a detailed coastline (surf, foliage, rooftops)
+// and encodes about 20% larger than a smooth dusk cityscape at the same number.
+const QUALITY = 0.76;
+const BASE   = path.basename(SRC, path.extname(SRC));
 const CHROME = process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 
 (async () => {
@@ -46,7 +53,7 @@ const CHROME = process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium-1194/chro
       return { h, data: c.toDataURL('image/jpeg', q).split(',')[1] };
     }, { src, w, q: QUALITY });
     if (!r) { console.log(`  skip ${w}w (source is not wider than that)`); continue; }
-    const out = path.join(ROOT, 'assets/img', `01-hero-w${w}.jpg`);
+    const out = path.join(ROOT, 'assets/img', `${BASE}-w${w}.jpg`);
     const buf = Buffer.from(r.data, 'base64');
     fs.writeFileSync(out, buf);
     console.log(`  ${path.basename(out)}  ${w}x${r.h}  ${(buf.length / 1024).toFixed(0)} KB`);

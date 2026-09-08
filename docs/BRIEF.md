@@ -1194,3 +1194,44 @@ so nothing is lost for a screen-reader user — the caption was a visible duplic
 The founder portrait keeps its caption; that one identifies a person and is not decorative.
 
 The dead `.hero-photo figcaption` rule was deleted with it rather than left behind.
+
+---
+
+## 23. Changelog — Newport becomes the hero
+
+The §22 reading was wrong. *"Picture should be all the way to the top left instead of:
+Marienplatz, Munich"* did not mean "remove the caption" — it meant **put the Newport
+picture in the hero, instead of the Munich one**. The client said so plainly on the next
+pass: *"Header Foto ist noch Munich, das muss bitte auch Newport sein."* The caption
+removal in §22 stands on its own merits and was not reverted.
+
+**Source.** The 2400×1792 PNG recovered from commit `57e3551` — the same frame the client
+picked, at full resolution rather than the 1200px calendar derivative. Encoded to
+`01-newport-cliff-walk-hero.jpg` and resampled to 1000 / 1600 / 2000 variants.
+
+**Quality 0.76, not 0.82.** This photograph is high-frequency almost everywhere — breaking
+surf, foliage, dense rooftops — and encodes about 70% larger than the Munich dusk shot at
+the same setting. A sweep put 1600w at 523 KB (0.82), 438 KB (0.76) and 332 KB (0.62);
+0.76 is where the saving stops being free. The LCP is still up from 249 KB to 438 KB and
+that is simply what this picture costs.
+
+**A 2000w rung was added.** 860px is a real breakpoint: below it the hero goes full width,
+so an 860px viewport at 2× asks for ~1720px. With rungs at 1000 / 1600 / 2400 it jumped
+straight to the 955 KB original. Measured before and after: 955 KB → 628 KB at that width.
+
+**`tools/make_hero_variants.js` was updated to match**, rather than left describing the
+old Munich file: new default source, widths, quality, and variant names derived from the
+source basename. Re-running it now reproduces exactly what is committed. The shipped
+variants are the tool's own output, not the marginally cleaner ones resampled from the
+PNG — a 3 KB difference is not worth a repo whose documented tool cannot reproduce it.
+
+**The Munich hero and its three variants were deleted** (~1.9 MB). Nothing referenced them
+once the hero changed; the Munich calendar card uses `11-munich.jpg` and is unaffected.
+They are recoverable from history if the client changes their mind.
+
+**The calendar card was re-cropped so the page does not show one photograph twice.** The
+hero and the Newport card were the same frame. The card is now a townscape crop of it —
+mansion, rooftops, church spires, harbour with sailboats — which sits with the Dallas, New
+York and Paris skylines rather than reading as a shrunken copy of the hero. Renamed back
+to `45-newport-rhode-island.jpg` (it is no longer the Cliff Walk view) and the alt text
+rewritten with it, for the same reason as §21.
