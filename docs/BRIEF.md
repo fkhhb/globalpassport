@@ -1014,26 +1014,28 @@ added. `assets/manifest.json` gained the three hero variants (51 entries).
 
 ---
 
-## 18. Changelog — coloured logo on a plate, colour back on the future summits
+## 18. Changelog — coloured-logo attempt (reverted), colour back on the future summits
 
-**The logo shows its real colours in both corners.** The client asked for the mark
-top-left and the lockup bottom-left to be coloured rather than reversed to white.
+**The coloured logo was tried and reverted. Do not try it again without changing the
+bar colour first.** The client asked for the mark top-left and the lockup bottom-left in
+colour rather than reversed to white, saw the result, and rejected it on sight.
 
-Both sit on the brand navy, and §15 records why a coloured mark cannot: the logo's own
-navy `P` measures **1.6:1** against that bar and simply disappears. Checked the assets
-before assuming — `logo-footer.png` and `favicon.png` are both RGBA and **72% fully
-transparent**, so removing the white-out filter really would have dropped the mark
-straight onto navy.
+The constraint that forced the shape of the attempt is in §15: both marks sit on the
+brand navy, where the logo's own navy `P` measures **1.6:1** and disappears. A coloured
+mark cannot sit on one of its own colours. (Confirmed against the files rather than
+assumed — `logo-footer.png` and `favicon.png` are both RGBA and **72% fully transparent**,
+so removing the white-out filter really would have dropped the mark onto bare navy.)
 
-So each gets a **paper plate** to sit on: `background:var(--paper)` with padding and a
-2px radius, matching the site's otherwise square geometry. The nav mark keeps its real
-inline fills (`#AD2625` / `#203D6A`) — the `fill:#fff` override is gone — and the footer
-lockup drops `filter:brightness(0) invert(1)`.
+The only way to show colour on a navy bar is therefore to give the mark its own light
+ground — a paper plate. That was built, proportioned by eye (the footer plate needed
+56px, not 46px, before the wordmark under the monogram became legible) and verified to
+fit at every breakpoint. It still read as a sticker pasted onto the bar, and it was
+reverted to `fill:#fff` in the nav and `filter:brightness(0) invert(1)` in the footer.
 
-Sized by looking rather than by guessing: the footer plate was first built at 46px and
-the wordmark under the monogram was illegible, so it went to 56px with 14/20 padding.
-The nav plate is 42px tall inside a 66px bar, verified to sit inside it at 390, 860,
-1080 and 1440px.
+**The lesson worth keeping:** a coloured logo and a navy navbar are mutually exclusive.
+If the client wants the mark in its real red and navy, the bar has to go light — which
+is what the white-navbar version in §14 did, and the reason the mark showed its true
+fills there. Reversed-to-white on navy is the trade for a blue header, not an oversight.
 
 **Colour is back on the three future summits.** The client picked out Munich, the UAE
 and Salzburg by screenshot: past summits stay monochrome and faded, everything still to
@@ -1045,7 +1047,9 @@ back onto `.ev.past img` — and it is the better one. Colour now carries the pa
 split by itself, so the row reads at a glance without the reader parsing the tags, and
 the three cards a visitor actually cares about are the ones that draw the eye.
 
-Re-verified after both changes: zero CSP violations and zero errors across all four
-runs (single file over `file://`, hosted at 390@3x / 1440@2x / 2560@2x), no horizontal
-overflow at any breakpoint.
+Re-verified after the calendar change and again after the logo revert: zero CSP
+violations and zero errors across all four runs (single file over `file://`, hosted at
+390@3x / 1440@2x / 2560@2x), no horizontal overflow at any breakpoint. The reverted
+logo rules are byte-identical to the pre-attempt version, checked with `diff` against
+the file in git rather than by eye.
 
