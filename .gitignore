@@ -1,5 +1,6 @@
 # Build output — regenerate with `python3 build.py`
 dist/
+_site/
 
 # NEVER COMMIT — these contain the redacted venue names and the plain
 # contact address. See docs/BRIEF.md §2.3: git history is permanent.

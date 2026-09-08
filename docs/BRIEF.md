@@ -1149,3 +1149,33 @@ wanted, and 7 MB has no business in every clone.
 cruisers, shingled wharf buildings, and a Gilded Age mansion on the headland. It reads as
 Newport rather than generic New England.
 
+
+---
+
+## 21. Changelog — Newport reshot from the client's reference
+
+The client sent a reference photograph — an aerial along the Cliff Walk, mansion lawns
+above the rocks, surf breaking below — with "this one is great", and asked for a
+generation in that shape. Four candidates went out through Higgsfield; the client picked
+one, downloaded it from the widget and committed the raw 2400×1792 / 10.3 MB PNG straight
+to `assets/img/`, the same transfer route §20 records.
+
+Converted through the Chromium canvas resample to **1200×900, 329 KB**, matching the
+sizing decision in §20 (1200px wide so the ≤480px single-column layout has real pixels at
+2×, rather than reproducing the 880px flaw catalogued in §7.1). The raw PNG is out of the
+tree again; it stays recoverable from commit `57e3551`.
+
+**Renamed, and the alt text rewritten with it.** The previous frame was a harbour view, so
+`45-newport-rhode-island.jpg` / *"Newport Harbor, Rhode Island"* described it accurately.
+This one is a coastline aerial and neither did any more. It is now
+`45-newport-cliff-walk-rhode-island.jpg`, alt *"The Cliff Walk and the Atlantic shoreline
+at Newport, Rhode Island"*. An alt attribute that describes the previous picture is worse
+than a generic one: a screen-reader user has no way to notice it is wrong.
+
+Verified in Chromium at 1440px: correct file loading at its native 1200×900, `grayscale(1)`
+and `opacity .72` applied by the `.ev.past` rule like every other past summit, no console
+errors, no CSP violations, no horizontal overflow.
+
+`_site/` was added to `.gitignore` alongside `dist/`. Both are build output; only `dist/`
+had been listed, so a `--linked` build left an untracked directory sitting in
+`git status` waiting to be committed by accident.

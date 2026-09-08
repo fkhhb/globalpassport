@@ -160,7 +160,7 @@ not discoverable by searching for the city and the dates.
 ```
 index.template.html      markup + inline CSS/JS, {{IMG:}} / {{FONT:}} / {{CSP}} / {{HERO_SRCSET}} / {{FONT_PRELOAD}}
 build.py                 inliner, CSP generator, redaction audit
-assets/img/              48 images (45 + 3 hero srcset variants)
+assets/img/              49 images (46 + 3 hero srcset variants)
 assets/fonts/            8 woff2 faces + OFL.txt licences
 assets/manifest.json     path, dimensions, byte size for every asset
 assets/fallback-silhouettes/   drawn SVG city silhouettes (Dallas, New York, Paris)
@@ -169,7 +169,7 @@ tools/make_hero_variants.js    hero srcset variants (optional dev tool, Node + P
 tools/make_city_silhouettes.py drawn SVG city silhouettes
 .github/workflows/pages.yml    build + audit + deploy to Pages, main only
 redactions.local.txt     plaintext denylist — GITIGNORED, never commit
-dist/                    single-file build output (gitignored)
+dist/ _site/             build output, single-file and hosted (both gitignored)
 docs/BRIEF.md            full handover: constraints, decisions, every change and why
 SECURITY.md              what the page enforces, what Pages cannot, what the repo keeps out
 ```
