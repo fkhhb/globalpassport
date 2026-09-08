@@ -1179,3 +1179,18 @@ errors, no CSP violations, no horizontal overflow.
 `_site/` was added to `.gitignore` alongside `dist/`. Both are build output; only `dist/`
 had been listed, so a `--linked` build left an untracked directory sitting in
 `git status` waiting to be committed by accident.
+
+---
+
+## 22. Changelog — the hero caption comes off
+
+Client: *"picture should be all the way to the top left instead of: Marienplatz, Munich."*
+The `<figcaption>` and its dark scrim were covering the bottom-left corner of the hero
+photograph — on a phone, where the picture is the top element, that is the corner you look
+at first. Both are gone; the photograph now runs edge to edge.
+
+The `alt` text still names the place (*"Marienplatz and the Frauenkirche at dusk, Munich"*),
+so nothing is lost for a screen-reader user — the caption was a visible duplicate of it.
+The founder portrait keeps its caption; that one identifies a person and is not decorative.
+
+The dead `.hero-photo figcaption` rule was deleted with it rather than left behind.
