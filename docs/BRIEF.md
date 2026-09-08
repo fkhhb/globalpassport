@@ -1130,16 +1130,22 @@ explicit that such denials are to be reported rather than routed around. §13 al
 recorded this; it has not changed. The loop stays: generate here → client picks and
 downloads → client drops the file into `assets/img/` → card wired in.
 
-**The card was deliberately not added yet.** A card referencing a missing file fails
-`build.py` outright, and one with an empty image slot would show a grey hole among five
-photographs on a live page. Better to add it complete. When the file lands:
+**Landed.** The client picked a frame, downloaded it and committed it straight to
+`assets/img/` — which is the working answer to the CDN block: GitHub is reachable from
+here, so the repo itself is the transfer channel. Worth remembering for the next asset.
 
-1. `assets/img/45-newport-rhode-island.jpg`
-2. an `<article class="ev past">` before Dallas, with `<div class="tag">Past</div>`,
-   `<h3>Newport, Rhode Island</h3>` and **no** `.when` line
-3. add it to `assets/manifest.json`
+It arrived as the raw 2400×1792 / 7.29 MB PNG under its Higgsfield filename. Converted
+to `45-newport-rhode-island.jpg`, **1200×900, 247 KB**, cover-cropped to 4:3 through the
+same Chromium canvas resample the hero variants use.
 
-Whoever does it should check the frame against the real place first — the bridge is a
-suspension span, and Newport's harbour is full of sailing yachts rather than motor
-cruisers. §8: generated cityscapes get landmarks wrong by default, not by exception.
+1200×900 rather than the 880×660 of its neighbours on purpose: §7.1 records that the
+calendar images are undersized for the ≤480px single-column layout, which needs 872px at
+2×. There was no reason to reproduce a known flaw in a new asset. The raw PNG was removed
+from the tree — it stays recoverable from commit `81c80d3` if a different crop is ever
+wanted, and 7 MB has no business in every clone.
+
+**Checked against the real place before shipping**, per §8: twin-towered suspension span
+(the Pell Bridge, not a girder crossing), classic sailing yachts rather than motor
+cruisers, shingled wharf buildings, and a Gilded Age mansion on the headland. It reads as
+Newport rather than generic New England.
 
