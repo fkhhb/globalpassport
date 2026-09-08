@@ -52,15 +52,54 @@ jobs:
       - name: Audit redactions
         run: python3 build.py --check
 
-      # --linked, not the single-file artefact. The WhatsApp build inlines 4.3 MB
+      # --linked, not the single-file artefact. The WhatsApp build inlines 4.4 MB
       # of base64 that must all arrive before anything paints and that no browser
       # can cache per-asset. Hosted, the HTML is ~64 KB and images stream in.
+      #
+      # Two repository variables control the launch, so neither step needs a code
+      # change (Settings -> Secrets and variables -> Actions -> Variables):
+      #
+      #   CUSTOM_DOMAIN   e.g. www.globalpassportseries.com. Writes the CNAME file
+      #                   and sets <link rel=canonical>/og:url. Set it only once
+      #                   DNS resolves: a CNAME file makes Pages serve the site
+      #                   from that hostname alone, so setting it early takes the
+      #                   fkhhb.github.io preview link down.
+      #   PUBLIC_LAUNCH   'true' drops --noindex and the disallow-all robots.txt.
+      #                   Unset or anything else keeps the preview posture. GPS is
+      #                   invitation-only; this is the client's call, not ours.
       - name: Build
+        env:
+          CUSTOM_DOMAIN: ${{ vars.CUSTOM_DOMAIN }}
+          PUBLIC_LAUNCH: ${{ vars.PUBLIC_LAUNCH }}
         run: |
-          python3 build.py --linked _site --noindex
-          printf 'User-agent: *\nDisallow: /\n' > _site/robots.txt
+          set -e
+          ARGS="--linked _site"
+          [ -n "$CUSTOM_DOMAIN" ] && ARGS="$ARGS --canonical https://$CUSTOM_DOMAIN"
+          if [ "$PUBLIC_LAUNCH" = "true" ]; then
+            echo "posture: PUBLIC (indexable)"
+          else
+            ARGS="$ARGS --noindex"
+            echo "posture: preview (noindex)"
+          fi
+          python3 build.py $ARGS
+
+          if [ "$PUBLIC_LAUNCH" = "true" ]; then
+            printf 'User-agent: *\nAllow: /\n' > _site/robots.txt
+          else
+            printf 'User-agent: *\nDisallow: /\n' > _site/robots.txt
+          fi
+
+          # Pages reads CNAME from the artefact, not from the repo, because this
+          # deploys from Actions rather than from a branch.
+          if [ -n "$CUSTOM_DOMAIN" ]; then
+            printf '%s\n' "$CUSTOM_DOMAIN" > _site/CNAME
+            echo "custom domain: $CUSTOM_DOMAIN"
+          fi
 
       - name: Confirm the deployed file is clean
+        env:
+          CUSTOM_DOMAIN: ${{ vars.CUSTOM_DOMAIN }}
+          PUBLIC_LAUNCH: ${{ vars.PUBLIC_LAUNCH }}
         run: |
           set -e
           # Strip base64 payloads, then assert on what a reader would actually see.
@@ -68,8 +107,19 @@ jobs:
           if grep -qiE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' /tmp/text.html; then
             echo "::error::a bare email address reached the deploy candidate"; exit 1
           fi
-          grep -q 'name="robots"' _site/index.html \
-            || { echo "::error::noindex tag missing"; exit 1; }
+          if [ "$PUBLIC_LAUNCH" = "true" ]; then
+            grep -q 'name="robots"' _site/index.html \
+              && { echo "::error::PUBLIC_LAUNCH is set but the noindex tag is still there"; exit 1; }
+          else
+            grep -q 'name="robots"' _site/index.html \
+              || { echo "::error::noindex tag missing"; exit 1; }
+          fi
+          if [ -n "$CUSTOM_DOMAIN" ]; then
+            [ "$(cat _site/CNAME)" = "$CUSTOM_DOMAIN" ] \
+              || { echo "::error::CNAME file does not match CUSTOM_DOMAIN"; exit 1; }
+            grep -q "rel=\"canonical\" href=\"https://$CUSTOM_DOMAIN/\"" _site/index.html \
+              || { echo "::error::canonical link missing or points elsewhere"; exit 1; }
+          fi
           echo "clean: $(du -h _site/index.html | cut -f1)"
 
       # NOTE: no `enablement: true`. Creating a Pages site needs the

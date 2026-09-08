@@ -145,21 +145,57 @@ sizes is already within ~20% of it).
 
 ## Deploy
 
-`.github/workflows/pages.yml` builds `--linked --noindex` and deploys to GitHub Pages on
-every push to `main`. Nothing else: the `github-pages` environment accepts the default
-branch only, so a workflow run from any other branch fails at the gate before a single
-step executes.
+`.github/workflows/pages.yml` builds `--linked` and deploys to GitHub Pages on every push
+to `main`. Nothing else: the `github-pages` environment accepts the default branch only, so
+a workflow run from any other branch fails at the gate before a single step executes.
 
 **This is a preview deployment.** GPS is invitation-only, so the page ships with a
 `noindex` meta tag and a disallow-all `robots.txt` — reachable by anyone with the link,
 not discoverable by searching for the city and the dates.
 
-**To launch for real** (client decision, not made yet):
+### The two launch switches
 
-1. Drop `--noindex` and the `robots.txt` line from the workflow.
-2. Add a `CNAME` file containing `www.globalpassportseries.com` to the deploy and point
-   DNS at Pages — or move to a host that can send security headers (see *Security*).
-3. Set `og:url` in the template.
+Both are **repository variables**, not code: *Settings → Secrets and variables → Actions →
+Variables*. They are separate on purpose — a custom domain and public indexing are
+different decisions, and the client may well want the first without the second.
+
+| variable | set it to | what happens |
+|---|---|---|
+| `CUSTOM_DOMAIN` | `www.globalpassportseries.com` | writes the `CNAME` file into the deploy and adds `<link rel="canonical">` + `og:url` |
+| `PUBLIC_LAUNCH` | `true` | drops `--noindex` and ships an allow-all `robots.txt` |
+
+Unset, the build is exactly what it was: preview posture, no custom domain. The verify step
+asserts whichever posture the variables ask for, so a half-applied launch fails the deploy
+rather than shipping.
+
+**Do not set `CUSTOM_DOMAIN` before DNS resolves.** A `CNAME` file makes Pages serve the
+site from that hostname *only* — set it early and `fkhhb.github.io/globalpassport/` starts
+redirecting to a domain that does not answer, which takes the preview link down.
+
+### Pointing the domain at Pages
+
+DNS lives at Squarespace. Add these to the domain's custom records and leave every `MX`
+record alone — the contact address is on this domain, and deleting them kills the mail.
+
+| host | type | value |
+|---|---|---|
+| `@` | A | `185.199.108.153` |
+| `@` | A | `185.199.109.153` |
+| `@` | A | `185.199.110.153` |
+| `@` | A | `185.199.111.153` |
+| `www` | CNAME | `fkhhb.github.io.` |
+
+Then *Settings → Pages → Custom domain* → `www.globalpassportseries.com` → Save, wait for
+the DNS check to go green, and tick **Enforce HTTPS** once the certificate is issued
+(minutes to an hour). Only then set the `CUSTOM_DOMAIN` variable so the CNAME file survives
+the next deploy.
+
+The apex A records exist so `globalpassportseries.com` without the `www` redirects to the
+canonical host rather than failing. Squarespace's DNS has no `ALIAS`/`ANAME` support, which
+is why the apex needs literal A records.
+
+Moving to a host that can send security headers (see *Security*) is still the better
+long-term answer; nothing above forecloses it.
 
 ---
 

@@ -36,6 +36,7 @@ needed and the browser caches them across visits.
 import argparse
 import base64
 import hashlib
+import html as html_mod
 import mimetypes
 import re
 import shutil
@@ -55,7 +56,8 @@ LOCAL_TERMS = ROOT / "redactions.local.txt"
 
 IMG_PLACEHOLDER = re.compile(r"\{\{IMG:([^}]+)\}\}")
 FONT_PLACEHOLDER = re.compile(r"\{\{FONT:([^}]+)\}\}")
-ANY_PLACEHOLDER = re.compile(r"\{\{(?:IMG|FONT|CSP|FONT_PRELOAD|HERO_SRCSET):[^}]*\}\}|\{\{(?:CSP|FONT_PRELOAD|HERO_SRCSET)\}\}")
+ANY_PLACEHOLDER = re.compile(r"\{\{(?:IMG|FONT|CSP|FONT_PRELOAD|HERO_SRCSET|CANONICAL):[^}]*\}\}"
+                             r"|\{\{(?:CSP|FONT_PRELOAD|HERO_SRCSET|CANONICAL)\}\}")
 
 # ---------------------------------------------------------------------------
 # Hosted-build-only tokens. Each expands to "" in the single-file artefact.
@@ -70,6 +72,10 @@ ANY_PLACEHOLDER = re.compile(r"\{\{(?:IMG|FONT|CSP|FONT_PRELOAD|HERO_SRCSET):[^}
 #                   text renders in the right face on first paint instead of after
 #                   the stylesheet has been parsed and the fonts discovered.
 #                   Pointless with data: URIs, hence linked-only.
+# {{CANONICAL}}     <link rel=canonical> + og:url, from --canonical. Empty until
+#                   the site has one real address: a canonical pointing at a
+#                   hostname that is not the one being served is worse than none,
+#                   and the single file has no address at all.
 # ---------------------------------------------------------------------------
 HERO_FILE = "01-newport-cliff-walk-hero.jpg"
 HERO_VARIANTS = [("01-newport-cliff-walk-hero-w1000.jpg", 1000),
@@ -105,6 +111,16 @@ SIZE_WARN_MB = 5.0
 # Deliberately not in index.template.html — baking it into the source would risk
 # shipping a launched site that quietly tells search engines to ignore it.
 NOINDEX_TAG = '<meta name="robots" content="noindex, nofollow">'
+
+
+def canonical_tags(url: str) -> str:
+    """<link rel=canonical> and og:url for the site's real address."""
+    if not url:
+        return ""
+    url = url.rstrip("/") + "/"
+    esc = html_mod.escape(url, quote=True)
+    return (f'<link rel="canonical" href="{esc}">\n'
+            f'<meta property="og:url" content="{esc}">')
 
 # ---------------------------------------------------------------------------
 # Redaction audit
@@ -332,6 +348,10 @@ def main():
     ap.add_argument("--noindex", action="store_true",
                     help="inject a robots noindex meta tag; for preview deploys of "
                          "an invitation-only event, not for the real launch")
+    ap.add_argument("--canonical", metavar="URL", default="",
+                    help="site's real address, e.g. https://www.example.com/ — "
+                         "emits <link rel=canonical> and og:url. Omit until the "
+                         "domain actually resolves")
     ap.add_argument("--linked", metavar="DIR", type=Path,
                     help="hosted build: write DIR/index.html with linked assets "
                          "instead of one self-contained file")
@@ -358,6 +378,9 @@ def main():
     # Hosted-only tokens; empty in the single file.
     html = html.replace("{{HERO_SRCSET}}", hero_srcset(link_dir) if link_dir else "")
     html = html.replace("{{FONT_PRELOAD}}", font_preload() if link_dir else "")
+    # Single file: no address to be canonical about, so always empty there.
+    html = html.replace("{{CANONICAL}}",
+                        canonical_tags(args.canonical) if link_dir else "")
 
     # Last, once nothing else will touch the inline blocks: their hashes.
     html = html.replace("{{CSP}}", csp_for(html))

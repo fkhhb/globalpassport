@@ -1235,3 +1235,48 @@ mansion, rooftops, church spires, harbour with sailboats — which sits with the
 York and Paris skylines rather than reading as a shrunken copy of the hero. Renamed back
 to `45-newport-rhode-island.jpg` (it is no longer the Cliff Walk view) and the alt text
 rewritten with it, for the same reason as §21.
+
+---
+
+## 24. Changelog — the domain switches
+
+`globalpassportseries.com` is registered at Squarespace and the client wants the site on
+it. The DNS side is theirs to do; this is the repository side, built so that neither half
+can half-land.
+
+**Two repository variables, not code.** `CUSTOM_DOMAIN` writes the `CNAME` file into the
+deploy artefact and sets `<link rel="canonical">` + `og:url`; `PUBLIC_LAUNCH=true` drops
+`--noindex` and ships an allow-all `robots.txt`. Unset, the build is byte-for-byte the
+posture it already had. They are deliberately separate: putting the site on its own domain
+and letting Google index it are different decisions, and §2 is the reason the second one
+is not ours to make.
+
+**Why not just commit a CNAME file.** A `CNAME` in the artefact makes Pages serve the site
+from that hostname *alone* — the `fkhhb.github.io/globalpassport/` preview immediately
+starts redirecting to it. Commit it before DNS resolves and the link the client is
+currently reviewing on goes dark. A variable can be set the minute DNS is green and unset
+the minute it isn't, without a commit and a deploy cycle.
+
+**The CNAME goes in the artefact, not the repo root.** This deploys from Actions rather
+than from a branch, so Pages reads the file out of the uploaded artefact.
+
+**`--canonical` rather than a hardcoded `og:url`.** A canonical pointing at a hostname
+that is not the one being served is worse than no canonical at all, and the single-file
+WhatsApp build has no address whatsoever — so the token resolves to nothing there, always.
+
+**The verify step now asserts the posture the variables ask for**, in both directions: it
+fails if `PUBLIC_LAUNCH` is set and the noindex tag is still present, and fails if
+`CUSTOM_DOMAIN` is set but the CNAME file or the canonical link disagrees with it. A
+half-applied launch fails the deploy instead of shipping.
+
+**DNS shape.** Four apex `A` records at GitHub's addresses plus a `www` `CNAME` to
+`fkhhb.github.io.`; `www` is canonical and the apex redirects to it. Squarespace has no
+`ALIAS`/`ANAME` support, so the apex cannot be a CNAME and needs the literal A records.
+
+**The trap worth writing down: the `MX` records.** The contact address is on this same
+domain (§2.2). Squarespace's DNS editor invites you to clear the existing records when
+repointing a domain; doing that would take the mailbox down along with the website. Only
+the `A` and `www` records change.
+
+All four variable combinations were exercised against the real build and verify steps
+before pushing, not reasoned about.
