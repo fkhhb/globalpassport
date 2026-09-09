@@ -1280,3 +1280,18 @@ the `A` and `www` records change.
 
 All four variable combinations were exercised against the real build and verify steps
 before pushing, not reasoned about.
+
+---
+
+## 25. Changelog — HGGC figures corrected
+
+Client voice note (transcribed): *"Bitte bei den Sponsoren HGGC von sieben billion auf ten
+billion ändern und San Francisco based auf Palo Alto based ändern."*
+
+The sponsor line read **"$7B San Francisco-based mid-market private equity firm"**; it now
+reads **"$10B Palo Alto-based mid-market private equity firm"**. Both are facts about a
+third party supplied by the client — taken as given, not researched here.
+
+The domain went live in the same window: `www.globalpassportseries.com` serves the site,
+DNS check green, Enforce HTTPS on. The apex redirects to it. The site is still `noindex`
+— `PUBLIC_LAUNCH` remains unset, per §24.
