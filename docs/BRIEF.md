@@ -1295,3 +1295,39 @@ third party supplied by the client — taken as given, not researched here.
 The domain went live in the same window: `www.globalpassportseries.com` serves the site,
 DNS check green, Enforce HTTPS on. The apex redirects to it. The site is still `noindex`
 — `PUBLIC_LAUNCH` remains unset, per §24.
+
+---
+
+## 26. Handover — the domain is live, and what a fresh session needs
+
+The site is **live at https://www.globalpassportseries.com**: apex redirecting to `www`,
+Let's Encrypt certificate issued, Enforce HTTPS on, DNS check green. It is still
+`noindex` — `PUBLIC_LAUNCH` is unset and flipping it is the client's decision, not ours.
+
+**`CLAUDE.md` was added** so a future session loads the constraints automatically instead
+of depending on whoever opens it remembering to say "read the brief first". It is short on
+purpose and defers to this file; the §2 rules, the build commands, and the traps that have
+actually caught someone are what it carries.
+
+**What a fresh clone will not have: `redactions.local.txt`.** It is gitignored, which is
+the point — the venue names have never been in git history. The hashed audit in `build.py`
+is unaffected and is what CI gates on, so the protection that matters survives. What is
+lost is the belt-and-braces plaintext grep over the staged diff that was run before each
+commit in this session. Anyone continuing this work should keep a copy of that file outside
+the repo. Regenerate entries with `python3 build.py --hash "Some Name"`.
+
+**The trap that nearly bit, worth repeating:** repointing the website meant editing DNS on
+a domain that also carries the contact mailbox. The `MX`, SPF and DKIM records had to
+survive untouched while the `A` and `www` records were replaced. Squarespace's editor
+offers to clear the existing set; accepting that would have taken the mailbox down.
+
+**Documentation corrected in this pass**, because the domain move turned several passages
+from plans into history: the README's live URL, its launch-switch table (now recording
+which variable is set and which deliberately is not), the DNS section (a record rather
+than instructions), the Status section, and SECURITY.md — where `frame-ancestors` and HSTS
+are still open, since the site moved domain but not host.
+
+**Also still open:** the logo files, the Willkie Farr logo, speaker press photographs, the
+colour portraits, the video, the city silhouettes, and the autumn Munich photograph. None
+of them is code; all of them are waiting on the client. Dropping a file into `assets/img/`
+is not enough on its own — it needs an `{{IMG:}}` reference and a manifest entry too.

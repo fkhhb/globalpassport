@@ -52,11 +52,15 @@ applied here and are **absent, not forgotten**:
 | `Content-Security-Policy: frame-ancestors 'none'` | clickjacking (the site framed inside a hostile page) | not expressible in a `<meta>` CSP |
 | `Strict-Transport-Security` | protocol downgrade | Pages serves HTTPS, but cannot send HSTS for a custom domain |
 
-When the site moves to `globalpassportseries.com`, host it somewhere that can
-send headers — Cloudflare Pages, Netlify, or Pages behind Cloudflare — and add
+The site is now on `www.globalpassportseries.com`, but still served by GitHub
+Pages — so both gaps above are **still open**. Closing them means moving to a host
+that can send headers: Cloudflare Pages, Netlify, or Pages behind Cloudflare. Add
 `frame-ancestors 'none'`, HSTS, `X-Content-Type-Options: nosniff` and
 `Permissions-Policy` at that layer. `build.py` can then drop the `<meta>` CSP in
 favour of the header, or keep both; they compose.
+
+One thing that *is* in place: HTTPS is enforced at the Pages level (Let's Encrypt
+certificate, **Enforce HTTPS** on), so there is no plaintext path to the site.
 
 ## The build pipeline
 

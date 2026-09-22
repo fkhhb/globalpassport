@@ -3,7 +3,8 @@
 Source for the Global Passport Series site. GPS is an invitation-only summit series
 for families, run by Adelphi Global LLC. Next summit: **Munich, 30 September – 2 October 2026**.
 
-**Live:** https://fkhhb.github.io/globalpassport/ (preview — reachable by link, not indexed)
+**Live:** https://www.globalpassportseries.com — reachable by link, deliberately **not indexed**
+(the apex redirects to `www`; `fkhhb.github.io/globalpassport/` now redirects here too).
 
 > **Before you commit anything, read [`docs/BRIEF.md`](docs/BRIEF.md) §2.**
 > This repo has deliberate redactions — Munich venue names and the contact email address
@@ -98,7 +99,9 @@ Full detail in [`SECURITY.md`](SECURITY.md). The short version:
   gated on the redaction audit.
 
 Two things GitHub Pages cannot do — `frame-ancestors` (clickjacking) and HSTS — need a
-host that sets headers. Do that when the site moves to its real domain.
+host that can set response headers. The site is on its own domain now but still on Pages,
+so both remain **absent, not forgotten**. Fixing them means moving to Cloudflare Pages,
+Netlify, or Pages behind Cloudflare. See `SECURITY.md`.
 
 ---
 
@@ -157,25 +160,30 @@ not discoverable by searching for the city and the dates.
 
 Both are **repository variables**, not code: *Settings → Secrets and variables → Actions →
 Variables*. They are separate on purpose — a custom domain and public indexing are
-different decisions, and the client may well want the first without the second.
+different decisions, and the client wanted the first without the second.
 
-| variable | set it to | what happens |
+| variable | current value | what it does |
 |---|---|---|
-| `CUSTOM_DOMAIN` | `www.globalpassportseries.com` | writes the `CNAME` file into the deploy and adds `<link rel="canonical">` + `og:url` |
-| `PUBLIC_LAUNCH` | `true` | drops `--noindex` and ships an allow-all `robots.txt` |
+| `CUSTOM_DOMAIN` | **`www.globalpassportseries.com`** ✅ set | writes the `CNAME` file into the deploy and adds `<link rel="canonical">` + `og:url` |
+| `PUBLIC_LAUNCH` | **unset** — deliberately | set to `true` to drop `--noindex` and ship an allow-all `robots.txt` |
 
-Unset, the build is exactly what it was: preview posture, no custom domain. The verify step
-asserts whichever posture the variables ask for, so a half-applied launch fails the deploy
-rather than shipping.
+So the site is on its own domain **and still `noindex`**. Flipping `PUBLIC_LAUNCH` is the
+client's decision; GPS is invitation-only and that is the whole reason the switch exists
+separately. Changing either variable needs a workflow re-run to take effect — Actions →
+*Deploy preview to Pages* → **Run workflow**.
 
-**Do not set `CUSTOM_DOMAIN` before DNS resolves.** A `CNAME` file makes Pages serve the
-site from that hostname *only* — set it early and `fkhhb.github.io/globalpassport/` starts
-redirecting to a domain that does not answer, which takes the preview link down.
+The verify step asserts whichever posture the variables ask for, in both directions: it
+fails if `PUBLIC_LAUNCH` is set and the noindex tag survived, and fails if `CUSTOM_DOMAIN`
+is set but the `CNAME` file or the canonical link disagrees. A half-applied launch fails
+the deploy rather than shipping.
 
-### Pointing the domain at Pages
+**If you ever unset `CUSTOM_DOMAIN`,** also clear the custom domain in Settings → Pages, or
+Pages keeps serving from a hostname the artefact no longer names.
 
-DNS lives at Squarespace. Add these to the domain's custom records and leave every `MX`
-record alone — the contact address is on this domain, and deleting them kills the mail.
+### The DNS, as configured
+
+Done — recorded here so nobody has to rediscover it. DNS is managed at **Squarespace**
+(authoritative nameservers are Google Cloud DNS, `ns-cloud-c*.googledomains.com`).
 
 | host | type | value |
 |---|---|---|
@@ -185,24 +193,28 @@ record alone — the contact address is on this domain, and deleting them kills 
 | `@` | A | `185.199.111.153` |
 | `www` | CNAME | `fkhhb.github.io.` |
 
-Then *Settings → Pages → Custom domain* → `www.globalpassportseries.com` → Save, wait for
-the DNS check to go green, and tick **Enforce HTTPS** once the certificate is issued
-(minutes to an hour). Only then set the `CUSTOM_DOMAIN` variable so the CNAME file survives
-the next deploy.
+Alongside these the domain carries **`MX` → `smtp.google.com`** plus SPF and DKIM `TXT`
+records: the contact address is on this domain. **Never delete those** — repointing the
+website must not touch the mail. Squarespace's DNS editor invites you to clear existing
+records when repointing; that would take the mailbox down with it.
 
-The apex A records exist so `globalpassportseries.com` without the `www` redirects to the
-canonical host rather than failing. Squarespace's DNS has no `ALIAS`/`ANAME` support, which
-is why the apex needs literal A records.
+The apex `A` records exist so `globalpassportseries.com` without the `www` redirects to the
+canonical host rather than failing. Squarespace has no `ALIAS`/`ANAME` support, which is
+why the apex needs literal `A` records rather than a CNAME.
+
+In Settings → Pages: custom domain set, DNS check green, **Enforce HTTPS** on (Let's
+Encrypt; no `CAA` records block issuance).
 
 Moving to a host that can send security headers (see *Security*) is still the better
-long-term answer; nothing above forecloses it.
+long-term answer; nothing here forecloses it.
 
 ---
 
 ## Layout
 
 ```
-index.template.html      markup + inline CSS/JS, {{IMG:}} / {{FONT:}} / {{CSP}} / {{HERO_SRCSET}} / {{FONT_PRELOAD}}
+CLAUDE.md                instructions a Claude session loads automatically
+index.template.html      markup + inline CSS/JS, {{IMG:}} / {{FONT:}} / {{CSP}} / {{HERO_SRCSET}} / {{FONT_PRELOAD}} / {{CANONICAL}}
 build.py                 inliner, CSP generator, redaction audit
 assets/img/              49 images (45 + hero + 3 hero srcset variants)
 assets/fonts/            8 woff2 faces + OFL.txt licences
@@ -276,25 +288,43 @@ allows the stylesheet by hash and refuses inline styles.
 
 ## Status
 
-Working, deployed, and passing every check it has: redaction audit, zero CSP violations
-on both builds, 20 colour pairs all AA, no horizontal overflow or console errors at
-1440 / 1080 / 860 / 480 / 390 px.
+**Live at https://www.globalpassportseries.com**, on its own domain, HTTPS enforced,
+deliberately not indexed.
+
+Passing every check it has: redaction audit, zero CSP violations on both builds, 20 colour
+pairs all AA, no horizontal overflow or console errors at 1440 / 1080 / 860 / 480 / 390 px.
 
 **Blocked on files from the client:**
 
-1. **Hero photograph.** The hero is currently the Newport aerial, at the client's request.
-   An autumn Munich photograph was chosen earlier and never supplied as a file; if it
-   arrives and the client wants it back, drop it into `assets/img/`, point the hero
-   `{{IMG:}}` at it, update `HERO_FILE` in `build.py` and re-run `make_hero_variants.js`
-   (the tool derives variant filenames from the source, so nothing else needs editing).
-2. **Logo files.** Colour values were extracted; the PNG/SVG files themselves have not
-   arrived. `favicon.png` is a 480×295 rectangle being used as a square icon.
-3. Willkie Farr & Gallagher logo — the cell is typeset text as a placeholder.
-4. Press photographs for the twenty speakers (BRIEF §7.3), colour photographs of Gregg
-   Hill and Brenda Exline (§7.4), the video, the city silhouettes (§8).
+1. **Logo files.** Colour values were sampled from artwork the client sent, but the PNG/SVG
+   files themselves never arrived. `favicon.png` is a 480×295 rectangle being used as a
+   square icon — it will look squashed in a browser tab until a real square/SVG mark lands.
+2. **Willkie Farr & Gallagher logo** — that sponsor cell is typeset text as a placeholder.
+3. **Press photographs for the twenty speakers** (BRIEF §7.3), and colour photographs of
+   Gregg Hill and Brenda Exline (§7.4).
+4. **The video** (§8) and the **city silhouettes** (§8) — `assets/fallback-silhouettes/`
+   holds drawn SVG stand-ins for Dallas, New York and Paris.
+5. **Autumn Munich photograph.** The client chose one early on and never supplied the file.
+   The hero is the Newport aerial at their later request (§23); if the Munich shot arrives
+   and they want it back, drop it in `assets/img/`, point the hero `{{IMG:}}` at it, update
+   `HERO_FILE` in `build.py`, and re-run `tools/make_hero_variants.js` (it derives variant
+   filenames from the source, so nothing else needs editing).
 
-**Decisions the client owes:** FAQ / News (left out for now, not as empty sections);
-launching publicly vs staying a noindexed preview; single-page vs multi-page (BRIEF §8);
-whether the venue names warrant a private repo after all (§2.3).
+To wire any of these in: the file must go in `assets/img/`, be referenced as
+`{{IMG:filename}}` in the template, **and** get an entry in `assets/manifest.json`.
+Uploading a file to the repo on its own puts nothing on the page.
 
-Every change and the reasoning behind it is in `docs/BRIEF.md`, §10 onward.
+**Decisions the client owes:**
+
+- **Go public?** `PUBLIC_LAUNCH` is unset, so the site is `noindex`. One variable away.
+- **FAQ / News** — left out entirely rather than shipped as empty sections. Wanted or not?
+- **Single-page vs multi-page** (BRIEF §8).
+- **Private repo?** The venue names are protected by hashing (§2.3), which stops the
+  likeliest failure — the list being read straight out of a public repo. A digest confirms
+  a guess; it does not prevent one. Still worth revisiting if the client's tolerance changed.
+
+**Security work not done, and why:** `frame-ancestors` and HSTS need a host that can send
+HTTP headers, which GitHub Pages cannot. See `SECURITY.md`.
+
+Every change and the reasoning behind it is in `docs/BRIEF.md`, §10 onward — 25 sections,
+in order, including the rounds that were reverted.
